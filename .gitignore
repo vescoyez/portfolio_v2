@@ -1,0 +1,5 @@
+# DB informations
+craft/config/db.php
+
+# Craft license key
+craft/config/license.key

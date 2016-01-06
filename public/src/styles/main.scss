@@ -1,11 +1,16 @@
+@charset 'utf-8';
+
 // Utils
+@import 'utils/functions';
 @import 'utils/variables';
+@import 'utils/mixins';
 
 //Vendors
 
 // Base
 @import 'base/normalize';
 @import 'base/base';
+@import 'base/helpers';
 @import 'base/typography';
 
 // Layout

@@ -1,0 +1,94 @@
+// clearfix
+%clearfix {
+  &:before,
+  &:after {
+      content: " ";
+      display: table;
+  }
+
+  &:after {
+      clear: both;
+  }
+}
+
+.clearfix {
+  @extend %clearfix;
+}
+
+// display
+.inline {
+  display: inline;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+// Media Queries
+@for $layout from 1 through length($layouts-name) {
+  $layout-name: nth($layouts-name, $layout);
+
+  @if ( $layout == 1 ) {
+
+    // text alignment
+    .text-left {
+      text-align: left;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    // visibility
+    .hidden {
+      display: none !important;
+    }
+
+  } @else {
+
+    @include media($layout-name) {
+
+      // text alignment
+      .text-left_#{$layout-name} {
+        text-align: left;
+      }
+
+      .text-right_#{$layout-name} {
+        text-align: right;
+      }
+
+      .text-center_#{$layout-name} {
+        text-align: center;
+      }
+
+      // visibility
+      .hidden_#{$layout-name} {
+        display: none !important;
+      }
+
+      .visible_#{$layout-name} {
+        display: block !important;
+
+        &.inline {
+          display: inline !important;
+        }
+
+        &.inline-block {
+          display: inline-block !important;
+        }
+
+        &.flex{
+          display: flex !important;
+        }
+      }
+    }
+  }
+}

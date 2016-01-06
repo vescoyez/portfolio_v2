@@ -1,0 +1,12 @@
+@mixin media($name) {
+  @for $layout from 1 through length($layouts-name) {
+    $layout-name: nth($layouts-name, $layout);
+    $break-point: nth($layouts-break-point, $layout);
+
+    @if ($name == $layout-name) {
+      @media only screen and (min-width: $break-point) {
+        @content;
+      }
+    }
+  }
+}

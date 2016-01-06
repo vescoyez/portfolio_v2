@@ -1,12 +1,49 @@
-// Colors
+// ===== Colors ======
 
-$primary-color: #3F51B5;
-$primary-color-light: #C5CAE9;
-$primary-color-dark: #303F9F;
+// Set colors
+$primary-color: #3f51b5;
+$primary-color-light: #c5cae9;
+$primary-color-dark: #303f9f;
 
-$accent-color: #FF4081;
+$accent-color: #ff4081;
 $accent-color-light: #FF80AB;
 $accent-color-dark: #F50057;
 
-// Base
+$gray-0: #fff;
+$gray-1: darken($gray-0, 20%);
+$gray-2: darken($gray-1, 20%);
+$gray-3: darken($gray-2, 20%);
+$gray-4: darken($gray-3, 20%);
+$gray-5: darken($gray-4, 20%);
 
+$bg-color-light: $gray-0;
+$bg-color-dark: $gray-4;
+$bg-color-primary: $primary-color;
+$bg-color-accent: $primary-color;
+
+$text-color-light-bg: $gray-4;
+$text-color-dark-bg: $gray-0;
+
+// Apply colors
+
+$main-bg-color: $bg-color-light;
+$main-text-color: $text-color-light-bg;
+
+// ===== Base =====
+
+//Typography
+$main-font-size: 14px;
+$main-font-weight: 400;
+
+
+// ===== Grid =====
+
+// container
+$container-min-width: 320px !default;
+
+// layouts
+$layouts-name:                'main',     's',        'm',        'l' !default; // ascending order / 'main' doesn't print out
+$layouts-break-point:         0,          500px,      800px,      1000px !default;
+$layouts-columns-number:      12,         12,         12,         12 !default;
+$layouts-column-gutter:       10px,       15px,       20px,       20px !default;
+$layouts-container-max-width: none,       none,       none,       1200px !default; //none if fluid

@@ -1,0 +1,79 @@
+@for $layout from 1 through length($layouts-name) {
+  $layout-name: nth($layouts-name, $layout);
+  $columns-number: nth($layouts-columns-number, $layout);
+  $gutter: nth($layouts-column-gutter, $layout);
+  $max-width: nth($layouts-container-max-width, $layout);
+
+  @if ( $layout == 1 ) {
+
+    .container {
+      display: block;
+      min-width: $container-min-width;
+      margin: 0 auto;
+      padding-left: $gutter / 2;
+      padding-right: $gutter / 2;
+    }
+
+    .grid {
+      display: block;
+      margin-left: $gutter / -2;
+      margin-right: $gutter / -2;
+      @extend %clearfix;
+    }
+
+    .grid__item {
+      float: left;
+      min-height: 1px;
+      padding-left: $gutter / 2;
+      padding-right: $gutter / 2;
+    }
+
+    @for $col-number from 1 through $columns-number {
+      .width-#{$col-number} {
+        width: 100% / $columns-number * $col-number;
+      }
+
+      .offset-#{$col-number} {
+        margin-left: 100% / $columns-number * $col-number;
+      }
+    }
+
+  } @else {
+    $prev-gutter: nth($layouts-column-gutter, $layout - 1);
+    $prev-max-width: nth($layouts-container-max-width, $layout - 1);
+
+    @include media($layout-name) {
+      .container {
+        @if $max-width != $prev-max-width {
+          max-width: $max-width;
+        }
+        @if $gutter != $prev-gutter {
+          padding-left: $gutter / 2;
+          padding-right: $gutter / 2;
+        }
+      }
+
+      @if $gutter != $prev-gutter {
+        .grid {
+          margin-left: $gutter / -2;
+          margin-right: $gutter / -2;
+        }
+
+        .grid__item {
+          padding-left: $gutter / 2;
+          padding-right: $gutter / 2;
+        }
+      }
+
+      @for $col-number from 1 through $columns-number {
+        .width-#{$col-number}_#{$layout-name} {
+          width: 100% / $columns-number * $col-number;
+        }
+
+        .offset-#{$col-number}_#{$layout-name} {
+          margin-left: 100% / $columns-number * $col-number;
+        }
+      }
+    }
+  }
+}

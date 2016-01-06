@@ -1,0 +1,7 @@
+@function whiten($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+@function blacken($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}

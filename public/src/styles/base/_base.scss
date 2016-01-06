@@ -1,5 +1,15 @@
-body {
+// box-sizing reset to border-box
+html {
+  box-sizing: border-box;
+}
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+// Base style
+body {
+  background: $main-bg-color;
 }
 
 hr {

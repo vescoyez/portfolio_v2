@@ -15,8 +15,12 @@
 // Layout
 @import 'layout/grid';
 @import 'layout/helpers';
+@import 'layout/header';
+@import 'layout/section';
 
 // Components
+@import 'components/nav';
+@import 'components/intro';
 
 // Pages
 

@@ -1,0 +1,16 @@
+.intro {
+  font-family: $second-font-family;
+  color: rgba(255, 255, 255, 0.7);
+  @include resp('font-size', (
+    'main': 24px,
+    's': 40px,
+    'm': 60px,
+    'l': 72px,
+  ));
+
+  b,
+  strong {
+    font-weight: inherit;
+    color: rgba(255, 255, 255, 1);
+  }
+}

@@ -12,21 +12,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
-	<meta charset="utf-8" />
+	<meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
-	<link rel="home" href="{{ siteUrl }}" />
-  <link rel="stylesheet" href="{{ siteUrl }}/dist/styles/main.min.css" />
+	<link rel="home" href="{{ siteUrl }}">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link href='https://fonts.googleapis.com/css?family=Abril+Fatface|Lato:400,300,300italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{ siteUrl }}/dist/styles/main.min.css">
 </head>
 
 <body>
-	<header class="header">
+	<header class="header clearfix">
     <div class="container">
-  		<h1><a href="{{ siteUrl }}">{{ siteName }}</a></h1>
+  		<h1 class="heading header__heading float-left">
+        <a href="{{ siteUrl }}"><b>Valentin</b> Escoyez</a>
+      </h1>
 
-  		<nav>
-  			<ul>
-  				<li>
-            <a href="{{ url('news') }}" {% if craft.request.firstSegment == 'news' %}class="active"{% endif %}>News</a>
+  		<nav class="nav float-right">
+  			<ul class="nav__list">
+          <li class="nav__item hidden visible_s">
+            <a href="#work">Work</a>
+          </li>
+          <li class="nav__item hidden visible_s">
+            <a href="#about">About</a>
+          </li>
+          <li class="nav__item">
+            <a href="#contact">Contact</a>
           </li>
   			</ul>
   		</nav>

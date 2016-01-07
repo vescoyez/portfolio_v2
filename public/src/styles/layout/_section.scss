@@ -1,0 +1,15 @@
+.section {
+  @include resp('padding', (
+    'main': 30px 0,
+  ));
+}
+
+.section--intro {
+  padding-top: $header-height;
+  background-color: $primary-color;
+  background-image: radial-gradient(circle at 50% -130%,#85d8ce 0,#085078 100%)
+}
+
+.section--dark {
+  color: $text-color--dark-bg;
+}

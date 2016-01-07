@@ -1,6 +1,7 @@
 html {
-  font-family: sans-serif;
+  font-family: $main-font-family;
   @include resp("font-size", $main-font-size);
+  font-weight: $main-font-weight;
 }
 
 b,
@@ -8,16 +9,37 @@ strong {
   font-weight: $bold-font-weight;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: $h-font-family;
+  font-weight: $h-font-weight;
+}
+
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
 
-h1 {
+a {
+  color: $link-color;
+  text-decoration: $link-decoration;
+}
+
+.heading {
+  margin: 0;
+}
+
+.heading--1 {
+  color: rgba(255, 255, 255, 0.7);
   @include resp("font-size", (
-    "main": 8px,
-    "s": 10px,
-    "m": 12px
-    )
-  );
+    "main": 20px,
+  ));
+}
+
+.heading-2 {
+  @include resp("font-size", (
+    "main": 36px,
+    "s": 40px,
+    "m": 62px,
+    "l": 76px,
+  ));
 }

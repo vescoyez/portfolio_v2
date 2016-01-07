@@ -47,6 +47,15 @@
       text-align: center;
     }
 
+    // float
+    .float-left {
+      float: left;
+    }
+
+    .float-right {
+      float: right;
+    }
+
     // visibility
     .hidden {
       display: none !important;
@@ -68,6 +77,15 @@
       .text-center_#{$layout-name} {
         text-align: center;
       }
+
+      // float
+    .float-left_#{$layout-name} {
+      float: left;
+    }
+
+    .float-right_#{$layout-name} {
+      float: right;
+    }
 
       // visibility
       .hidden_#{$layout-name} {

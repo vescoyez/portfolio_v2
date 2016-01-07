@@ -29,17 +29,28 @@ $text-color-dark-bg: $gray-0 !default;
 $main-bg-color: $bg-color-light !default;
 $main-text-color: $text-color-light-bg !default;
 
+$text-color--dark-bg: $gray-0;
+
 // ===== Base =====
 
 //Typography
+$main-font-family: 'Lato', sans-serif;
+$second-font-family: 'Abril Fatface', sans-serif;
+
+$h-font-family: $main-font-family;
+
 $main-font-size: (
   "main": 14px,
   "s": 15px,
-  "m": 16px
+  "m": 16px,
+  "l": 24px,
 ) !default;
-$main-font-weight: 400 !default;
-
+$main-font-weight: 300 !default;
 $bold-font-weight: 400 !default;
+$h-font-weight: 300 !default;
+
+$link-color: $primary-color;
+$link-decoration: none;
 
 
 // ===== Grid =====
@@ -53,3 +64,5 @@ $layouts-break-point:         0,          500px,      800px,      1000px      !d
 $layouts-columns-number:      12,         12,         12,         12          !default;
 $layouts-column-gutter:       10px,       15px,       20px,       20px        !default;
 $layouts-container-max-width: none,       none,       none,       1200px      !default; //none if fluid
+
+$header-height: 64px;

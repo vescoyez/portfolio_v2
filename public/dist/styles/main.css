@@ -375,6 +375,7 @@ th {
 
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 *, *:before, *:after {
@@ -383,11 +384,13 @@ html {
 
 body {
   background: #fff;
+  height: 100%;
 }
 
 html {
-  font-family: sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 14px;
+  font-weight: 300;
 }
 @media only screen and (min-width: 500px) {
   html {
@@ -399,10 +402,20 @@ html {
     font-size: 16px;
   }
 }
+@media only screen and (min-width: 1000px) {
+  html {
+    font-size: 24px;
+  }
+}
 
 b,
 strong {
   font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
 }
 
 h1 {
@@ -410,17 +423,36 @@ h1 {
   margin: 0.67em 0;
 }
 
-h1 {
-  font-size: 8px;
+a {
+  color: #3f51b5;
+  text-decoration: none;
+}
+
+.heading {
+  margin: 0;
+}
+
+.heading--1 {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+}
+
+.heading-2 {
+  font-size: 36px;
 }
 @media only screen and (min-width: 500px) {
-  h1 {
-    font-size: 10px;
+  .heading-2 {
+    font-size: 40px;
   }
 }
 @media only screen and (min-width: 800px) {
-  h1 {
-    font-size: 12px;
+  .heading-2 {
+    font-size: 62px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .heading-2 {
+    font-size: 76px;
   }
 }
 
@@ -440,6 +472,7 @@ h1 {
 
 .grid__item {
   display: block;
+  width: 100%;
   float: left;
   min-height: 1px;
   padding-left: 5px;
@@ -901,6 +934,14 @@ h1 {
   text-align: center;
 }
 
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
 .hidden {
   display: none !important;
 }
@@ -916,6 +957,14 @@ h1 {
 
   .text-center_s {
     text-align: center;
+  }
+
+  .float-left_s {
+    float: left;
+  }
+
+  .float-right_s {
+    float: right;
   }
 
   .hidden_s {
@@ -950,6 +999,14 @@ h1 {
     text-align: center;
   }
 
+  .float-left_m {
+    float: left;
+  }
+
+  .float-right_m {
+    float: right;
+  }
+
   .hidden_m {
     display: none !important;
   }
@@ -982,6 +1039,14 @@ h1 {
     text-align: center;
   }
 
+  .float-left_l {
+    float: left;
+  }
+
+  .float-right_l {
+    float: right;
+  }
+
   .hidden_l {
     display: none !important;
   }
@@ -1000,4 +1065,77 @@ h1 {
     display: -ms-flexbox !important;
     display: flex !important;
   }
+}
+.header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 20px 0;
+}
+.header a {
+  color: #fff;
+}
+
+.header__heading {
+  font-size: 20px;
+  letter-spacing: 0.03em;
+}
+
+.section {
+  padding: 30px 0;
+}
+
+.section--intro {
+  padding-top: 64px;
+  background-color: #3f51b5;
+  background-image: radial-gradient(circle at 50% -130%, #85d8ce 0, #085078 100%);
+}
+
+.section--dark {
+  color: #fff;
+}
+
+.nav {
+  letter-spacing: 0.05em;
+}
+
+.nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__item {
+  float: left;
+  font-size: 20px;
+}
+
+.nav__item ~ .nav__item {
+  margin-left: 20px;
+}
+
+.intro {
+  font-family: "Abril Fatface", sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 24px;
+}
+@media only screen and (min-width: 500px) {
+  .intro {
+    font-size: 40px;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .intro {
+    font-size: 60px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .intro {
+    font-size: 72px;
+  }
+}
+.intro b,
+.intro strong {
+  font-weight: inherit;
+  color: white;
 }

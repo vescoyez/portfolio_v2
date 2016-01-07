@@ -1,0 +1,17 @@
+.header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: (($header-height - 24px) / 2) 0;
+
+  a {
+    color: $text-color--dark-bg;
+  }
+}
+
+.header__heading {
+  @include resp('font-size', (
+    'main': 20px,
+  ));
+  letter-spacing: 0.03em;
+}

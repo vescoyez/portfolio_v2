@@ -1,6 +1,7 @@
 // box-sizing reset to border-box
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 *, *:before, *:after {
@@ -10,6 +11,7 @@ html {
 // Base style
 body {
   background: $main-bg-color;
+  height: 100%;
 }
 
 hr {

@@ -4,9 +4,27 @@
     $break-point: nth($layouts-break-point, $layout);
 
     @if ($name == $layout-name) {
-      @media only screen and (min-width: $break-point) {
+      @if ($break-point == 0) {
         @content;
+      } @else {
+        @media only screen and (min-width: $break-point) {
+          @content;
+        }
       }
     }
+  }
+}
+
+@mixin resp($property, $value) {
+  @if (type-of($value) == "map") {
+    @each $layout-name in $layouts-name {
+      @if map-has-key($value, $layout-name) {
+        @include media($layout-name) {
+         #{$property}: map-get($value, $layout-name)
+        }
+      }
+    }
+  } @else {
+    #{$property}: $value;
   }
 }

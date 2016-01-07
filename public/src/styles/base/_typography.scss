@@ -1,13 +1,23 @@
 html {
   font-family: sans-serif;
+  @include resp("font-size", $main-font-size);
 }
 
 b,
 strong {
-  font-weight: bold;
+  font-weight: $bold-font-weight;
 }
 
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
+}
+
+h1 {
+  @include resp("font-size", (
+    "main": 8px,
+    "s": 10px,
+    "m": 12px
+    )
+  );
 }

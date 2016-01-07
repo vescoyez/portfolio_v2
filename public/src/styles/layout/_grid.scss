@@ -22,6 +22,7 @@
     }
 
     .grid__item {
+      display: block;
       float: left;
       min-height: 1px;
       padding-left: $gutter / 2;

@@ -32,8 +32,14 @@ $main-text-color: $text-color-light-bg;
 // ===== Base =====
 
 //Typography
-$main-font-size: 14px;
+$main-font-size: (
+  "main": 14px,
+  "s": 15px,
+  "m": 16px
+);
 $main-font-weight: 400;
+
+$bold-font-weight: 400;
 
 
 // ===== Grid =====
@@ -42,8 +48,8 @@ $main-font-weight: 400;
 $container-min-width: 320px !default;
 
 // layouts
-$layouts-name:                'main',     's',        'm',        'l' !default; // ascending order / 'main' doesn't print out
-$layouts-break-point:         0,          500px,      800px,      1000px !default;
-$layouts-columns-number:      12,         12,         12,         12 !default;
-$layouts-column-gutter:       10px,       15px,       20px,       20px !default;
-$layouts-container-max-width: none,       none,       none,       1200px !default; //none if fluid
+$layouts-name:                'main',     's',        'm',        'l'         !default; // ascending order / 'main' doesn't print out
+$layouts-break-point:         0,          500px,      800px,      1000px      !default;
+$layouts-columns-number:      12,         12,         12,         12          !default;
+$layouts-column-gutter:       10px,       15px,       20px,       20px        !default;
+$layouts-container-max-width: none,       none,       none,       1200px      !default; //none if fluid

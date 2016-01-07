@@ -1,33 +1,33 @@
 // ===== Colors ======
 
 // Set colors
-$primary-color: #3f51b5;
-$primary-color-light: #c5cae9;
-$primary-color-dark: #303f9f;
+$primary-color: #3f51b5 !default;
+$primary-color-light: #c5cae9 !default;
+$primary-color-dark: #303f9f !default;
 
-$accent-color: #ff4081;
-$accent-color-light: #FF80AB;
-$accent-color-dark: #F50057;
+$accent-color: #ff4081 !default;
+$accent-color-light: #FF80AB !default;
+$accent-color-dark: #F50057 !default;
 
-$gray-0: #fff;
-$gray-1: darken($gray-0, 20%);
-$gray-2: darken($gray-1, 20%);
-$gray-3: darken($gray-2, 20%);
-$gray-4: darken($gray-3, 20%);
-$gray-5: darken($gray-4, 20%);
+$gray-0: #fff !default;
+$gray-1: darken($gray-0, 20%) !default;
+$gray-2: darken($gray-1, 20%) !default;
+$gray-3: darken($gray-2, 20%) !default;
+$gray-4: darken($gray-3, 20%) !default;
+$gray-5: darken($gray-4, 20%) !default;
 
-$bg-color-light: $gray-0;
-$bg-color-dark: $gray-4;
-$bg-color-primary: $primary-color;
-$bg-color-accent: $primary-color;
+$bg-color-light: $gray-0 !default;
+$bg-color-dark: $gray-4 !default;
+$bg-color-primary: $primary-color !default;
+$bg-color-accent: $primary-color !default;
 
-$text-color-light-bg: $gray-4;
-$text-color-dark-bg: $gray-0;
+$text-color-light-bg: $gray-4 !default;
+$text-color-dark-bg: $gray-0 !default;
 
 // Apply colors
 
-$main-bg-color: $bg-color-light;
-$main-text-color: $text-color-light-bg;
+$main-bg-color: $bg-color-light !default;
+$main-text-color: $text-color-light-bg !default;
 
 // ===== Base =====
 
@@ -36,10 +36,10 @@ $main-font-size: (
   "main": 14px,
   "s": 15px,
   "m": 16px
-);
-$main-font-weight: 400;
+) !default;
+$main-font-weight: 400 !default;
 
-$bold-font-weight: 400;
+$bold-font-weight: 400 !default;
 
 
 // ===== Grid =====

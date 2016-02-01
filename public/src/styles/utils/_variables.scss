@@ -10,8 +10,8 @@ $accent-color-light: #FF80AB !default;
 $accent-color-dark: #F50057 !default;
 
 $gray-0: #fff !default;
-$gray-1: darken($gray-0, 20%) !default;
-$gray-2: darken($gray-1, 20%) !default;
+$gray-1: #eee !default;
+$gray-2: #999 !default;
 $gray-3: darken($gray-2, 20%) !default;
 $gray-4: darken($gray-3, 20%) !default;
 $gray-5: darken($gray-4, 20%) !default;
@@ -29,6 +29,7 @@ $text-color-dark-bg: $gray-0 !default;
 $main-bg-color: $bg-color-light !default;
 $main-text-color: $text-color-light-bg !default;
 
+$text-color: $gray-3;
 $text-color--dark-bg: $gray-0;
 
 // ===== Base =====
@@ -62,7 +63,7 @@ $container-min-width: 320px !default;
 $layouts-name:                'main',     's',        'm',        'l'         !default; // ascending order / 'main' doesn't print out
 $layouts-break-point:         0,          500px,      800px,      1000px      !default;
 $layouts-columns-number:      12,         12,         12,         12          !default;
-$layouts-column-gutter:       10px,       15px,       20px,       20px        !default;
+$layouts-column-gutter:       20px,       30px,       40px,       40px        !default;
 $layouts-container-max-width: none,       none,       none,       1200px      !default; //none if fluid
 
 $header-height: 64px;

@@ -154,9 +154,9 @@ class RichTextFieldType extends BaseFieldType
 		if (strpos($value, '{') !== false)
 		{
 			// Preserve the ref tags with hashes {type:id:url} => {type:id:url}#type:id
-			$value = preg_replace_callback('/(href=|src=)([\'"])(\{(\w+\:\d+\:'.HandleValidator::$handlePattern.')\})\2/', function($matches)
+			$value = preg_replace_callback('/(href=|src=)([\'"])(\{(\w+\:\d+\:'.HandleValidator::$handlePattern.')\})(#[^\'"#]+)?\2/', function($matches)
 			{
-				return $matches[1].$matches[2].$matches[3].'#'.$matches[4].$matches[2];
+				return $matches[1].$matches[2].$matches[3].(!empty($matches[5]) ? $matches[5] : '').'#'.$matches[4].$matches[2];
 			}, $value);
 
 			// Now parse 'em
@@ -216,9 +216,9 @@ class RichTextFieldType extends BaseFieldType
 		}
 
 		// Find any element URLs and swap them with ref tags
-		$value = preg_replace_callback('/(href=|src=)([\'"])[^\'"]+?#(\w+):(\d+)(:'.HandleValidator::$handlePattern.')?\2/', function($matches)
+		$value = preg_replace_callback('/(href=|src=)([\'"])[^\'"#]+?(#[^\'"#]+)?(?:#|%23)(\w+):(\d+)(:'.HandleValidator::$handlePattern.')?\2/', function($matches)
 		{
-			return $matches[1].$matches[2].'{'.$matches[3].':'.$matches[4].(!empty($matches[5]) ? $matches[5] : ':url').'}'.$matches[2];
+			return $matches[1].$matches[2].'{'.$matches[4].':'.$matches[5].(!empty($matches[6]) ? $matches[6] : ':url').'}'.(!empty($matches[3]) ? $matches[3] : '').$matches[2];
 		}, $value);
 
 		// Encode any 4-byte UTF-8 characters.
@@ -421,6 +421,29 @@ class RichTextFieldType extends BaseFieldType
 				}
 			}
 		}
+
+		$customTranslations = array(
+			'fullscreen' => Craft::t('Fullscreen'),
+			'insert-page-break' => Craft::t('Insert Page Break'),
+			'table' => Craft::t('Table'),
+			'insert-table' => Craft::t('Insert table'),
+			'insert-row-above' => Craft::t('Insert row above'),
+			'insert-row-below' => Craft::t('Insert row below'),
+			'insert-column-left' => Craft::t('Insert column left'),
+			'insert-column-right' => Craft::t('Insert column right'),
+			'add-head' => Craft::t('Add head'),
+			'delete-head' => Craft::t('Delete head'),
+			'delete-column' => Craft::t('Delete column'),
+			'delete-row' => Craft::t('Delete row'),
+			'delete-table' => Craft::t('Delete table'),
+			'video' => Craft::t('Video'),
+			'video-html-code' => Craft::t('Video Embed Code or Youtube/Vimeo Link'),
+		);
+
+		craft()->templates->includeJs(
+			'$.extend($.Redactor.opts.langs["'.static::$_redactorLang.'"], ' .
+			JsonHelper::encode($customTranslations) .
+			');');
 	}
 
 	/**

@@ -2,6 +2,7 @@ html {
   font-family: $main-font-family;
   @include resp("font-size", $main-font-size);
   font-weight: $main-font-weight;
+  color: $text-color;
 }
 
 b,
@@ -15,7 +16,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 29px;
   margin: 0.67em 0;
 }
 

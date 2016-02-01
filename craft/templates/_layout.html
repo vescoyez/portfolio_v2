@@ -35,13 +35,13 @@
   		<nav class="nav float-right">
   			<ul class="nav__list">
           <li class="nav__item hidden visible_s">
-            <a href="#work">Work</a>
+            <a href="{{ siteUrl }}#work">Work</a>
           </li>
           <li class="nav__item hidden visible_s">
-            <a href="#about">About</a>
+            <a href="{{ siteUrl }}#about">About</a>
           </li>
           <li class="nav__item">
-            <a href="#contact">Contact</a>
+            <a href="{{ siteUrl }}#contact">Contact</a>
           </li>
   			</ul>
   		</nav>
@@ -55,10 +55,5 @@
 		{% endblock %}
 	</main>
 
-	<footer class="footer">
-    <div class="container">
-		  Copyright {{ now.year }} {{ craft.request.serverName | ucfirst }}. All rights reserved  •  Built with <a href="http://craftcms.com">Craft</a>
-    </div>
-	</footer>
 </body>
 </html>

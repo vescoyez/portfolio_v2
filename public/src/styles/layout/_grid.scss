@@ -35,8 +35,8 @@
         width: 100% / $columns-number * $col-number;
       }
 
-      .offset-#{$col-number} {
-        margin-left: 100% / $columns-number * $col-number;
+      .offset-#{($col-number - 1)} {
+        margin-left: 100% / $columns-number * ($col-number - 1);
       }
     }
 
@@ -72,8 +72,8 @@
           width: 100% / $columns-number * $col-number;
         }
 
-        .offset-#{$col-number}_#{$layout-name} {
-          margin-left: 100% / $columns-number * $col-number;
+        .offset-#{($col-number - 1)}_#{$layout-name} {
+          margin-left: 100% / $columns-number * ($col-number - 1);
         }
       }
     }

@@ -1,0 +1,133 @@
+$device-border-color: $gray-2;
+$device-bg-color: $gray-1;
+
+.devices {
+  position: relative;
+  padding-bottom: 5%;
+}
+
+.browser {
+  position: relative;
+  border: 1px solid $device-border-color;
+  background: $gray-1;
+  border-radius: 8px;
+  overflow: hidden;
+  @include resp('font-size', (
+    'main': 8px,
+    's': 10px,
+    'm': 12px,
+    'l': 15px,
+  ));
+  text-align: center;
+
+  &:before {
+    content: attr(data-title);
+    display: inline-block;
+    background: $main-bg-color;
+    border: 1px solid $device-border-color;
+    border-radius: 5px;
+    margin: 0.8em 0;
+    padding: 0.3em 0 0.4em;
+    line-height: 1;
+    width: 20em;
+    max-width: 94%;
+  }
+
+  &:after {
+    @include media('s') {
+      content: '';
+    }
+    display: block;
+    position: absolute;
+    top: 1.25em;
+    left: 0.8em;
+    width: 0.8em;
+    height: 0.8em;
+    background: $main-bg-color;
+    border: 1px solid $device-border-color;
+    box-shadow:
+      1.4em 0 0 -1px $main-bg-color,
+      1.4em 0 0 0 $device-border-color,
+      2.8em 0 0 -1px $main-bg-color,
+      2.8em 0 0 0 $device-border-color;
+    border-radius: 999px;
+  }
+
+  img {
+    border-top: 1px solid $device-border-color;
+  }
+}
+
+.phone {
+  position: absolute;
+  bottom: 0;
+  left: 1px;
+  @include resp('font-size', (
+    'main': 4px,
+    's': 6px,
+    'l': 8px,
+  ));
+  border: 0.5em solid $device-bg-color;
+  border-radius: 2em;
+  box-shadow:
+    0 0 0 1px $device-border-color inset,
+    0 0 0 1px $device-border-color;
+  padding: 4.5em 0.5em 5em;
+  text-align: center;
+  background: $main-bg-color;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 4em;
+    height: 0.5em;
+    border: 1px solid $device-border-color;
+    background: $device-bg-color;
+    border-radius: 9999px;
+    position: absolute;
+    left: 50%;
+    margin-left: -2em;
+    top: 2em;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 4em;
+    height: 4em;
+    border: 1px solid $device-border-color;
+    background: $main-bg-color;
+    border-radius: 9999px;
+    position: absolute;
+    bottom: 0.5em;
+    left: 50%;
+    margin-left: -1.5em;
+    box-shadow: 0 0 0 0.1em $device-bg-color inset, 0 0 0 0.2em $device-border-color inset;
+  }
+
+  img {
+    border: 1px solid $device-border-color;
+  }
+}
+
+.tablet {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  @include resp('font-size', (
+    'main': 4px,
+    'l': 8px,
+  ));
+  border: 0.5em solid $device-bg-color;
+  border-radius: 2em;
+  box-shadow:
+    0 0 0 1px $device-border-color inset,
+    0 0 0 1px $device-border-color;
+  padding:3em 5em;
+  text-align: center;
+  background: $main-bg-color;
+
+  img {
+    border: 1px solid $device-border-color;
+  }
+}

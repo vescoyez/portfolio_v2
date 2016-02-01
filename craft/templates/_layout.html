@@ -55,5 +55,27 @@
 		{% endblock %}
 	</main>
 
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script type="text/javascript">
+    $('#my-form').submit(function(ev) {
+    // Prevent the form from actually submitting
+    ev.preventDefault();
+
+    // Get the post data
+    var data = $(this).serialize();
+
+    // Send it to the server
+    $.post('/', data, function(response) {
+        if (response.success) {
+            console.log('sucess');
+        } else {
+            // response.error will be an object containing any validation errors that occurred, indexed by field name
+            // e.g. response.error.fromName => ['From Name is required']
+            alert('An error occurred. Please try again.');
+        }
+    });
+  });
+  </script>
+
 </body>
 </html>

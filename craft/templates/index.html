@@ -33,29 +33,7 @@
     <div class="container">
     	<h2 class="heading section__heading">Work</h2>
   		{% for entry in craft.entries.section('work').limit(3).find() %}
-        <article class="work">
-    			<h1 class="heading heading--2">{{ entry.title }}</h1>
-          <div class="grid">
-            <div class="grid__item width-6_l width-8_m width-10_s">
-              <p>{{ entry.description }}</p>
-            </div>
-          </div>
-          <div class="devices">
-            <div class="grid">
-              <div class="grid__item width-10_m offset-1_m">
-                <div class="browser" data-title="{{ entry.siteAddress }}">
-                  <img src="{{ entry.desktopImage[0].getUrl() }}" alt="{{ entry.desktopImage[0].title }}">
-                </div>
-              </div>
-            </div>
-            <div class="phone width-3 offset-8 width-2_m offset-0_m" data-title="{{ entry.siteAddress }}">
-              <img src="{{ entry.mobileImage[0].getUrl() }}" alt="{{ entry.mobileImage[0].title }}">
-            </div>
-            <div class="tablet hidden visible_m width-6_m" data-title="{{ entry.siteAddress }}">
-              <img src="{{ entry.tabletImage[0].getUrl() }}" alt="{{ entry.tabletImage[0].title }}">
-            </div>
-          </div>
-        </article>
+        {% include 'includes/_work' %}
   		{% endfor %}
       <h1 class="heading heading--2">More</h1>
       <div class="grid">
@@ -69,7 +47,14 @@
       </div>
     </div>
   </section>
-  <section class="section  section--dark" id="about">
+  <section class="section section--dark" id="about">
     <h2 class="heading section__heading">About</h2>
+    {% for entry in craft.entries.section('testimonials').limit(2).find() %}
+
+    {% endfor %}
+  </section>
+  <section class="section" id="contact">
+    <h2 class="heading section__heading">Contact</h2>
+    {% include 'includes/_contactform' %}
   </section>
 {% endblock %}

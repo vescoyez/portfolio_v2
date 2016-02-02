@@ -1,0 +1,21 @@
+.testimonial {
+  margin: 0;
+}
+
+.testimonial__picture {
+  display: block;
+  width: 60px;
+  border-radius: 9999px;
+  border: 2px solid #fff;
+  border: 2px solid rgba(255,255,255,0.8);
+  overflow: hidden;
+  float: left;
+
+  &:hover {
+    border-color: rgba(255,255,255,1);
+  }
+}
+
+.testimonial__person {
+  margin-left: 80px;
+}

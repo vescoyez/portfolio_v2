@@ -23,6 +23,7 @@ h1 {
 a {
   color: $link-color;
   text-decoration: $link-decoration;
+  transition: 0.1s;
 }
 
 .heading {

@@ -48,20 +48,30 @@
     </div>
   </section>
   <section class="section section--dark" id="about">
-    <h2 class="heading section__heading">About</h2>
-    {% for entry in craft.entries.section('testimonials').limit(2).find() %}
-    <blockquote>
-      {{ entry.testimonial }}
-      <footer>
-        <a href="{{ entry.personUrl }}"><img src="{{ entry.personPicture[0].getUrl() }}" alt="{{ entry.personPicture[0].title }}"></a>
-        <a href="{{ entry.personUrl }}">{{ entry.title }}</a>
-        {{ entry.personTitle }}
-      </footer>
-    </blockquote>
-    {% endfor %}
+    <div class="container">
+      <h2 class="heading section__heading">About</h2>
+      {% for entry in craft.entries.section('testimonials').limit(2).find() %}
+        <blockquote class="testimonial">
+          <div class="testimonial__quote">
+            {{ entry.testimonial }}
+          </div>
+          <footer class="testimonial__footer">
+            <a href="{{ entry.personUrl }}" class="testimonial__picture">
+              <img src="{{ entry.personPicture[0].getUrl() }}" alt="{{ entry.personPicture[0].title }}">
+            </a>
+            <div class="testimonial__person">
+              <a href="{{ entry.personUrl }}" class="testimonial__name">{{ entry.title }}</a>
+              <div class="testimonial__title">{{ entry.personTitle }}</div>
+            </div>
+          </footer>
+        </blockquote>
+      {% endfor %}
+    </div>
   </section>
   <section class="section" id="contact">
-    <h2 class="heading section__heading">Contact</h2>
-    {% include 'includes/_contactform' %}
+    <div class="container">
+      <h2 class="heading section__heading">Contact</h2>
+      {% include 'includes/_contactform' %}
+    </div>
   </section>
 {% endblock %}

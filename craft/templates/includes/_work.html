@@ -20,11 +20,20 @@
       <img src="{{ entry.tabletImage[0].getUrl() }}" alt="{{ entry.tabletImage[0].title }}">
     </div>
   </div>
-  {% for technology in entry.technologies %}
-
-    <svg class="icon">
-      <use xlink:href="/dist/images/icons.svg#{{ technology.slug }}"></use>
-    </svg>
-    {{ technology.title }}
-  {% endfor %}
+  <h3 class="text-center">Things I used</h3>
+  <div class="grid technologies">
+    {% set divider = entry.technologies.total > 4 and entry.technologies.total < 7 ?  3 : 4 %}
+    {% for technology in entry.technologies.limit(8) %}
+      <div class="width-{{ 12 / divider }} technologies__item">
+        <div class="technologies__icon">
+          <svg class="icon">
+            <use xlink:href="/dist/images/icons.svg#{{ technology.slug }}"></use>
+          </svg>
+        </div>
+        <h4 class="technologies__title">
+          {{ technology.title }}
+        </h4>
+      </div>
+    {% endfor %}
+  </div>
 </article>

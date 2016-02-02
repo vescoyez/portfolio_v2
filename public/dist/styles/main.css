@@ -433,6 +433,7 @@ h1 {
 a {
   color: #3f51b5;
   text-decoration: none;
+  transition: 0.1s;
 }
 
 .heading {
@@ -1098,6 +1099,9 @@ a {
   background-color: #3f51b5;
   background-image: linear-gradient(135deg, #3c899c 0%, #085078 100%);
 }
+.section--dark .section__heading {
+  color: #fff;
+}
 .section--dark b,
 .section--dark strong {
   font-weight: inherit;
@@ -1339,4 +1343,104 @@ a {
   height: 24px;
   fill: currentColor;
   vertical-align: middle;
+}
+
+.technologies {
+  text-align: center;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+@media only screen and (min-width: 800px) {
+  .technologies {
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+  }
+}
+
+.technologies__item {
+  display: inline-block;
+}
+@media only screen and (min-width: 800px) {
+  .technologies__item {
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    width: auto;
+    margin: 0 20px;
+    -webkit-flex-basis: 0;
+        -ms-flex-preferred-size: 0;
+            flex-basis: 0;
+  }
+}
+
+.technologies__icon {
+  display: inline-block;
+  padding: 13px;
+  border-radius: 99999px;
+  background: #FFFFFF;
+  color: #4D4D4D;
+  border: 2px solid;
+}
+.technologies__icon .icon {
+  display: block;
+}
+@media only screen and (min-width: 800px) {
+  .technologies__icon .icon {
+    height: 48px;
+    width: 48px;
+  }
+}
+
+.technologies__title {
+  margin: 2px 0 18px;
+  font-size: 12px;
+}
+@media only screen and (min-width: 800px) {
+  .technologies__title {
+    margin: 6px 0 18px;
+  }
+}
+@media only screen and (min-width: 500px) {
+  .technologies__title {
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .technologies__title {
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .technologies__title {
+    font-size: 18px;
+  }
+}
+
+.testimonial {
+  margin: 0;
+}
+
+.testimonial__picture {
+  display: block;
+  width: 60px;
+  border-radius: 9999px;
+  border: 2px solid #fff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  float: left;
+}
+.testimonial__picture:hover {
+  border-color: white;
+}
+
+.testimonial__person {
+  margin-left: 80px;
 }

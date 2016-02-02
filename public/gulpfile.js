@@ -40,9 +40,21 @@ gulp.task('scripts', function() {
 // Images
 gulp.task('images', function() {
   return gulp.src('src/images/**/*')
-    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+    .pipe(cache(imagemin({
+      optimizationLevel: 3,
+      progressive: true,
+      interlaced: true,
+      svgoPlugins: [
+        {cleanupIDs: false}
+      ]
+    })))
     .pipe(gulp.dest('dist/images'))
     .pipe(notify({ message: 'Images task complete' }));
+});
+
+// Clear cache
+gulp.task('clear', function (done) {
+  return cache.clearAll(done);
 });
 
 // Clean

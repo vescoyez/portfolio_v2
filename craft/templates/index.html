@@ -50,7 +50,14 @@
   <section class="section section--dark" id="about">
     <h2 class="heading section__heading">About</h2>
     {% for entry in craft.entries.section('testimonials').limit(2).find() %}
-
+    <blockquote>
+      {{ entry.testimonial }}
+      <footer>
+        <a href="{{ entry.personUrl }}"><img src="{{ entry.personPicture[0].getUrl() }}" alt="{{ entry.personPicture[0].title }}"></a>
+        <a href="{{ entry.personUrl }}">{{ entry.title }}</a>
+        {{ entry.personTitle }}
+      </footer>
+    </blockquote>
     {% endfor %}
   </section>
   <section class="section" id="contact">

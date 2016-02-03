@@ -67,3 +67,9 @@ $layouts-column-gutter:       20px,       30px,       40px,       40px        !d
 $layouts-container-max-width: none,       none,       none,       1200px      !default; //none if fluid
 
 $header-height: 64px;
+
+$spacer: (
+  'main': 20px,
+  's': 30px,
+  'm': 40px,
+);

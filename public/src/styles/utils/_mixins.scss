@@ -15,16 +15,16 @@
   }
 }
 
-@mixin resp($property, $value) {
+@mixin resp($property, $value, $multiplier: 1) {
   @if (type-of($value) == "map") {
     @each $layout-name in $layouts-name {
       @if map-has-key($value, $layout-name) {
         @include media($layout-name) {
-         #{$property}: map-get($value, $layout-name)
+         #{$property}: multiply-all(map-get($value, $layout-name), $multiplier);
         }
       }
     }
   } @else {
-    #{$property}: $value;
+    #{$property}: multiply-all($value, $multiplier);
   }
 }

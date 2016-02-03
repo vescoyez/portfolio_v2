@@ -110,3 +110,36 @@
     }
   }
 }
+
+.m-t { @include resp('margin-top', $spacer); }
+.m-r { @include resp('margin-right', $spacer); }
+.m-b { @include resp('margin-bottom', $spacer); }
+.m-l { @include resp('margin-left', $spacer); }
+.m-a { @extend .m-t; @extend .m-r; @extend .m-b; @extend .m-l; }
+.m-x { @extend .m-r; @extend .m-l; }
+.m-y { @extend .m-t; @extend .m-b; }
+
+.m-t-2x { @include resp('margin-top', $spacer, 2); }
+.m-r-2x { @include resp('margin-right', $spacer, 2); }
+.m-b-2x { @include resp('margin-bottom', $spacer, 2); }
+.m-l-2x { @include resp('margin-left', $spacer, 2); }
+.m-a-2x { @extend .m-t-2x; @extend .m-r-2x; @extend .m-b-2x; @extend .m-l-2x; }
+.m-x-2x { @extend .m-r-2x; @extend .m-l-2x; }
+.m-y-2x { @extend .m-t-2x; @extend .m-b-2x; }
+
+
+.p-t { @include resp('padding-top', $spacer); }
+.p-r { @include resp('padding-right', $spacer); }
+.p-b { @include resp('padding-bottom', $spacer); }
+.p-l { @include resp('padding-left', $spacer); }
+.p-a { @extend .p-t; @extend .p-r; @extend .p-b; @extend .p-l; }
+.p-x { @extend .p-r; @extend .p-l; }
+.p-y { @extend .p-t; @extend .p-b; }
+
+.p-t-2x { @include resp('padding-top', $spacer, 2); }
+.p-r-2x { @include resp('padding-right', $spacer, 2); }
+.p-b-2x { @include resp('padding-bottom', $spacer, 2); }
+.p-l-2x { @include resp('padding-left', $spacer, 2); }
+.p-a-2x { @extend .p-t-2x; @extend .p-r-2x; @extend .p-b-2x; @extend .p-l-2x; }
+.p-x-2x { @extend .p-r-2x; @extend .p-l-2x; }
+.p-y-2x { @extend .p-t-2x; @extend .p-b-2x; }

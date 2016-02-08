@@ -79,27 +79,15 @@
       {% include 'includes/_contactform' %}
       <p class="text-center m-t-2x">or reach me via those networks</p>
       <ul class="networks">
+        {% for network in networks.networks %}
         <li class="networks__item">
-          <a href="" class="networks__link">
+          <a href="{{ network.siteUrl }}" class="networks__link">
             <svg class="icon networks__icon">
-              <use xlink:href="/dist/images/icons.svg#codepen"></use>
+              <use xlink:href="/dist/images/icons.svg#{{ network.networkSlug }}"></use>
             </svg>
           </a>
         </li>
-        <li class="networks__item">
-          <a href="" class="networks__link">
-            <svg class="icon networks__icon">
-              <use xlink:href="/dist/images/icons.svg#github"></use>
-            </svg>
-          </a>
-        </li>
-        <li class="networks__item">
-          <a href="" class="networks__link">
-            <svg class="icon networks__icon">
-              <use xlink:href="/dist/images/icons.svg#linkedin"></use>
-            </svg>
-          </a>
-        </li>
+        {% endfor %}
       </ul>
     </div>
   </section>

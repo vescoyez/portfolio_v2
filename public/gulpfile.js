@@ -16,7 +16,9 @@ var gulp = require('gulp'),
 // Styles
 gulp.task('styles', function() {
   return sass('src/styles/main.scss', { style: 'expanded' })
-    .pipe(autoprefixer('last 2 version'))
+    .pipe(autoprefixer({
+            browsers: ['last 2 versions']
+        }))
     .pipe(gulp.dest('dist/styles'))
     .pipe(rename({ suffix: '.min' }))
     .pipe(cssnano())
@@ -26,7 +28,10 @@ gulp.task('styles', function() {
 
 // Scripts
 gulp.task('scripts', function() {
-  return gulp.src('src/scripts/**/*.js')
+  return gulp.src([
+      'src/scripts/svg4everybody.js',
+      'src/scripts/app.js'
+    ])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'))
     .pipe(concat('main.js'))

@@ -1,0 +1,35 @@
+.work {
+  p {
+    line-height: 1.4;
+  }
+
+  @include resp('padding-bottom', $spacer, 2);
+  @include resp('margin-top', $spacer);
+}
+
+.work--more {
+  display: block;
+  position: relative;
+  border: 1px solid $gray-2;
+  margin-bottom: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 0;
+  @include resp('margin-top', $spacer);
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: 0.2s;
+  }
+
+  &:hover:after {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}

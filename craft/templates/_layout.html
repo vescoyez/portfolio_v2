@@ -35,13 +35,13 @@
   		<nav class="nav float-right">
   			<ul class="nav__list">
           <li class="nav__item hidden visible_s">
-            <a href="{{ siteUrl }}#work">Work</a>
+            <a href="{{ siteUrl }}#work" data-scroll-to="#work" class="js-scroll-to">Work</a>
           </li>
           <li class="nav__item hidden visible_s">
-            <a href="{{ siteUrl }}#about">About</a>
+            <a href="{{ siteUrl }}#about" data-scroll-to="#about" class="js-scroll-to">About</a>
           </li>
           <li class="nav__item">
-            <a href="{{ siteUrl }}#contact">Contact</a>
+            <a href="{{ siteUrl }}#contact" data-scroll-to="#contact" class="js-scroll-to">Contact</a>
           </li>
   			</ul>
   		</nav>
@@ -55,27 +55,15 @@
 		{% endblock %}
 	</main>
 
-  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-  <script type="text/javascript">
-    $('#my-form').submit(function(ev) {
-    // Prevent the form from actually submitting
-    ev.preventDefault();
+  <div class="snackbar">
+    <div class="snackbar__container">
+      <div class="snackbar__content">Your message has been sent</div>
+      <div class="snackbar__action">Close</div>
+    </div>
+  </div>
 
-    // Get the post data
-    var data = $(this).serialize();
-
-    // Send it to the server
-    $.post('/', data, function(response) {
-        if (response.success) {
-            console.log('sucess');
-        } else {
-            // response.error will be an object containing any validation errors that occurred, indexed by field name
-            // e.g. response.error.fromName => ['From Name is required']
-            alert('An error occurred. Please try again.');
-        }
-    });
-  });
-  </script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="/dist/scripts/main.min.js"></script>
 
 </body>
 </html>

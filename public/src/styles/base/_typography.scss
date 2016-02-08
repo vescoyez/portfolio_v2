@@ -24,6 +24,10 @@ a {
   color: $link-color;
   text-decoration: $link-decoration;
   transition: 0.1s;
+
+  &:hover {
+    color: $primary-color-dark;
+  }
 }
 
 .heading {
@@ -33,15 +37,17 @@ a {
 .heading--1 {
   color: rgba(255, 255, 255, 0.7);
   @include resp("font-size", (
-    "main": 20px,
+    "main": 16px,
+    "s": 20px,
   ));
+  letter-spacing: 0.2em;
 }
 
-.heading-2 {
+.heading--2 {
   @include resp("font-size", (
-    "main": 36px,
-    "s": 40px,
-    "m": 62px,
-    "l": 76px,
+    "main": 22px,
+    "s": 24px,
+    "m": 26px,
+    "l": 28px,
   ));
 }

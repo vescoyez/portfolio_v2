@@ -1,11 +1,11 @@
 <article class="work">
   <h1 class="heading heading--2">{{ entry.title }}</h1>
   <div class="grid">
-    <div class="grid__item width-6_l width-8_m width-10_s">
-      <p>{{ entry.description }}</p>
+    <div class="grid__item width-7_l width-8_m width-10_s">
+      {{ entry.description }}
     </div>
   </div>
-  <div class="devices">
+  <div class="devices m-y">
     <div class="grid">
       <div class="grid__item width-10_m offset-1_m">
         <div class="browser" data-title="{{ entry.siteAddress }}">
@@ -20,7 +20,6 @@
       <img src="{{ entry.tabletImage[0].getUrl() }}" alt="{{ entry.tabletImage[0].title }}">
     </div>
   </div>
-  <h3 class="text-center">Things I used</h3>
   <div class="grid technologies">
     {% set divider = entry.technologies.total > 4 and entry.technologies.total < 7 ?  3 : 4 %}
     {% for technology in entry.technologies.limit(8) %}
@@ -30,10 +29,17 @@
             <use xlink:href="/dist/images/icons.svg#{{ technology.slug }}"></use>
           </svg>
         </div>
-        <h4 class="technologies__title">
+        <h2 class="technologies__title">
           {{ technology.title }}
-        </h4>
+        </h2>
       </div>
     {% endfor %}
+  </div>
+  <div class="text-center">
+    {% if entry.siteUrl %}
+      <a href="{{ entry.siteUrl }}" class="button">Visit {{ entry.title }}</a>
+    {% else %}
+      <a class="button button--disabled">Not online yet</a>
+    {% endif %}
   </div>
 </article>

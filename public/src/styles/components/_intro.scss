@@ -3,8 +3,16 @@
   color: rgba(255, 255, 255, 0.7);
   @include resp('font-size', (
     'main': 24px,
-    's': 40px,
+    's': 38px,
     'm': 60px,
     'l': 72px,
   ));
+
+  p {
+    margin: 0 0 0.5em;
+    @include resp('line-height', (
+      'main': 1.5,
+      'm': 1.4,
+    ));
+  }
 }

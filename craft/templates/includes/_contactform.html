@@ -1,36 +1,42 @@
-{% macro errorList(errors) %}
-    {% if errors %}
-        <ul class="errors">
-            {% for error in errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endmacro %}
+<div class="grid">
+  <div class="grid__item width-10_m offset-1_m width-8_l offset-2_l">
+    {% macro errorList(errors) %}
+        {% if errors %}
+            <ul class="errors">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endmacro %}
 
-{% from _self import errorList %}
+    {% from _self import errorList %}
 
-<form method="post" action="" accept-charset="UTF-8" id="my-form">
-    {{ getCsrfInput() }}
-    <input type="hidden" name="action" value="contactForm/sendMessage">
+    <form method="post" action="" accept-charset="UTF-8" class="form" id="contact-form" novalidate>
+        {{ getCsrfInput() }}
+        <input type="hidden" name="action" value="contactForm/sendMessage">
 
-    <h3><label for="fromName">Your Name</label></h3>
-    <input id="fromName" type="text" name="fromName" value="{% if message is defined %}{{ message.fromName }}{% endif %}">
-    {{ message is defined and message ? errorList(message.getErrors('fromName')) }}
+        <div class="form__group">
+          <input class="form__field" placeholder="Your Name" id="fromName" type="text" name="subject" value="{% if message is defined %}{{ message.fromName }}{% endif %}">
+          <label class="form__label" for="fromName">Your Name</label>
+          {{ message is defined and message ? errorList(message.getErrors('fromName')) }}
+        </div>
 
-    <h3><label for="fromEmail">Your Email</label></h3>
-    <input id="fromEmail" type="text" name="fromEmail" value="{% if message is defined %}{{ message.fromEmail }}{% endif %}">
-    {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
+        <div class="form__group">
+          <input class="form__field" placeholder="Your Email" id="fromEmail" type="email" name="fromEmail" value="{% if message is defined %}{{ message.fromEmail }}{% endif %}" required>
+          <label class="form__label" for="fromEmail">Your Email</label>
+          {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
+        </div>
 
-    <h3><label for="subject">Subject</label></h3>
-    <input id="subject" type="text" name="subject" value="{% if message is defined %}{{ message.subject }}{% endif %}">
-    {{ message is defined and message ? errorList(message.getErrors('subject')) }}
+        <div class="form__group">
+          <textarea class="form__field" placeholder="Your Message" rows="6" cols="40" id="message" name="message" required>{% if message is defined %}{{ message.message }}{% endif %}</textarea>
+          <label class="form__label" for="message">Your Message</label>
+          {{ message is defined and message ? errorList(message.getErrors('message')) }}
+        </div>
 
-    <h3><label for="message">Message</label></h3>
-    <textarea rows="10" cols="40" id="message" name="message">{% if message is defined %}{{ message.message }}{% endif %}</textarea>
-    {{ message is defined and message ? errorList(message.getErrors('message')) }}
+        <input id="gender" name="gender" type="text">
 
-    <input id="gender" name="gender" type="text">
-
-    <input type="submit" value="Send">
-</form>
+        <input class="button width-12 width-6_s offset-3_s width-4_m offset-4_m" type="submit" value="Send">
+    </form>
+  </div>
+</div>

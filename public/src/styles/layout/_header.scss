@@ -9,7 +9,8 @@
 
 .header__heading {
   @include resp('font-size', (
-    'main': 20px,
+    'main': 18px,
+    'm': 20px,
   ));
-  letter-spacing: 0.03em;
+  letter-spacing: 0.1em;
 }

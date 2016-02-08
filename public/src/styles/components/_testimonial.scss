@@ -1,5 +1,28 @@
 .testimonial {
   margin: 0;
+
+  & ~ & {
+    @include resp('margin-top', $spacer, 2);
+  }
+}
+
+.testimonial__quote {
+  line-height: 1.5;
+
+  p {
+    font-style: italic;
+
+    &:before,
+    &:after {
+      content: '"';
+    }
+  }
+}
+
+.testimonial__footer {
+  @extend %clearfix;
+  display: flex;
+  align-items: center;
 }
 
 .testimonial__picture {
@@ -17,5 +40,24 @@
 }
 
 .testimonial__person {
-  margin-left: 80px;
+  float: left;
+  @include resp('margin-left', (
+    'main': 10px,
+    'm': 20px,
+  ));
+  @include resp('font-size', (
+    'main': 14px,
+    'm': 18px,
+  ));
+}
+
+.testimonial__name {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.testimonial__title {
+  p {
+    margin: 0;
+  }
 }

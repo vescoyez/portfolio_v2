@@ -1,13 +1,8 @@
 // ===== Colors ======
 
 // Set colors
-$primary-color: #3f51b5 !default;
-$primary-color-light: #c5cae9 !default;
-$primary-color-dark: #303f9f !default;
-
-$accent-color: #ff4081 !default;
-$accent-color-light: #FF80AB !default;
-$accent-color-dark: #F50057 !default;
+$primary-color: #0D8EA4 !default;
+$primary-color-dark: #085078 !default;
 
 $gray-0: #fff !default;
 $gray-1: #eee !default;
@@ -41,9 +36,9 @@ $second-font-family: 'Abril Fatface', sans-serif;
 $h-font-family: $main-font-family;
 
 $main-font-size: (
-  "main": 14px,
-  "s": 15px,
-  "m": 16px,
+  "main": 16px,
+  "s": 18px,
+  "m": 20px,
   "l": 24px,
 ) !default;
 $main-font-weight: 300 !default;

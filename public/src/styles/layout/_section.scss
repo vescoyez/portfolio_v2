@@ -1,13 +1,16 @@
 .section {
   @include resp('padding', (
     'main': 30px 0,
+    's': 50px 0,
+    'm': 70px 0,
+    'l': 90px 0 120px,
   ));
 }
 
 .section--dark {
   color: #fff;
   color: rgba(255, 255, 255, 0.7);
-  background-color: $primary-color;
+  background-color: #3C899C;
   background-image: linear-gradient(135deg, rgba(60,137,156,1) 0%,rgba(8,80,120,1) 100%);
 
   .section__heading {
@@ -32,7 +35,13 @@
 
 .section--intro {
   padding-top: $header-height;
-  background-image: radial-gradient(circle at 50% -50%,#85d8ce 0,#085078 100%)
+  background-image: radial-gradient(circle at 50% -50%,#85d8ce 0,#085078 100%);
+  @include resp('padding', (
+    'main': 80px 0 60px,
+    's': 105px 0 80px,
+    'm': 135px 0 100px,
+    'l': 150px 0 120px,
+  ));
 }
 
 .section__heading {
@@ -44,7 +53,12 @@
     'l': 40px,
   ));
   text-align: center;
-
+  @include resp('margin-bottom', (
+    'main': 20px,
+    's': 35px,
+    'm': 50px,
+    'l': 65px,
+  ));
   &:before,
   &:after {
     content: '';

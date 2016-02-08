@@ -1,0 +1,22 @@
+.button {
+  display: inline-block;
+  color: $primary-color;
+  padding: 0.3em 1em 0.35em;
+  border-radius: 3px;
+  border: 1px solid;
+  background: transparent;
+  transition: 0.2s;
+  outline: 0;
+
+  &:hover,
+  &:focus {
+    color: $primary-color-dark;
+  }
+}
+
+.button--disabled {
+  color: #ddd;
+  &:hover {
+    color: #ddd;
+  }
+}

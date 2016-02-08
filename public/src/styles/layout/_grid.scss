@@ -10,8 +10,8 @@
       display: block;
       min-width: $container-min-width;
       margin: 0 auto;
-      padding-left: $gutter / 2;
-      padding-right: $gutter / 2;
+      padding-left: $gutter;
+      padding-right: $gutter;
     }
 
     .grid {
@@ -50,8 +50,8 @@
           max-width: $max-width;
         }
         @if $gutter != $prev-gutter {
-          padding-left: $gutter / 2;
-          padding-right: $gutter / 2;
+          padding-left: $gutter;
+          padding-right: $gutter;
         }
       }
 

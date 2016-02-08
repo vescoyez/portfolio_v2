@@ -11,12 +11,14 @@
 // Base
 @import 'base/base';
 @import 'base/typography';
+@import 'base/form';
 
 // Layout
 @import 'layout/grid';
 @import 'layout/helpers';
 @import 'layout/header';
 @import 'layout/section';
+@import 'layout/content';
 
 // Components
 @import 'components/nav';
@@ -25,6 +27,11 @@
 @import 'components/icon';
 @import 'components/technologies';
 @import 'components/testimonial';
+@import 'components/work';
+@import 'components/button';
+@import 'components/errors';
+@import 'components/snackbar';
+@import 'components/networks';
 
 // Pages
 @import 'pages/home';

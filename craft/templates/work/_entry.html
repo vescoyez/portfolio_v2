@@ -16,7 +16,7 @@
 {% extends "_layout" %}
 
 {% block content %}
-  <div class="container">
+  <div class="container m-y">
     {% include 'includes/_work' %}
 
     {% set params = craft.entries.section('work') %}
@@ -24,13 +24,23 @@
     {% set nextEntry = entry.getNext(params) %}
     <div class="grid">
       <div class="grid__item width-4">
-        {% if prevEntry %}<a href="{{ prevEntry.url }}">Previous</a>{% endif %}
+        {% if prevEntry %}<a href="{{ prevEntry.url }}">
+          <svg class="icon">
+            <use xlink:href="/dist/images/icons.svg#arrow-back"></use>
+          </svg>
+          Next
+        </a>{% endif %}
       </div>
       <div class="grid__item width-4 text-center">
         <a href="{{ siteUrl }}">Home</a>
       </div>
       <div class="grid__item width-4 text-right">
-        {% if nextEntry %}<a href="{{ nextEntry.url }}">Next</a>{% endif %}
+        {% if nextEntry %}<a href="{{ nextEntry.url }}">
+          Previous
+          <svg class="icon">
+            <use xlink:href="/dist/images/icons.svg#arrow-forward"></use>
+          </svg>
+        </a>{% endif %}
       </div>
     </div>
   </div>

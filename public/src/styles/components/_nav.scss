@@ -1,5 +1,5 @@
 .nav {
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 
 .nav__list {
@@ -11,10 +11,11 @@
 .nav__item {
   float: left;
   @include resp('font-size', (
-    'main': 20px,
+    'main': 18px,
+    'm': 20px,
   ));
 }
 
 .nav__item ~ .nav__item {
-  margin-left: 20px;
+  margin-left: 28px;
 }

@@ -105,7 +105,6 @@ $(".js-scroll-to").on('click', function(e) {
 });
 
 $(document).on('focusout input', '[required]', function(){
-  console.log('test');
   var field = $(this);
   if( !field.val() ) {
     if ( !field.siblings('.errors').length ) {

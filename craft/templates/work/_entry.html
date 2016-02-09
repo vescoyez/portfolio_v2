@@ -26,7 +26,7 @@
       <div class="grid__item width-4">
         {% if prevEntry %}<a href="{{ prevEntry.url }}">
           <svg class="icon">
-            <use xlink:href="/dist/images/icons.svg#arrow-back"></use>
+            <use xlink:href="{{ siteUrl }}dist/images/icons.svg#arrow-back"></use>
           </svg>
           Next
         </a>{% endif %}
@@ -38,7 +38,7 @@
         {% if nextEntry %}<a href="{{ nextEntry.url }}">
           Previous
           <svg class="icon">
-            <use xlink:href="/dist/images/icons.svg#arrow-forward"></use>
+            <use xlink:href="{{ siteUrl }}dist/images/icons.svg#arrow-forward"></use>
           </svg>
         </a>{% endif %}
       </div>

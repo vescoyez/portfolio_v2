@@ -39,8 +39,8 @@
       <div class="grid">
         {% for entry in craft.entries.section('work').offset(3).limit(3).find() %}
           <div class="grid__item width-4">
-            <a class="work work--more" href="{{ entry.getUrl('thumb') }}">
-              <img src="{{ entry.tabletImage[0].getUrl() }}" alt="{{ entry.tabletImage[0].title }}">
+            <a class="work work--more" href="{{ entry.getUrl() }}">
+              <img src="{{ entry.tabletImage[0].getUrl('thumb') }}" alt="{{ entry.title }}">
             </a>
           </div>
         {% endfor %}

@@ -499,6 +499,8 @@ a:hover {
   background: transparent;
   transition: border-color 0.2s;
   resize: none;
+  border-radius: 0;
+  -webkit-appearance: none;
 }
 
 .form__field::-webkit-input-placeholder {

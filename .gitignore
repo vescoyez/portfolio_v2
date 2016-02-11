@@ -6,3 +6,4 @@ craft/config/license.key
 
 public/node_modules
 public/.sass-cache
+craft/storage/backups

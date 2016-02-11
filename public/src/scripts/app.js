@@ -94,6 +94,12 @@ var showSnackbar = function(error) {
   }
   snackbar.addClass('is-shown');
   $('.content').css({ 'padding-bottom': snackbarHeight });
+  setTimeout(
+    function() {
+      hideSnackbar();
+    },
+    5000
+  );
 };
 
 var hideSnackbar = function() {

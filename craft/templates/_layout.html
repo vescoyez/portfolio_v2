@@ -1,69 +1,75 @@
 {#
- # Layout template
- # ---------------
- #
- # This template defines your site’s global layout. It can be
- # “extended” by other templates to fill in the gaps.
- #
- # See Twig’s Template Inheritance documentation for more details:
- # http://twig.sensiolabs.org/doc/templates.html#template-inheritance
- #}
+  # Layout template
+  # ---------------
+  #
+  # This template defines your site’s global layout. It can be
+  # “extended” by other templates to fill in the gaps.
+  #
+  # See Twig’s Template Inheritance documentation for more details:
+  # http://twig.sensiolabs.org/doc/templates.html#template-inheritance
+  #}
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
-<head>
-	<meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
-	<link rel="home" href="{{ siteUrl }}">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+    <link rel="home" href="{{ siteUrl }}">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link href='https://fonts.googleapis.com/css?family=Abril+Fatface|Lato:400,300,300italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="{{ siteUrl }}dist/styles/main.min.css">
-</head>
+    <link href='https://fonts.googleapis.com/css?family=Abril+Fatface|Lato:400,300,300italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ siteUrl }}dist/styles/main.min.css">
+  </head>
 
-<body class="{{ page }}">
-	<header class="header clearfix">
-    <div class="container">
-  		<h1 class="heading header__heading float-left">
-        <a href="{{ siteUrl }}"><b>Valentin</b> Escoyez</a>
-      </h1>
+  <body class="{{ page }}">
+    <header class="header clearfix">
+      <div class="container">
+        <h1 class="heading header__heading float-left">
+          <a href="{{ siteUrl }}"><b>Valentin</b> Escoyez</a>
+        </h1>
 
-  		<nav class="nav float-right">
-  			<ul class="nav__list">
-          <li class="nav__item hidden visible_s">
-            <a href="{{ siteUrl }}#work" data-scroll-to="#work" class="js-scroll-to">Work</a>
-          </li>
-          <li class="nav__item hidden visible_s">
-            <a href="{{ siteUrl }}#about" data-scroll-to="#about" class="js-scroll-to">About</a>
-          </li>
-          <li class="nav__item">
-            <a href="{{ siteUrl }}#contact" data-scroll-to="#contact" class="js-scroll-to">Contact</a>
-          </li>
-  			</ul>
-  		</nav>
+        <nav class="nav float-right">
+          <ul class="nav__list">
+            <li class="nav__item hidden visible_s">
+              <a href="{{ siteUrl }}#work" data-scroll-to="#work" class="js-scroll-to">Work</a>
+            </li>
+            <li class="nav__item hidden visible_s">
+              <a href="{{ siteUrl }}#about" data-scroll-to="#about" class="js-scroll-to">About</a>
+            </li>
+            <li class="nav__item">
+              <a href="{{ siteUrl }}#contact" data-scroll-to="#contact" class="js-scroll-to">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="content" role="main">
+      {% block content %}
+      <p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
+      <p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
+      {% endblock %}
+    </main>
+
+    <div class="snackbar">
+      <div class="snackbar__container">
+        <div class="snackbar__content">Your message has been sent</div>
+        <div class="snackbar__action">Close</div>
+      </div>
     </div>
-	</header>
 
-	<main class="content" role="main">
-		{% block content %}
-			<p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
-			<p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
-		{% endblock %}
-	</main>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="{{ siteUrl }}dist/scripts/main.min.js"></script>
 
-  <div class="snackbar">
-    <div class="snackbar__container">
-      <div class="snackbar__content">Your message has been sent</div>
-      <div class="snackbar__action">Close</div>
-    </div>
-  </div>
+    <script>
+      window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+      ga('create','UA-26009263-1','auto');ga('send','pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
-  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-  <script src="{{ siteUrl }}dist/scripts/main.min.js"></script>
-
-</body>
-</html>
+  </body>
+  </html>

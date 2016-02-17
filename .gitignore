@@ -4,6 +4,6 @@ craft/config/db.php
 # Craft license key
 craft/config/license.key
 
-public/node_modules
-public/.sass-cache
+valentin/node_modules
+valentin/.sass-cache
 craft/storage/backups

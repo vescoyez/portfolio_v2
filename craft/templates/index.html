@@ -35,7 +35,7 @@
   		{% for entry in craft.entries.section('work').limit(3).find() %}
         {% include 'includes/_work' %}
   		{% endfor %}
-      <h1 class="heading heading--2">More</h1>
+      <h3 class="heading heading--2">More</h3>
       <div class="grid">
         {% for entry in craft.entries.section('work').offset(3).limit(3).find() %}
           <div class="grid__item width-4">

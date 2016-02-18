@@ -12,7 +12,7 @@
 
     {% from _self import errorList %}
 
-    <form method="post" action="" accept-charset="UTF-8" class="form" id="contact-form" novalidate>
+    <form method="post" action="/" accept-charset="UTF-8" class="form" id="contact-form" novalidate>
       {{ getCsrfInput() }}
       <input type="hidden" name="action" value="contactForm/sendMessage">
 

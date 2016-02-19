@@ -3,8 +3,11 @@
     line-height: 1.4;
   }
 
-  @include resp('padding-bottom', $spacer, 2);
   @include resp('margin-top', $spacer);
+
+  & ~ & {
+    @include resp('padding-top', $spacer, 2);
+  }
 }
 
 .work--more {

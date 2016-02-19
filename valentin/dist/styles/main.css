@@ -1904,21 +1904,10 @@ a:hover {
 }
 
 .work {
-  padding-bottom: 40px;
   margin-top: 20px;
 }
 .work p {
   line-height: 1.4;
-}
-@media only screen and (min-width: 500px) {
-  .work {
-    padding-bottom: 60px;
-  }
-}
-@media only screen and (min-width: 800px) {
-  .work {
-    padding-bottom: 80px;
-  }
 }
 @media only screen and (min-width: 500px) {
   .work {
@@ -1928,6 +1917,19 @@ a:hover {
 @media only screen and (min-width: 800px) {
   .work {
     margin-top: 40px;
+  }
+}
+.work ~ .work {
+  padding-top: 40px;
+}
+@media only screen and (min-width: 500px) {
+  .work ~ .work {
+    padding-top: 60px;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .work ~ .work {
+    padding-top: 80px;
   }
 }
 

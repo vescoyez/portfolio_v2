@@ -35,16 +35,9 @@
   		{% for entry in craft.entries.section('work').limit(3).find() %}
         {% include 'includes/_work' %}
   		{% endfor %}
-      <h3 class="heading heading--2">More</h3>
-      <div class="grid">
-        {% for entry in craft.entries.section('work').offset(3).limit(3).find() %}
-          <div class="grid__item width-4">
-            <a class="work work--more" href="{{ entry.getUrl() }}">
-              <img src="{{ entry.tabletImage[0].getUrl('thumb') }}" alt="{{ entry.title }}">
-            </a>
-          </div>
-        {% endfor %}
-      </div>
+      {# ##### More section removed for now #####
+      {% include 'includes/_more' %}
+      #}
     </div>
   </section>
   <section class="section section--dark" id="about">
@@ -75,7 +68,7 @@
   <section class="section" id="contact">
     <div class="container">
       <h2 class="heading section__heading">Contact</h2>
-      <p class="text-center">Interested to work with me? <br>Drop me a line!</p>
+      <p class="text-center">Interested in working with me? <br>Drop me a line!</p>
       {% include 'includes/_contactform' %}
       <p class="text-center m-t-2x">or reach me via those networks</p>
       <ul class="networks">

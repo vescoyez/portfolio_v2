@@ -31,33 +31,42 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+    <title>{{ meta.metaTitle }}{% if title is defined %} - {{ title }}{% endif %}</title>
     <link rel="home" href="{{ siteUrl }}">
-    <meta name="description" content="">
+    <meta name="description" content="{{ meta.metaDescription }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <link rel="stylesheet" href="{{ siteUrl }}dist/styles/main.min.css">
+    <link rel="stylesheet" href="/dist/styles/main.min.css">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ meta.metaTitle }}">
+    <meta property="og:description" content="{{ meta.metaDescription }}">
+    <meta property="og:image" content="/dist/images/og.jpg">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@ValentinEscoyez" />
+    <meta name="twitter:title" content="{{ meta.metaTitle }}" />
+    <meta name="twitter:image" content="/dist/images/og.jpg" />
   </head>
 
   <body class="{{ page }}">
     <header class="header clearfix">
       <div class="container">
         <h1 class="heading header__heading float-left">
-          <a href="{{ siteUrl }}"><b>Valentin</b> Escoyez</a>
+          <a href="/"><b>Valentin</b> Escoyez</a>
         </h1>
 
         <nav class="nav float-right">
           <ul class="nav__list">
             <li class="nav__item hidden visible_s">
-              <a href="{{ siteUrl }}#work" data-scroll-to="#work" class="js-scroll-to">Work</a>
+              <a href="/#work" data-scroll-to="#work" class="js-scroll-to">Work</a>
             </li>
             <li class="nav__item hidden visible_s">
-              <a href="{{ siteUrl }}#about" data-scroll-to="#about" class="js-scroll-to">About</a>
+              <a href="/#about" data-scroll-to="#about" class="js-scroll-to">About</a>
             </li>
             <li class="nav__item">
-              <a href="{{ siteUrl }}#contact" data-scroll-to="#contact" class="js-scroll-to">Contact</a>
+              <a href="/#contact" data-scroll-to="#contact" class="js-scroll-to">Contact</a>
             </li>
           </ul>
         </nav>
@@ -79,7 +88,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script src="{{ siteUrl }}dist/scripts/main.min.js"></script>
+    <script src="/dist/scripts/main.min.js"></script>
 
     <script>
       window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;

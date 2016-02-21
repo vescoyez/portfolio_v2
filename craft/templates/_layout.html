@@ -51,6 +51,8 @@
   </head>
 
   <body class="{{ page }}">
+
+    {% cache globally %}
     <header class="header clearfix">
       <div class="container">
         <h1 class="heading header__heading float-left">
@@ -72,6 +74,7 @@
         </nav>
       </div>
     </header>
+    {% endcache %}
 
     <main class="content">
       {% block content %}
@@ -80,6 +83,7 @@
       {% endblock %}
     </main>
 
+    {% cache globally %}
     <div class="snackbar">
       <div class="snackbar__container">
         <div class="snackbar__content"></div>
@@ -95,6 +99,7 @@
       ga('create','UA-26009263-1','auto');ga('send','pageview')
     </script>
     <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    {% endcache %}
 
   </body>
   </html>

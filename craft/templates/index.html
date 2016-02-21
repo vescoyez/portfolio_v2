@@ -20,6 +20,8 @@
 {% extends "_layout" %}
 
 {% block content %}
+
+  {% cache %}
   <section class="section section--dark section--intro">
     <div class="container">
       <h2 class="heading heading--1">{{ entry.greetings }}</h2>
@@ -84,4 +86,6 @@
       </ul>
     </div>
   </section>
+  {% endcache %}
+
 {% endblock %}

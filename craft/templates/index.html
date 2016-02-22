@@ -54,7 +54,9 @@
               </div>
               <footer class="testimonial__footer">
                 <a href="{{ entry.personUrl }}" class="testimonial__picture">
-                  <img src="{{ entry.personPicture[0].getUrl() }}" alt="{{ entry.personPicture[0].title }}">
+                  <picture>
+                    <img src="{{ entry.personPicture[0].getUrl('testimonial') }}" alt="{{ entry.title }}">
+                  </picture>
                 </a>
                 <div class="testimonial__person">
                   <a href="{{ entry.personUrl }}" class="testimonial__name">{{ entry.title }}</a>

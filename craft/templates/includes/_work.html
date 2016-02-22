@@ -9,15 +9,24 @@
     <div class="grid">
       <div class="grid__item width-10_m offset-1_m">
         <div class="browser" data-title="{{ entry.siteAddress }}">
-          <img src="{{ entry.desktopImage[0].getUrl('desktop') }}" alt="{{ entry.title }}">
+          <picture>
+            <source srcset="{{ entry.desktopImage[0].getUrl('desktopRetina') }}" media="(min-width: 500px) and (min-resolution: 192dpi), (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2)">
+            <img src="{{ entry.desktopImage[0].getUrl('desktop') }}" alt="{{ entry.title }}">
+          </picture>
         </div>
       </div>
     </div>
     <div class="phone width-3 offset-8 width-2_m offset-0_m" data-title="{{ entry.siteAddress }}">
-      <img src="{{ entry.mobileImage[0].getUrl('mobile') }}" alt="{{ entry.title }}">
+      <picture>
+        <source srcset="{{ entry.mobileImage[0].getUrl('mobileRetina') }}" media="(min-width: 500px) and (min-resolution: 192dpi), (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2)">
+        <img src="{{ entry.mobileImage[0].getUrl('mobile') }}" alt="{{ entry.title }}">
+      </picture>
     </div>
     <div class="tablet hidden visible_m width-6_m" data-title="{{ entry.siteAddress }}">
-      <img src="{{ entry.tabletImage[0].getUrl('tablet') }}" alt="{{ entry.title }}">
+      <picture>
+        <source srcset="{{ entry.tabletImage[0].getUrl('tabletRetina') }}" media="(min-width: 500px) and (min-resolution: 192dpi), (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2)">
+        <img src="{{ entry.tabletImage[0].getUrl('tablet') }}" alt="{{ entry.title }}">
+      </picture>
     </div>
   </div>
   <div class="technologies">

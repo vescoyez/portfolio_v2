@@ -1659,7 +1659,7 @@ a:hover {
   border: 0.5em solid #eee;
   border-radius: 2em;
   box-shadow: 0 0 0 1px #999 inset, 0 0 0 1px #999;
-  padding: 4.5em 0.5em 5em;
+  padding: 4.5em 0.5em;
   text-align: center;
   background: #fff;
 }
@@ -1672,33 +1672,6 @@ a:hover {
   .phone {
     font-size: 8px;
   }
-}
-.phone:before {
-  content: '';
-  display: block;
-  width: 4em;
-  height: 0.5em;
-  border: 1px solid #999;
-  background: #eee;
-  border-radius: 9999px;
-  position: absolute;
-  left: 50%;
-  margin-left: -2em;
-  top: 2em;
-}
-.phone:after {
-  content: '';
-  display: block;
-  width: 4em;
-  height: 4em;
-  border: 1px solid #999;
-  background: #fff;
-  border-radius: 9999px;
-  position: absolute;
-  bottom: 0.5em;
-  left: 50%;
-  margin-left: -1.5em;
-  box-shadow: 0 0 0 0.1em #eee inset, 0 0 0 0.2em #999 inset;
 }
 .phone img {
   border: 1px solid #999;

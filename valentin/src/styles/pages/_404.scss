@@ -30,7 +30,7 @@
 }
 
 .page404__link {
-  display: block;
+  display: inline-block;
   color: rgba(255, 255, 255, 0.6);
   @include resp('font-size', (
     'main': 30px,

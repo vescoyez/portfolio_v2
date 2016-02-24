@@ -2056,7 +2056,7 @@ a:hover {
 
 .page404 .content {
   font-family: "Abril Fatface", sans-serif;
-  height: 100%;
+  min-height: 100%;
   padding-top: 64px;
   padding-top: 62px;
   display: -webkit-flex;

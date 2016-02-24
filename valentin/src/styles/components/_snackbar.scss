@@ -1,13 +1,13 @@
 .snackbar {
   position: fixed;
-  bottom: 0;
+  top: 100%;
   left: 0;
   right: 0;
-  transform: translateY(100%);
+  transform: translateY(0);
   transition: 0.2s;
 
   &.is-shown {
-    transform: translateY(0);
+    transform: translateY(-100%);
   }
 }
 

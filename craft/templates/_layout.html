@@ -54,7 +54,7 @@
   <body class="{{ page }}">
 
     {% cache globally %}
-    <header class="header clearfix">
+    <header class="header{% if headerInverse %} header--inverse{% endif %} clearfix">
       <div class="container">
         <h1 class="heading header__heading float-left">
           <a href="/"><b>Valentin</b> Escoyez</a>

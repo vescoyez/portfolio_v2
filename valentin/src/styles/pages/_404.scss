@@ -1,0 +1,45 @@
+.page404 {
+
+  .content {
+    font-family: $second-font-family;
+    height: 100%;
+    padding-top: 64px;
+    @include resp('padding-top', (
+      'main': 62px,
+      'm': 66px,
+    ));
+    display: flex;
+    align-items: center;
+    background: url('/dist/images/404.jpg') no-repeat center #000;
+    background-size: cover;
+  }
+
+  .container {
+    flex-grow: 1;
+  }
+
+}
+
+.page404__heading {
+  font-family: inherit;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+  line-height: 1.3;
+  @include resp('font-size', (
+    'main': 46px,
+    's': 60px,
+  ));
+}
+
+.page404__link {
+  display: block;
+  color: rgba(255, 255, 255, 0.6);
+  @include resp('font-size', (
+    'main': 30px,
+    'm': 40px,
+  ));
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}

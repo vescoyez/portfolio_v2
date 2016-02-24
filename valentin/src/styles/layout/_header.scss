@@ -14,3 +14,14 @@
   ));
   letter-spacing: 0.1em;
 }
+
+.header--inverse {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.8);
+
+  a:hover {
+    color: #fff;
+  }
+}

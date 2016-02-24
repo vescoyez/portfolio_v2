@@ -18,11 +18,13 @@
 
 {% extends "_layout" %}
 {% set title = "404" %}
+{% set page = 'page404' %}
+{% set headerInverse = true %}
 
 {% block content %}
-  <div class="container">
-  	<h1>Page not found</h1>
+<div class="container text-center">
+	<h2 class="heading page404__heading">There is<br class="hidden_m"> nothing here</h2>
 
-  	<p>What’s worse, a hilarious 404 page can’t be found either.</p>
-  </div>
+	<a class="page404__link" href="/">Go back home</a>
+</div>
 {% endblock %}

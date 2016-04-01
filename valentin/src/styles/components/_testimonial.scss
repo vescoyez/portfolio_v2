@@ -14,7 +14,17 @@
 
     &:before,
     &:after {
-      content: '"';
+      content: '“';
+      font-size: 1.6em;
+      vertical-align: -6px;
+      margin-right: 4px;
+      line-height: 0;
+    }
+
+    &:after {
+      content: '”';
+      margin-right: 0;
+      margin-left: 2px;
     }
   }
 }

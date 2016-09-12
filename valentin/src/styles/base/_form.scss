@@ -20,6 +20,7 @@
 
 .form__field::placeholder {
   color: transparent;
+  transition: color 0.2s ease-out;
 }
 
 .form__field:placeholder-shown ~ .form__label {
@@ -56,6 +57,11 @@
 .form__field:focus {
   padding-bottom: 6px;
   border-bottom: 2px solid $primary-color-dark;
+
+  &::placeholder {
+    color: #ddd;
+    transition: color 0.2s ease-out;
+  }
 }
 
 #gender {

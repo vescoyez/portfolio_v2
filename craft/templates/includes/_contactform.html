@@ -17,19 +17,19 @@
       <input type="hidden" name="action" value="contactForm/sendMessage">
 
       <div class="form__group">
-        <input class="form__field" placeholder="Your Name" id="fromName" type="text" name="subject" value="{% if message is defined %}{{ message.fromName }}{% endif %}">
+        <input class="form__field" placeholder="John Doe" id="fromName" type="text" name="subject" value="{% if message is defined %}{{ message.fromName }}{% endif %}">
         <label class="form__label" for="fromName">Your Name</label>
         {{ message is defined and message ? errorList(message.getErrors('fromName')) }}
       </div>
 
       <div class="form__group">
-        <input class="form__field" placeholder="Your Email" id="fromEmail" type="email" name="fromEmail" value="{% if message is defined %}{{ message.fromEmail }}{% endif %}" required>
+        <input class="form__field" placeholder="john.doe@gmail.com" id="fromEmail" type="email" name="fromEmail" value="{% if message is defined %}{{ message.fromEmail }}{% endif %}" required>
         <label class="form__label" for="fromEmail">Your Email</label>
         {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
       </div>
 
       <div class="form__group">
-        <textarea class="form__field" placeholder="Your Message" rows="6" cols="40" id="message" name="message" required>{% if message is defined %}{{ message.message }}{% endif %}</textarea>
+        <textarea class="form__field" placeholder="Hello Valentin!&#10;I'd like to contact you to..." rows="6" cols="40" id="message" name="message" required>{% if message is defined %}{{ message.message }}{% endif %}</textarea>
         <label class="form__label" for="message">Your Message</label>
         {{ message is defined and message ? errorList(message.getErrors('message')) }}
       </div>

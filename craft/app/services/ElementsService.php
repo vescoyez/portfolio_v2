@@ -547,21 +547,42 @@ class ElementsService extends BaseApplicationComponent
 	 */
 	public function getTotalElements($criteria = null)
 	{
+		// TODO: Lots in here MySQL specific.
 		$query = $this->buildElementsQuery($criteria, $contentTable, $fieldColumns, true);
 
 		if ($query)
 		{
-			// Remove the order, offset, limit, and any additional tables in the FROM clause
 			$query
 				->order('')
 				->offset(0)
 				->limit(-1)
 				->from('elements elements');
 
-			// Can't use COUNT() here because of complications with the GROUP BY clause.
-			$rows = $query->queryColumn();
+			$elementsIdColumn = 'elements.id';
+			$selectedColumns = $query->getSelect();
 
-			return count($rows);
+			// Normalize with no quotes. setSelect later will properly add them back in.
+			$selectedColumns = str_replace('`', '', $selectedColumns);
+
+			// Guarantee we select an elements.id column
+			if (strpos($selectedColumns, $elementsIdColumn) === false)
+			{
+				$selectedColumns = $elementsIdColumn.', '.$selectedColumns;
+			}
+
+			// Alias elements.id as elementsId
+			$selectedColumns = str_replace($elementsIdColumn, $elementsIdColumn.' AS elementsId', $selectedColumns);
+
+			$query->setSelect($selectedColumns);
+
+			$masterQuery = craft()->db->createCommand();
+			$masterQuery->params = $query->params;
+
+			$masterQuery->from(sprintf('(%s) derivedElementsTable', $query->getText()));
+
+			$count = $masterQuery->count('derivedElementsTable.elementsId');
+
+			return $count;
 		}
 		else
 		{
@@ -1382,6 +1403,10 @@ class ElementsService extends BaseApplicationComponent
 
 				if ($success)
 				{
+					// Save the new dateCreated and dateUpdated dates on the model
+					$element->dateCreated = new DateTime('@'.$elementRecord->dateCreated->getTimestamp());
+					$element->dateUpdated = new DateTime('@'.$elementRecord->dateUpdated->getTimestamp());
+
 					if ($isNewElement)
 					{
 						// Save the element id on the element model, in case {id} is in the URL format
@@ -2067,7 +2092,7 @@ class ElementsService extends BaseApplicationComponent
 	 *
 	 * @param string $class The element action class handle.
 	 *
-	 * @return IElementType|null The element action, or `null`.
+	 * @return IElementAction|null The element action, or `null`.
 	 */
 	public function getAction($class)
 	{
@@ -2095,7 +2120,17 @@ class ElementsService extends BaseApplicationComponent
 			{
 				global $refTagsByElementType;
 
-				$elementTypeHandle = ucfirst($matches[1]);
+				if (strpos($matches[1], '_') === false)
+				{
+					$elementTypeHandle = ucfirst($matches[1]);
+				}
+				else
+				{
+					$elementTypeHandle = preg_replace_callback('/^\w|_\w/', function($matches) {
+						return strtoupper($matches[0]);
+					}, $matches[1]);
+				}
+
 				$token = '{'.StringHelper::randomString(9).'}';
 
 				$refTagsByElementType[$elementTypeHandle][] = array('token' => $token, 'matches' => $matches);

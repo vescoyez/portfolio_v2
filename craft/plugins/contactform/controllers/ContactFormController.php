@@ -44,13 +44,27 @@ class ContactFormController extends BaseController
 					$message->attachment = array(\CUploadedFile::getInstanceByName('attachment'));
 				}
 			}
-
 		}
 
 		// Set the message body
 		$postedMessage = craft()->request->getPost('message');
 
-		if ($postedMessage)
+		// Before compile event
+		Craft::import('plugins.contactform.events.ContactFormMessageEvent');
+		$event = new ContactFormMessageEvent($this, array('postedMessage' => $postedMessage));
+		craft()->contactForm->onBeforeMessageCompile($event);
+
+		if ($event->message && $event->messageFields)
+		{
+			$message->message = $event->message;
+			$message->messageFields = $event->messageFields;
+
+			if (!empty($event->htmlMessage))
+			{
+				$message->htmlMessage = $event->htmlMessage;
+			}
+		}
+		elseif ($postedMessage)
 		{
 			if (is_array($postedMessage))
 			{
@@ -111,6 +125,11 @@ class ContactFormController extends BaseController
 				$message->messageFields = array('body' => $postedMessage);
 			}
 		}
+
+        if (empty($message->htmlMessage))
+        {
+            $message->htmlMessage = StringHelper::parseMarkdown($message->message);
+        }
 
 		if ($message->validate())
 		{

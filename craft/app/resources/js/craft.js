@@ -2206,11 +2206,13 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 				{
 					this.$selectAllCheckbox.removeClass('indeterminate');
 					this.$selectAllCheckbox.addClass('checked');
+					this.$selectAllBtn.attr('aria-checked', 'true');
 				}
 				else
 				{
 					this.$selectAllCheckbox.addClass('indeterminate');
 					this.$selectAllCheckbox.removeClass('checked');
+					this.$selectAllBtn.attr('aria-checked', 'mixed');
 				}
 
 				this.showActionTriggers();
@@ -2218,6 +2220,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 			else
 			{
 				this.$selectAllCheckbox.removeClass('indeterminate checked');
+				this.$selectAllBtn.attr('aria-checked', 'false');
 				this.hideActionTriggers();
 			}
 		}
@@ -3019,8 +3022,14 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 			{
 				// Create the select all button
 				this.$selectAllContainer = $('<td class="selectallcontainer thin"/>');
-				this.$selectAllBtn = $('<div class="btn"/>').appendTo(this.$selectAllContainer);
+				this.$selectAllBtn = $('<div class="btn" />').appendTo(this.$selectAllContainer);
 				this.$selectAllCheckbox = $('<div class="checkbox"/>').appendTo(this.$selectAllBtn);
+
+				this.$selectAllBtn.attr({
+					'role': 'checkbox',
+					'tabindex': '0',
+					'aria-checked': 'false',
+				});
 
 				this.addListener(this.$selectAllBtn, 'click', function()
 				{
@@ -3033,11 +3042,23 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 						this.view.deselectAllElements();
 					}
 				});
+
+				this.addListener(this.$selectAllBtn, 'keydown', function(ev)
+				{
+					if(ev.keyCode == Garnish.SPACE_KEY)
+					{
+						ev.preventDefault();
+
+						$(ev.currentTarget).trigger('click');
+					}
+				});
 			}
 			else
 			{
 				// Reset the select all button
 				this.$selectAllCheckbox.removeClass('indeterminate checked');
+
+				this.$selectAllBtn.attr('aria-checked', 'false');
 			}
 
 			// Place the select all button at the beginning of the toolbar
@@ -3285,7 +3306,7 @@ Craft.BaseElementIndexView = Garnish.Base.extend(
 		// Enable inline element editing if this is an index page
 		if (this.settings.context == 'index')
 		{
-			this.addListener(this.$elementContainer, 'dblclick', function(ev)
+			this._handleElementEditing = $.proxy(function(ev)
 			{
 				var $target = $(ev.target);
 
@@ -3313,7 +3334,10 @@ Craft.BaseElementIndexView = Garnish.Base.extend(
 				{
 					this.createElementEditor($element);
 				}
-			});
+			}, this);
+
+			this.addListener(this.$elementContainer, 'dblclick', this._handleElementEditing);
+			this.addListener(this.$elementContainer, 'taphold', this._handleElementEditing);
 		}
 
 		// Give sub-classes a chance to do post-initialization stuff here
@@ -3864,10 +3888,12 @@ Craft.BaseElementSelectInput = Garnish.Base.extend(
 
 		if (this.settings.editable)
 		{
-			this.addListener($elements, 'dblclick', function(ev)
-			{
+			this._handleShowElementEditor = $.proxy(function(ev) {
 				this.elementEditor = Craft.showElementEditor($(ev.currentTarget), this.settings.editorSettings);
-			});
+			}, this);
+
+			this.addListener($elements, 'dblclick', this._handleShowElementEditor);
+			this.addListener($elements, 'taphold', this._handleShowElementEditor);
 		}
 
 		$elements.find('.delete').on('click', $.proxy(function(ev)
@@ -4359,8 +4385,9 @@ Craft.BaseElementSelectorModal = Garnish.Modal.extend(
 					onSelectionChange:  $.proxy(this, 'onSelectionChange')
 				});
 
-				// Double-clicking should select the elements
+				// Double-clicking or double-tapping should select the elements
 				this.addListener(this.elementIndex.$elements, 'dblclick', 'selectElements');
+				this.addListener(this.elementIndex.$elements, 'doubletap', 'selectElements');
 			}
 
 		}, this));
@@ -10456,8 +10483,8 @@ Craft.ElevatedSessionManager = Garnish.Base.extend(
 
 			if (textStatus == 'success')
 			{
-				// Is there still enough time left?
-				if (response.timeout >= Craft.ElevatedSessionManager.minSafeElevatedSessionTimeout)
+				// Is there still enough time left or has it been disabled?
+				if (response.timeout === false || response.timeout >= Craft.ElevatedSessionManager.minSafeElevatedSessionTimeout)
 				{
 					this.callback();
 				}
@@ -13019,6 +13046,11 @@ Craft.LightSwitch = Garnish.Base.extend(
 
 		this.on = this.$outerContainer.hasClass('on');
 
+		this.$outerContainer.attr({
+			'role': 'checkbox',
+			'aria-checked': (this.on ? 'true' : 'false'),
+		});
+
 		this.addListener(this.$outerContainer, 'mousedown', '_onMouseDown');
 		this.addListener(this.$outerContainer, 'keydown', '_onKeyDown');
 
@@ -13041,6 +13073,7 @@ Craft.LightSwitch = Garnish.Base.extend(
 
 		this.$input.val('1');
 		this.$outerContainer.addClass('on');
+		this.$outerContainer.attr('aria-checked', 'true');
 		this.on = true;
 		this.onChange();
 	},
@@ -13055,6 +13088,7 @@ Craft.LightSwitch = Garnish.Base.extend(
 
 		this.$input.val('');
 		this.$outerContainer.removeClass('on');
+		this.$outerContainer.attr('aria-checked', 'false');
 		this.on = false;
 		this.onChange();
 	},
@@ -13993,9 +14027,6 @@ Craft.PasswordInput = Garnish.Base.extend(
 		this.setCurrentInput(this.$passwordInput);
 		this.updateToggleLabel(Craft.t('Show'));
 		this.showingPassword = false;
-
-		// Alt key temporarily shows the password
-		this.addListener(this.$passwordInput, 'keydown', 'onKeyDown');
 	},
 
 	togglePassword: function()
@@ -14010,27 +14041,6 @@ Craft.PasswordInput = Garnish.Base.extend(
 		}
 
 		this.settings.onToggleInput(this.$currentInput);
-	},
-
-	onKeyDown: function(ev)
-	{
-		if (ev.keyCode == Garnish.ALT_KEY && this.$currentInput.val())
-		{
-			this.showPassword();
-			this.$showPasswordToggle.hide();
-			this.addListener(this.$textInput, 'keyup', 'onKeyUp');
-		}
-	},
-
-	onKeyUp: function(ev)
-	{
-		ev.preventDefault();
-
-		if (ev.keyCode == Garnish.ALT_KEY)
-		{
-			this.hidePassword();
-			this.$showPasswordToggle.show();
-		}
 	},
 
 	onInputChange: function()
@@ -16581,7 +16591,7 @@ Craft.ui =
 
 		var $field = $('<div/>', {
 			'class': 'field',
-			id: (config.id ? config.id+'-field' : null)
+			'id': config.fieldId || (config.id ? config.id+'-field' : null)
 		});
 
 		if (config.first) $field.addClass('first');
@@ -16593,6 +16603,7 @@ Craft.ui =
 			if (label)
 			{
 				var $label = $('<label/>', {
+					'id': config.labelId || (config.id ? config.id+'-label' : null),
 					'class': (config.required ? 'required' : null),
 					'for': config.id,
 					text: label

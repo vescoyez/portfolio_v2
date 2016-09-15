@@ -561,19 +561,19 @@ a:hover {
 }
 .form__field:focus::-webkit-input-placeholder {
   color: #ddd;
-  transition: color 0.2s ease-out 0.2s;
+  transition: color 0.2s ease-out;
 }
 .form__field:focus::-moz-placeholder {
   color: #ddd;
-  transition: color 0.2s ease-out 0.2s;
+  transition: color 0.2s ease-out;
 }
 .form__field:focus:-ms-input-placeholder {
   color: #ddd;
-  transition: color 0.2s ease-out 0.2s;
+  transition: color 0.2s ease-out;
 }
 .form__field:focus::placeholder {
   color: #ddd;
-  transition: color 0.2s ease-out 0.2s;
+  transition: color 0.2s ease-out;
 }
 
 #gender {

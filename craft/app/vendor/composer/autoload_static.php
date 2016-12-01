@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9154d9474c89d4f9d15cc14deb5764ae
+class ComposerStaticInit3714fe01d0d2977add0f422140552c5e
 {
     public static $prefixLengthsPsr4 = array (
         'l' => 
@@ -619,6 +619,8 @@ class ComposerStaticInit9154d9474c89d4f9d15cc14deb5764ae
         'Twig_TokenStream' => __DIR__ . '/..' . '/twig/twig/lib/Twig/TokenStream.php',
         'Twig_Util_DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/DeprecationCollector.php',
         'Twig_Util_TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
+        'Yii' => __DIR__ . '/..' . '/yiisoft/yii/framework/yii.php',
+        'YiiBase' => __DIR__ . '/..' . '/yiisoft/yii/framework/YiiBase.php',
         'lsolesen\\pel\\Pel' => __DIR__ . '/..' . '/lsolesen/pel/src/Pel.php',
         'lsolesen\\pel\\PelConvert' => __DIR__ . '/..' . '/lsolesen/pel/src/PelConvert.php',
         'lsolesen\\pel\\PelDataWindow' => __DIR__ . '/..' . '/lsolesen/pel/src/PelDataWindow.php',
@@ -666,10 +668,10 @@ class ComposerStaticInit9154d9474c89d4f9d15cc14deb5764ae
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9154d9474c89d4f9d15cc14deb5764ae::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9154d9474c89d4f9d15cc14deb5764ae::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit9154d9474c89d4f9d15cc14deb5764ae::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit9154d9474c89d4f9d15cc14deb5764ae::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3714fe01d0d2977add0f422140552c5e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3714fe01d0d2977add0f422140552c5e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit3714fe01d0d2977add0f422140552c5e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit3714fe01d0d2977add0f422140552c5e::$classMap;
 
         }, null, ClassLoader::class);
     }

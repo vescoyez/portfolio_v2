@@ -36,8 +36,8 @@ return array(
 	 * Possible values are:
 	 *
 	 * - `true` (all updates are allowed)
-	 * - `'minor-only'` (only minor and build updates are allowed)
-	 * - `'build-only'` (only build updates are allowed)
+	 * - `'minor-only'` (only minor and patch updates are allowed - the "Y" and "Z" in X.Y.Z)
+	 * - `'patch-only'` (only patch updates are allowed - the "Z" in X.Y.Z)
 	 * - `false` (no updates are allowed)
 	 */
 	'allowAutoUpdates' => true,
@@ -230,6 +230,15 @@ return array(
 	 * - `6` represents Saturday
 	 */
 	'defaultWeekStartDay' => 0,
+
+	/**
+	 * By default, Craft will require a 'password' field to be submitted on front-end, public
+	 * user registrations. Setting this to `true` will no longer require it on the initial registration form.
+	 * If you have email verification enabled, the will set their password once they've clicked on the
+	 * verification link in the email. If you don't, the only way they can set their password is to go
+	 * through your "forgot password" workflow.
+	 */
+	'deferPublicRegistrationPassword' => false,
 
 	/**
 	 * Determines whether the system is in Dev Mode or not.
@@ -441,17 +450,20 @@ return array(
 	'postLoginRedirect' => '',
 
 	/**
-	 * Whether the X-Powered-By header should be sent on each request, helping clients identify that the site is powered by Craft.
-	 */
-	'sendPoweredByHeader' => true,
-
-	/**
 	 * Whether the embedded Image Color Profile (ICC) should be preserved when manipulating images.
 	 *
 	 * Setting this to false will reduce the image size a little bit, but on some Imagick versions can cause images to be saved with
 	 * an incorrect gamma value, which causes the images to become very dark. This will only have effect if Imagick is in use.
 	 */
 	'preserveImageColorProfiles' => true,
+
+	/**
+	 * When set to `false` and you go through the "forgot password" workflow on the control panel login page, for example,
+	 * you get distinct messages saying if the username/email didn't exist or the email was successfully sent and to check
+	 * your email for further instructions. This can allow for username/email enumeration based on the response. If set
+	 * `true`, you will always get a successful response even if there was an error making it difficult to enumerate users.
+	 */
+	'preventUserEnumeration' => false,
 
 	/**
 	 * The template path segment prefix that should be used to identify "private" templates -- templates that aren't
@@ -529,6 +541,11 @@ return array(
 	 * keyword index.
 	 */
 	'searchIgnoreWords' => array('the', 'and'),
+
+	/**
+	 * Whether the X-Powered-By header should be sent on each request, helping clients identify that the site is powered by Craft.
+	 */
+	'sendPoweredByHeader' => true,
 
 	/**
 	 * The URI Craft should use for user password resetting. Note that this only affects front-end site requests.
@@ -672,6 +689,23 @@ return array(
 	 * Whether Craft should use XSendFile to serve files when possible.
 	 */
 	'useXSendFile' => false,
+
+	/**
+	 * If set to `true`, the following request parameters will need to be hashed to ensure they weren’t tampered with:
+	 *
+	 * - all `redirect` parameters
+	 * - possibly 3rd party plugin parameters
+	 *
+	 * To hash a value from a Twig template, you can pass it through the |hash filter. For example:
+	 *
+	 * ```twig
+	 * <input type="hidden" name="redirect" value="{{ 'my-page'|hash }}">
+	 * ```
+	 *
+	 * Enabling this will prevent certain Denial of Service (DoS) attack vectors. As an added benefit, Twig will no
+	 * longer operate in Safe Mode when processing the input values.
+	 */
+	'validateUnsafeRequestParams' => false,
 
 	/**
 	 * If set, should be a private, random, cryptographically secure key that is used to generate HMAC

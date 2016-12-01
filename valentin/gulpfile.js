@@ -57,6 +57,16 @@ gulp.task('images', function() {
     .pipe(notify({ message: 'Images task complete' }));
 });
 
+// Clear cache
+gulp.task('cache', function (done) {
+  return cache.clearAll(done);
+});
+
+// Clean
+gulp.task('clean', function() {
+  return del(['dist/styles', 'dist/scripts', 'dist/images']);
+});
+
 // Default task
 gulp.task('default', ['clean'], function() {
   gulp.start('styles', 'scripts', 'images');
@@ -79,14 +89,5 @@ gulp.task('watch', function() {
 
   // Watch any files in dist/, reload on change
   gulp.watch(['dist/**']).on('change', livereload.changed);
-});
 
-// Clear cache
-gulp.task('cache', function (done) {
-  return cache.clearAll(done);
-});
-
-// Clean
-gulp.task('clean', function() {
-  return del(['dist/styles', 'dist/scripts', 'dist/images']);
 });

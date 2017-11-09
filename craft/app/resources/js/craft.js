@@ -1,4 +1,4 @@
-/*! Craft  - 2016-11-21 */
+/*! Craft  - 2017-11-06 */
 (function($){
 
 // Set all the standard Craft.* stuff
@@ -2067,6 +2067,11 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 
 		if (this.getSelectedSortAttribute() == 'structure')
 		{
+			if (typeof this.instanceState.collapsedElementIds === 'undefined')
+			{
+				this.instanceState.collapsedElementIds = [];
+			}
+
 			params.collapsedElementIds = this.instanceState.collapsedElementIds;
 		}
 
@@ -2347,7 +2352,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 			return false;
 		}
 
-		if (this.$source && this.$source[0] && this.$source[0] == $source[0])
+		if (this.$source && this.$source[0] && this.$source[0] == $source[0] && $source.data('key') == this.sourceKey)
 		{
 			return false;
 		}
@@ -2355,11 +2360,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 		this.$source = $source;
 		this.sourceKey = $source.data('key');
 		this.setInstanceState('selectedSource', this.sourceKey);
-
-		if ($source[0] != this.sourceSelect.$selectedItems[0])
-		{
-			this.sourceSelect.selectItem($source);
-		}
+		this.sourceSelect.selectItem($source);
 
 		Craft.cp.updateSidebarMenuLabel();
 
@@ -3243,6 +3244,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 {
 	defaults: {
 		context: 'index',
+		modal: null,
 		storageKey: null,
 		criteria: null,
 		batchSize: 50,
@@ -3588,6 +3590,7 @@ Craft.BaseElementIndexView = Garnish.Base.extend(
 				this.appendElements($newElements);
 				Craft.appendHeadHtml(response.headHtml);
 				Craft.appendFootHtml(response.footHtml);
+				picturefill();
 
 				if (this.elementSelect)
 				{
@@ -4416,6 +4419,7 @@ Craft.BaseElementSelectorModal = Garnish.Modal.extend(
 				// Initialize the element index
 				this.elementIndex = Craft.createElementIndex(this.elementType, this.$body, {
 					context:            'modal',
+					modal:              this,
 					storageKey:         this.settings.storageKey,
 					criteria:           this.settings.criteria,
 					disabledElementIds: this.settings.disabledElementIds,
@@ -4426,7 +4430,14 @@ Craft.BaseElementSelectorModal = Garnish.Modal.extend(
 				});
 
 				// Double-clicking or double-tapping should select the elements
-				this.addListener(this.elementIndex.$elements, 'doubletap', 'selectElements');
+				this.addListener(this.elementIndex.$elements, 'doubletap', function(ev, touchData) {
+					// Make sure the touch targets are the same
+					// (they may be different if Command/Ctrl/Shift-clicking on multiple elements quickly)
+					if (touchData.firstTap.target === touchData.secondTap.target)
+					{
+						this.selectElements();
+					}
+				});
 			}
 
 		}, this));
@@ -4712,11 +4723,11 @@ Craft.AdminTable = Garnish.Base.extend(
 			this.updateUI();
 			this.onDeleteObject(id);
 
-			Craft.cp.displayNotice(Craft.t(this.settings.deleteSuccessMessage, { name: name }));
+			Craft.cp.displayNotice(Craft.t(this.settings.deleteSuccessMessage, { name: Craft.escapeHtml(name) }));
 		}
 		else
 		{
-			Craft.cp.displayError(Craft.t(this.settings.deleteFailMessage, { name: name }));
+			Craft.cp.displayError(Craft.t(this.settings.deleteFailMessage, { name: Craft.escapeHtml(name) }));
 		}
 	},
 
@@ -4851,6 +4862,15 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 		if (this.settings.context == 'index')
 		{
 			this._initIndexPageMode();
+			this.addListener(Garnish.$win, 'resize,scroll', '_positionProgressBar');
+		}
+		else
+		{
+			this.addListener(this.$main, 'scroll', '_positionProgressBar');
+
+			if (this.settings.modal) {
+				this.settings.modal.on('updateSizeAndPosition', $.proxy(this, '_positionProgressBar'));
+			}
 		}
 	},
 
@@ -4972,7 +4992,7 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 
 				for (var i = 0; i < $selected.length; i++)
 				{
-					var $source = $selected.eq(i).parent();
+					var	$source = $selected.eq(i);
 
 					if (!this._getFolderIdFromSourceKey($source.data('key'))) {
 						continue;
@@ -4980,7 +5000,7 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 
 					if ($source.hasClass('sel') && this._getSourceLevel($source) > 1)
 					{
-						draggees.push($source[0]);
+						draggees.push($source.parent()[0]);
 					}
 				}
 
@@ -5453,28 +5473,30 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 		var moveCallback = $.proxy(function(folderDeleteList, changedFolderIds, removeFromTree)
 		{
 			//Move the folders around in the tree
-			var topFolderLi = $();
-			var folderToMove = $();
-			var topMovedFolderId = 0;
+			var $topFolderLi,
+				$folderToMove;
 
 			// Change the folder ids
 			for (var previousFolderId in changedFolderIds)
 			{
-				folderToMove = this._getSourceByFolderId(previousFolderId);
+				$folderToMove = this._getSourceByFolderId(previousFolderId);
 
-				// Change the id and select the containing element as the folder element.
-				folderToMove = folderToMove
-									.attr('data-key', 'folder:' + changedFolderIds[previousFolderId].newId)
-									.data('key', 'folder:' + changedFolderIds[previousFolderId].newId).parent();
+				// Change the folder ID
+				$folderToMove
+					.attr('data-key', 'folder:' + changedFolderIds[previousFolderId].newId)
+					.data('key', 'folder:' + changedFolderIds[previousFolderId].newId);
 
-				if (topFolderLi.length == 0 || topFolderLi.parents().filter(folderToMove).length > 0)
+				// Select the containing element as the folder element
+				$folderToMove = $folderToMove.parent();
+
+				if (!$topFolderLi || $topFolderLi.parents().filter($folderToMove).length > 0)
 				{
-					topFolderLi = folderToMove;
+					$topFolderLi = $folderToMove;
 					topFolderMovedId = changedFolderIds[previousFolderId].newId;
 				}
 			}
 
-			if (topFolderLi.length == 0)
+			if ($topFolderLi.length == 0)
 			{
 				this.setIndexAvailable();
 				this.progressBar.hideProgressBar();
@@ -5483,15 +5505,15 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 				return;
 			}
 
-			var topFolder = topFolderLi.children('a');
+			var topFolder = $topFolderLi.children('a');
 
 			// Now move the uppermost node.
-			var siblings = topFolderLi.siblings('ul, .toggle');
+			var siblings = $topFolderLi.siblings('ul, .toggle');
 			var parentSource = this._getParentSource(topFolder);
 
 			var newParent = this._getSourceByFolderId(targetFolderId);
 			this._prepareParentForChildren(newParent);
-			this._appendSubfolder(newParent, topFolderLi);
+			this._appendSubfolder(newParent, $topFolderLi);
 
 			topFolder.after(siblings);
 
@@ -5598,12 +5620,7 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 			}
 		}
 
-		this.sourceSelect.selectItem($targetSource);
-
-		this.$source = $targetSource;
-		this.sourceKey = $targetSource.data('key');
-		this.setInstanceState('selectedSource', this.sourceKey);
-
+		this.selectSource($targetSource);
 		this.updateElements();
 	},
 
@@ -5678,7 +5695,9 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 	_getFolderIdFromSourceKey: function(sourceKey)
 	{
 		var parts = sourceKey.split(':');
-		if (parts.length > 1 && parts[0] == 'folder') {
+
+		if (parts.length > 1 && parts[0] == 'folder')
+		{
 			return parts[1];
 		}
 
@@ -5767,6 +5786,7 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 		this._positionProgressBar();
 		this.progressBar.resetProgressBar();
 		this.progressBar.showProgressBar();
+        this.promptHandler.resetPrompts();
 	},
 
 	/**
@@ -6288,19 +6308,21 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 	_positionProgressBar: function()
 	{
 		var $container = $(),
+			scrollTop = 0,
 			offset = 0;
 
 		if (this.settings.context == 'index')
 		{
 			$container = this.progressBar.$progressBar.closest('#content');
+			scrollTop = Garnish.$win.scrollTop();
 		}
 		else
 		{
 			$container = this.progressBar.$progressBar.closest('.main');
+			scrollTop = this.$main.scrollTop();
 		}
 
 		var containerTop = $container.offset().top;
-		var scrollTop = Garnish.$doc.scrollTop();
 		var diff = scrollTop - containerTop;
 		var windowHeight = Garnish.$win.height();
 
@@ -6311,6 +6333,11 @@ Craft.AssetIndex = Craft.BaseElementIndex.extend(
 		else
 		{
 			offset = ($container.height() / 2) - 6;
+		}
+
+		if(this.settings.context != 'index')
+		{
+			offset = scrollTop + (($container.height() / 2) - 6);
 		}
 
 		this.progressBar.$progressBar.css({
@@ -6815,14 +6842,13 @@ Craft.AuthManager = Garnish.Base.extend(
 			{
 				if (textStatus == 'success')
 				{
-					this.updateAuthTimeout(jqXHR.responseJSON.timeout);
-
-					this.submitLoginIfLoggedOut = false;
-
 					if (typeof jqXHR.responseJSON.csrfTokenValue !== 'undefined' && typeof Craft.csrfTokenValue !== 'undefined')
 					{
 						Craft.csrfTokenValue = jqXHR.responseJSON.csrfTokenValue;
 					}
+
+					this.updateAuthTimeout(jqXHR.responseJSON.timeout);
+					this.submitLoginIfLoggedOut = false;
 				}
 				else
 				{
@@ -7316,7 +7342,7 @@ Craft.CategoryIndex = Craft.BaseElementIndex.extend(
 			{
 				var href = this._getGroupTriggerHref(selectedGroup),
 					label = (this.settings.context == 'index' ? Craft.t('New category') : Craft.t('New {group} category', {group: selectedGroup.name}));
-				this.$newCategoryBtn = $('<a class="btn submit add icon" '+href+'>'+label+'</a>').appendTo(this.$newCategoryBtnGroup);
+				this.$newCategoryBtn = $('<a class="btn submit add icon" '+href+'>'+Craft.escapeHtml(label)+'</a>').appendTo(this.$newCategoryBtnGroup);
 
 				if (this.settings.context != 'index')
 				{
@@ -7348,7 +7374,7 @@ Craft.CategoryIndex = Craft.BaseElementIndex.extend(
 					{
 						var href = this._getGroupTriggerHref(group),
 							label = (this.settings.context == 'index' ? group.name : Craft.t('New {group} category', {group: group.name}));
-						menuHtml += '<li><a '+href+'">'+label+'</a></li>';
+						menuHtml += '<li><a '+href+'">'+Craft.escapeHtml(label)+'</a></li>';
 					}
 				}
 
@@ -7822,7 +7848,7 @@ Craft.charts.BaseChart = Garnish.Base.extend(
                 return locale.timeFormat(this.settings.formats.shortDateFormats.month);
 
             case 'hour':
-                return locale.timeFormat(this.settings.formats.shortDateFormats.month+" %H:00:00");
+                return locale.timeFormat(this.settings.formats.shortDateFormats.day+" %H:00:00");
 
             default:
                 return locale.timeFormat(this.settings.formats.shortDateFormats.day);
@@ -9583,7 +9609,8 @@ Craft.EditableTable = Garnish.Base.extend(
 		}
 		else
 		{
-			this.addListener(Garnish.$win, 'resize', 'initializeIfVisible');
+            // Give everything a chance to initialize
+			setTimeout($.proxy(this, 'initializeIfVisible'), 500);
 		}
 	},
 
@@ -9615,10 +9642,16 @@ Craft.EditableTable = Garnish.Base.extend(
 
 	initializeIfVisible: function()
 	{
-		if (this.isVisible())
+        this.removeListener(Garnish.$win, 'resize');
+
+        if (this.isVisible())
+        {
+            this.initialize();
+        }
+        else
 		{
-			this.initialize();
-		}
+            this.addListener(Garnish.$win, 'resize', 'initializeIfVisible');
+        }
 	},
 
 	addRow: function()
@@ -10784,7 +10817,7 @@ Craft.EntryIndex = Craft.BaseElementIndex.extend(
 			{
 				var href = this._getSectionTriggerHref(selectedSection),
 					label = (this.settings.context == 'index' ? Craft.t('New entry') : Craft.t('New {section} entry', {section: selectedSection.name}));
-				this.$newEntryBtn = $('<a class="btn submit add icon" '+href+'>'+label+'</a>').appendTo(this.$newEntryBtnGroup);
+				this.$newEntryBtn = $('<a class="btn submit add icon" '+href+'>'+Craft.escapeHtml(label)+'</a>').appendTo(this.$newEntryBtnGroup);
 
 				if (this.settings.context != 'index')
 				{
@@ -10816,7 +10849,7 @@ Craft.EntryIndex = Craft.BaseElementIndex.extend(
 					{
 						var href = this._getSectionTriggerHref(section),
 							label = (this.settings.context == 'index' ? section.name : Craft.t('New {section} entry', {section: section.name}));
-						menuHtml += '<li><a '+href+'">'+label+'</a></li>';
+						menuHtml += '<li><a '+href+'">'+Craft.escapeHtml(label)+'</a></li>';
 					}
 				}
 
@@ -16324,6 +16357,12 @@ Craft.TagSelectInput = Craft.BaseElementSelectInput.extend(
 
 			Craft.postActionRequest('tags/searchForTags', data, $.proxy(function(response, textStatus)
 			{
+				// Just in case
+				if (this.searchMenu)
+				{
+					this.killSearchMenu();
+				}
+
 				this.$spinner.addClass('hidden');
 
 				if (textStatus == 'success')
@@ -16787,7 +16826,7 @@ Craft.UpgradeModal = Garnish.Modal.extend(
 
 	init: function(settings)
 	{
-		this.$container = $('<div id="upgrademodal" class="modal loading"/>').appendTo(Garnish.$bod),
+		this.$container = $('<div id="upgrademodal" class="modal loading"/>').appendTo(Garnish.$bod);
 
 		this.base(this.$container, $.extend({
 			resizable: true

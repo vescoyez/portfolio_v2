@@ -258,7 +258,7 @@ class Craft extends \Yii
 
 	/**
 	 * Displays a variable.
-     *
+	 *
 	 * @param mixed $target    The variable to be dumped.
 	 * @param int   $depth     The maximum depth that the dumper should go into the variable. Defaults to 10.
 	 * @param bool  $highlight Whether the result should be syntax-highlighted. Defaults to true.
@@ -272,7 +272,7 @@ class Craft extends \Yii
 
 	/**
 	 * Displays a variable and ends the request. (“Dump and die”)
-     *
+	 *
 	 * @param mixed $target    The variable to be dumped.
 	 * @param int   $depth     The maximum depth that the dumper should go into the variable. Defaults to 10.
 	 * @param bool  $highlight Whether the result should be syntax-highlighted. Defaults to true.
@@ -455,7 +455,7 @@ class Craft extends \Yii
 		$file = str_replace('\\', '/', $file);
 
 		// Don't add any Composer vendor files to the class map.
-		if (strpos($file, '/vendor/') === false)
+		if (strpos($file, realpath(CRAFT_VENDOR_PATH)) === false)
 		{
 			$class = __NAMESPACE__.'\\'.pathinfo($file, PATHINFO_FILENAME);
 			\Yii::$classMap[$class] = $file;

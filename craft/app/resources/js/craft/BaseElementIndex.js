@@ -554,6 +554,11 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 
 		if (this.getSelectedSortAttribute() == 'structure')
 		{
+			if (typeof this.instanceState.collapsedElementIds === 'undefined')
+			{
+				this.instanceState.collapsedElementIds = [];
+			}
+
 			params.collapsedElementIds = this.instanceState.collapsedElementIds;
 		}
 
@@ -834,7 +839,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 			return false;
 		}
 
-		if (this.$source && this.$source[0] && this.$source[0] == $source[0])
+		if (this.$source && this.$source[0] && this.$source[0] == $source[0] && $source.data('key') == this.sourceKey)
 		{
 			return false;
 		}
@@ -842,11 +847,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 		this.$source = $source;
 		this.sourceKey = $source.data('key');
 		this.setInstanceState('selectedSource', this.sourceKey);
-
-		if ($source[0] != this.sourceSelect.$selectedItems[0])
-		{
-			this.sourceSelect.selectItem($source);
-		}
+		this.sourceSelect.selectItem($source);
 
 		Craft.cp.updateSidebarMenuLabel();
 
@@ -1730,6 +1731,7 @@ Craft.BaseElementIndex = Garnish.Base.extend(
 {
 	defaults: {
 		context: 'index',
+		modal: null,
 		storageKey: null,
 		criteria: null,
 		batchSize: 50,

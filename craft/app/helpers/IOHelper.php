@@ -142,7 +142,7 @@ class IOHelper
 	 */
 	public static function getFolders($path, $suppressErrors = false)
 	{
-		$path = static::normalizePathSeparators($path, $suppressErrors);
+		$path = static::normalizePathSeparators($path);
 
 		if (static::folderExists($path, false, $suppressErrors))
 		{
@@ -152,7 +152,7 @@ class IOHelper
 			{
 				foreach ($folders as $key => $folder)
 				{
-					$folders[$key] = static::normalizePathSeparators($folder, $suppressErrors);
+					$folders[$key] = static::normalizePathSeparators($folder);
 				}
 
 				return $folders;
@@ -172,11 +172,22 @@ class IOHelper
 	 */
 	public static function getFiles($path, $suppressErrors = false)
 	{
-		$path = static::normalizePathSeparators($path, $suppressErrors);
+		$path = static::normalizePathSeparators($path);
 
 		if (static::folderExists($path, false, $suppressErrors))
 		{
-			return $suppressErrors ? @glob($path.'*.*') : glob($path.'*');
+			$glob = $suppressErrors ? @glob($path.'*') : glob($path.'*');
+			$files = array();
+
+			foreach ($glob as $file)
+			{
+				if ($suppressErrors ? @is_file($file) : is_file($file))
+				{
+					$files[] = static::normalizePathSeparators($file);
+				}
+			}
+
+			return $files;
 		}
 
 		return false;
@@ -632,17 +643,23 @@ class IOHelper
 	{
 		$path = static::normalizePathSeparators($path);
 
-		if (static::folderExists($path, false, $suppressErrors) && static::isReadable($path, $suppressErrors))
+		if (static::folderExists($path, false, $suppressErrors))
 		{
-			if (($contents = static::_folderContents($path, $recursive, $filter, $includeHiddenFiles, $suppressErrors)) !== false)
+			if (static::isReadable($path, $suppressErrors))
 			{
-				return $contents;
+				if (($contents = static::_folderContents($path, $recursive, $filter, $includeHiddenFiles, $suppressErrors)) !== false)
+				{
+					return $contents;
+				}
+
+				return false;
 			}
 
-			Craft::log('Tried to read the file contents at '.$path.' and could not.');
+			Craft::log('Tried to read the folder contents at '.$path.', but it is not readable.');
 			return false;
 		}
 
+		Craft::log('Tried to read the folder contents at '.$path.', but it does not exist.');
 		return false;
 	}
 
@@ -1913,7 +1930,7 @@ class IOHelper
 				'php'         => array('label' => Craft::t('PHP'),         'extensions' => array('php')),
 				'powerpoint'  => array('label' => Craft::t('PowerPoint'),  'extensions' => array('pps','ppsm','ppsx','ppt','pptm','pptx','potx')),
 				'text'        => array('label' => Craft::t('Text'),        'extensions' => array('txt','text')),
-				'video'       => array('label' => Craft::t('Video'),       'extensions' => array('avchd','asf','asx','avi','flv','fla','mov','m4v','mng','mpeg','mpg','m1s','mp2v','m2v','m2s','mp4','mkv','qt','flv','mp4','ogg','ogv','rm','wmv','webm','vob')),
+				'video'       => array('label' => Craft::t('Video'),       'extensions' => array('avchd','asf','asx','avi','flv','fla','mov','m4v','mng','mpeg','mpg','m1s','m2t','mp2v','m2v','m2s','mp4','mkv','qt','flv','mp4','ogg','ogv','rm','wmv','webm','vob')),
 				'word'        => array('label' => Craft::t('Word'),        'extensions' => array('doc','docx','dot','docm','dotm')),
 				'xml'         => array('label' => Craft::t('XML'),         'extensions' => array('xml')),
 			);

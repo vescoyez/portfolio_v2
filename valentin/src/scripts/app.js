@@ -87,6 +87,7 @@
   });
 
   var snackbar = $('.snackbar');
+  var timer = 0;
 
   var showSnackbar = function(error) {
     var snackbarHeight = snackbar.height() + 'px';
@@ -96,7 +97,7 @@
     }
     snackbar.addClass('is-shown');
     $('.content').css({ 'padding-bottom': snackbarHeight });
-    setTimeout(
+    timer = setTimeout(
       function() {
         hideSnackbar();
       },
@@ -107,6 +108,10 @@
   var hideSnackbar = function() {
     $('.content').css({ 'padding-bottom': 0 });
     snackbar.removeClass('is-shown');
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+    }
   };
 
 })();

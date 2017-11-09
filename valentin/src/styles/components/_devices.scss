@@ -72,12 +72,13 @@ $device-bg-color: $gray-1;
   box-shadow:
     0 0 0 1px $device-border-color inset,
     0 0 0 1px $device-border-color;
-  padding: 4.5em 0.5em;
+  padding: 2em 0.5em;
   text-align: center;
   background: $main-bg-color;
 
   img {
     border: 1px solid $device-border-color;
+    border-radius: 1em;
   }
 }
 
@@ -94,11 +95,12 @@ $device-bg-color: $gray-1;
   box-shadow:
     0 0 0 1px $device-border-color inset,
     0 0 0 1px $device-border-color;
-  padding:3em 5em;
+  padding: 1em 4em;
   text-align: center;
   background: $main-bg-color;
 
   img {
     border: 1px solid $device-border-color;
+    border-radius: 3px;
   }
 }

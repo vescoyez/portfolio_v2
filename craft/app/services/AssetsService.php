@@ -352,25 +352,25 @@ class AssetsService extends BaseApplicationComponent
 
 		$folder = $this->findFolder($folderCriteria);
 
-        if (!$folder)
-        {
-            $response = $this->createFolder($sourceTopFolder->id, $folderName);
+		if (!$folder)
+		{
+			$response = $this->createFolder($sourceTopFolder->id, $folderName);
 
-            if ($response->isConflict() || $response->isError()) {
-                // If folder doesn't exist in DB, but we can't create it, it probably exists on the server.
-                $folder = new AssetFolderModel(
-                    array(
-                        'parentId' => $sourceTopFolder->id,
-                        'name' => $folderName,
-                        'sourceId' => null,
-                        'path' => $folderName.'/'
-                    )
-                );
-                $folder->id = craft()->assets->storeFolder($folder);
-            } else {
-                $folder = $this->getFolderById($response->getDataItem('folderId'));
-            }
-        }
+			if ($response->isConflict() || $response->isError()) {
+				// If folder doesn't exist in DB, but we can't create it, it probably exists on the server.
+				$folder = new AssetFolderModel(
+					array(
+						'parentId' => $sourceTopFolder->id,
+						'name' => $folderName,
+						'sourceId' => null,
+						'path' => $folderName.'/'
+					)
+				);
+				$folder->id = craft()->assets->storeFolder($folder);
+			} else {
+				$folder = $this->getFolderById($response->getDataItem('folderId'));
+			}
+		}
 
 		return $folder;
 	}
@@ -816,6 +816,11 @@ class AssetsService extends BaseApplicationComponent
 			foreach ($fileIds as $fileId)
 			{
 				$file = $this->getFileById($fileId);
+
+				if (!$file) {
+				    continue;
+                }
+
 				$source = craft()->assetSources->getSourceTypeById($file->sourceId);
 
 				// Fire an 'onBeforeDeleteAsset' event
@@ -999,6 +1004,12 @@ class AssetsService extends BaseApplicationComponent
 			$sourceType = craft()->assetSources->getSourceTypeById($file->sourceId);
 			return AssetsHelper::generateUrl($sourceType, $file);
 		}
+
+        if (StringHelper::toLowerCase(IOHelper::getExtension($file->filename)) === 'gif' && !craft()->config->get('transformGifs'))
+        {
+            $sourceType = craft()->assetSources->getSourceTypeById($file->sourceId);
+            return AssetsHelper::generateUrl($sourceType, $file);
+        }
 
 		// Get the transform index model
 		$index = craft()->assetTransforms->getTransformIndex($file, $transform);
@@ -1391,6 +1402,12 @@ class AssetsService extends BaseApplicationComponent
 		{
 			case AssetConflictResolution::Replace:
 			{
+				// Make sure the extension didn't change.
+				if (IOHelper::getExtension($theNewFile->filename) !== IOHelper::getExtension($fileName))
+				{
+					throw new Exception($theNewFile->filename.' doesn\'t have the original file extension.');
+				}
+
 				// Replace the actual file
 				$targetFile = $this->findFile(array(
 					'folderId' => $theNewFile->folderId,
@@ -1412,11 +1429,11 @@ class AssetsService extends BaseApplicationComponent
 				$source->replaceFile($targetFile, $theNewFile);
 				$fileId = $targetFile->id;
 
-                // Fire an 'onReplaceFile' event
-                craft()->assets->onReplaceFile(new Event($this, array(
-                    'asset' => $targetFile
-                )));
-            }
+				// Fire an 'onReplaceFile' event
+				craft()->assets->onReplaceFile(new Event($this, array(
+					'asset' => $targetFile
+				)));
+			}
 			// Falling through to delete the file
 			case AssetConflictResolution::Cancel:
 			{

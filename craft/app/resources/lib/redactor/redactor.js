@@ -1,7 +1,7 @@
 /*
 	Redactor II
-	Version 2.11
-	Updated: September 20, 2017
+	Version 2.13
+	Updated: April 17, 2018
 
 	http://imperavi.com/redactor/
 
@@ -101,7 +101,7 @@
 
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '2.11';
+	$.Redactor.VERSION = '2.13';
 	$.Redactor.modules = ['air', 'autosave', 'block', 'buffer', 'build', 'button', 'caret', 'clean', 'code', 'core', 'detect', 'dropdown',
 						  'events', 'file', 'focus', 'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
 						  'lang', 'line', 'link', 'linkify', 'list', 'marker', 'modal', 'observe', 'offset', 'paragraphize', 'paste', 'placeholder',
@@ -147,7 +147,7 @@
 		pasteImages: true,
 		pasteLinks: true,
 		pasteBlockTags: ['pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'table', 'tbody', 'thead', 'tfoot', 'th', 'tr', 'td', 'ul', 'ol', 'li', 'blockquote', 'p', 'figure', 'figcaption'],
-		pasteInlineTags: ['br', 'strong', 'ins', 'code', 'del', 'span', 'samp', 'kbd', 'sup', 'sub', 'mark', 'var', 'cite', 'small', 'b', 'u', 'em', 'i'],
+		pasteInlineTags: ['br', 'strong', 'ins', 'code', 'del', 'span', 'samp', 'kbd', 'sup', 'sub', 'abbr','mark', 'var', 'cite', 'small', 'b', 'u', 'em', 'i'],
 
 		preClass: false, // string
 		preSpaces: 4, // or false
@@ -183,6 +183,7 @@
 		s3: false,
 
         linkNewTab: false,
+        linkNewTabHide: false,
 		linkTooltip: true,
 		linkNofollow: false,
 		linkSize: 30,
@@ -308,7 +309,7 @@
 		// private
 		type: 'textarea', // textarea, div, inline, pre
 		inline: false,
-		inlineTags: ['a', 'span', 'strong', 'strike', 'b', 'u', 'em', 'i', 'code', 'del', 'ins', 'samp', 'kbd', 'sup', 'sub', 'mark', 'var', 'cite', 'small'],
+		inlineTags: ['a', 'span', 'strong', 'strike', 'b', 'u', 'em', 'i', 'code', 'del', 'ins', 'samp', 'kbd', 'sup', 'sub', 'abbr', 'mark', 'var', 'cite', 'small'],
 		blockTags: ['pre', 'ul', 'ol', 'li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  'dl', 'dt', 'dd', 'div', 'td', 'blockquote', 'output', 'figcaption', 'figure', 'address', 'section', 'header', 'footer', 'aside', 'article', 'iframe'],
 		paragraphize: true,
 		paragraphizeBlocks: ['table', 'div', 'pre', 'form', 'ul', 'ol', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dl', 'blockquote', 'figcaption',
@@ -915,7 +916,7 @@
 				},
 				formatUncollapsed: function(tag, attr, value, type)
 				{
-					this.selection.save();
+                    this.selection.save();
 
 					var replaced = [];
 					var blocks = this.selection.blocks();
@@ -1839,10 +1840,8 @@
 				},
 				buildButtonTooltip: function($btn, title)
 				{
-    				if (this.opts.air || this.detect.isMobile())
-    				{
-        				return;
-    				}
+    				if (typeof this.button.toolbar() === 'undefined') return;
+    				if (this.opts.air || this.detect.isMobile()) return;
 
                     var $tooltip = $('<span>');
 				    $tooltip.addClass('re-button-tooltip');
@@ -2786,11 +2785,8 @@
                         html = html.replace(/<o:p[^>]*>/gi, '');
                         html = html.replace(/<\/o:p>/gi, '');
 
-						var msword = this.clean.isHtmlMsWord(html);
-						if (msword)
-						{
-							html = this.clean.cleanMsWord(html);
-						}
+                        // ms word
+						html = this.clean.cleanMsWord(html);
 					}
 
 					html = $.trim(html);
@@ -2947,10 +2943,6 @@
 					var matchNL = html.match(/\n/gi);
 
 					return (!matchBR && !matchNL) ? true : false;
-				},
-				isHtmlMsWord: function(html)
-				{
-					return html.match(/class="?Mso|style="[^"]*\bmso-|style='[^'']*\bmso-|w:WordDocument/i);
 				},
 				removeEmptyInlineTags: function(html)
 				{
@@ -3513,6 +3505,11 @@
 					}
 
 					this.placeholder.enable();
+
+                    if (!options.start)
+                    {
+					    this.observe.load();
+					}
 				},
 				get: function()
 				{
@@ -4836,6 +4833,7 @@
 					var width = Math.round(height * this.image.resizeHandle.ratio);
 
 					if (height < 50 || width < 100) return;
+					if (this.core.editor().width() <= width) return;
 
 					this.image.resizeHandle.el.attr({width: width, height: height});
 		            this.image.resizeHandle.el.width(width);
@@ -5360,7 +5358,7 @@
                             filter = ',' + this.opts.keepStyleAttr.join(',');
                         }
 
-						$el.find(this.opts.inlineTags.join(',')).not('img' + filter).removeAttr('style');
+						$el.find(this.opts.inlineTags.join(',')).not('img, [data-redactor-style-cache], [data-redactor-span]' + filter).removeAttr('style');
 
 						var $parent = $el.parent();
 						if ($parent.length !== 0 && $parent[0].tagName === 'LI')
@@ -6102,19 +6100,40 @@
                 // All
 				removeFormat: function()
 				{
+    				var nodes = this.selection.inlines();
+
+    				if (nodes.length === 1)
+    				{
+        				var node = nodes[0];
+        				while (node)
+    					{
+    						if (this.utils.isInlineTag(node.tagName))
+    						{
+    							if ($(node).hasClass('redactor-in'))
+    							{
+        							return false;
+                                }
+                                else
+                                {
+                                    nodes.push(node);
+                                }
+    						}
+
+    						node = node.parentNode;
+    					}
+    				}
+
+
     				this.selection.save();
 
-    				var nodes = this.inline.getClearedNodes();
     				for (var i = 0; i < nodes.length; i++)
     				{
-        				if (nodes[i].nodeType === 1)
+        				$(nodes[i]).replaceWith(function()
         				{
-            				$(nodes[i]).replaceWith(function()
-                            {
-                                return $(this).contents();
-                            });
-        				}
+            				return $(this).contents();
+        				});
     				}
+
 
     				this.selection.restore();
 				}
@@ -6250,7 +6269,7 @@
 					if (data.pre) this.clean.cleanPre();
 
                     this.caret.end(endNode);
-                    this.linkify.format();
+                    this.linkify.format(true);
 				},
 				text: function(text)
 				{
@@ -6674,6 +6693,7 @@
     					}
 					}
 
+
 					// backspace & delete
 					if (key === this.keyCode.BACKSPACE || key === this.keyCode.DELETE)
 					{
@@ -6925,19 +6945,6 @@
 
     					}, this), 1);
 					}
-
-                    // remove last br
-                    setTimeout($.proxy(function()
-    				{
-                        var block = this.selection.block();
-                        var nodes = block.childNodes;
-                        var last = nodes[nodes.length-1];
-                        if (last && last.nodeType !== 3 && last.tagName === 'BR')
-                        {
-                            $(last).remove();
-                        }
-
-                    }, this), 1);
 				},
 				checkEvents: function(arrow, key)
 				{
@@ -7156,9 +7163,11 @@
 				},
 				setupSelectAll: function(e, key)
 				{
-					if (this.keydown.ctrl && key === 65)
+    				if ((e.ctrlKey || e.metaKey) && !e.altKey && key === 65)
 					{
+    					e.preventDefault();
 						this.utils.enableSelectAll();
+    					this.selection.all();
 					}
 					else if (key !== this.keyCode.LEFT_WIN && !this.keydown.ctrl)
 					{
@@ -7688,6 +7697,12 @@
     					link.target = true;
 					}
 
+					// hide new link
+					if (this.opts.linkNewTabHide)
+					{
+					    $('#redactor-link-blank-section').hide();
+					}
+
 					// set modal values
 					this.link.setModalValues(link);
 
@@ -7746,26 +7761,9 @@
 				},
 				isUrl: function(url)
 				{
-					var pattern = '((xn--)?[\\W\\w\\D\\d]+(-[\\W\\w\\D\\d]+)*\\.)+[\\W\\w]{2,}';
+    				var reUrl = /^(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
 
-					var re1 = new RegExp('^(http|ftp|https)://' + pattern, 'i');
-					var re2 = new RegExp('^' + pattern, 'i');
-					var re3 = new RegExp('\.(html|php)$', 'i');
-					var re4 = new RegExp('^/', 'i');
-					var re5 = new RegExp('^tel:(.*?)', 'i');
-
-					// add protocol
-					if (url.search(re1) === -1 && url.search(re2) !== -1 && url.search(re3) === -1 && url.substring(0, 1) !== '/')
-					{
-						url = 'http://' + url;
-					}
-
-					if (url.search(re1) !== -1 || url.search(re3) !== -1 || url.search(re4) !== -1 || url.search(re5) !== -1)
-					{
-						return url;
-					}
-
-					return false;
+    				return (reUrl.test(url)) ? url : false;
 				},
 				isMailto: function(url)
 				{
@@ -7791,7 +7789,7 @@
 					{
     					if (this.opts.linkValidation)
     					{
-						    link.url = this.link.isUrl(link.url);
+        					link.url = (this.link.isUrl(link.url) && link.url.search(/^(ftp|https?)/i) === -1) ? 'http://' + link.url.replace(/(ftp|https?):\/\//gi, '') : link.url;
 						}
 					}
 
@@ -7924,7 +7922,7 @@
 
 					$el.before(text.replace(text, html)).remove();
 				},
-				format: function()
+				format: function(lastFocus)
 				{
 					if (!this.opts.linkify || this.utils.isCurrentOrParent('pre'))
 					{
@@ -7944,15 +7942,7 @@
 							$el.removeAttr('class');
 						}
 
-						if (s.tagName === 'DIV') // video container
-						{
-							this.linkify.breakBlockTag($el, 'video');
-						}
-						else if (s.tagName === 'IMG') // image
-						{
-							this.linkify.breakBlockTag($el, 'image');
-						}
-						else if (s.tagName === 'A')
+						if (s.tagName === 'A')
 						{
 							this.core.callback('insertedLink', $el);
 						}
@@ -7964,40 +7954,15 @@
 					// callback
 					setTimeout($.proxy(function()
 					{
+    					if (lastFocus === true && $objects.length > 0)
+    					{
+        					this.caret.end($objects.last());
+    					}
+
 						this.code.sync();
 						this.core.callback('linkify', $objects);
 
 					}, this), 100);
-
-				},
-				breakBlockTag: function($el, type)
-				{
-					var breaked = this.utils.breakBlockTag();
-					if (breaked === false)
-					{
-						return;
-					}
-
-					var $newBlock = $el;
-					if (type === 'image')
-					{
-						$newBlock = $('<figure />').append($el);
-					}
-
-					if (breaked.type === 'start')
-					{
-						breaked.$block.before($newBlock);
-					}
-					else
-					{
-						breaked.$block.after($newBlock);
-					}
-
-
-					if (type === 'image')
-					{
-						this.caret.after($newBlock);
-					}
 
 				},
 				convertVideoLinks: function(html)
@@ -8025,7 +7990,7 @@
 						return html;
 					}
 
-					return html.replace(html, '<img src="' + matches + '" class="redactor-linkify-object" />');
+					return html.replace(html, '<img src="' + matches + '"  class="redactor-linkify-object" />');
 				},
 				convertLinks: function(html)
 				{
@@ -8083,107 +8048,34 @@
 		list: function()
 		{
 			return {
-				toggle: function(cmd)
+				toggle: function(type)
 				{
 					if (this.utils.inBlocks(['table', 'td', 'th', 'tr']))
 					{
 						return;
 					}
 
-					var tag = (cmd === 'orderedlist' || cmd === 'ol') ? 'OL' : 'UL';
-					cmd = (tag === 'OL') ? 'orderedlist' : 'unorderedlist'
+    				type = (type === 'orderedlist') ? 'ol' : type;
+    				type = (type === 'unorderedlist') ? 'ul' : type;
 
-					var $list = $(this.selection.current()).parentsUntil('.redactor-in', 'ul, ol').first();
+    				type = type.toLowerCase();
 
-					this.placeholder.hide();
-					this.buffer.set();
+                    this.buffer.set();
+                    this.selection.save();
 
+                    var nodes = this.list._getBlocks();
+                    var block = this.selection.block();
+                    var $list = $(block).parents('ul, ol', this.core.editor()[0]).last();
+                    if (nodes.length === 0 && $list.length !== 0)
+                    {
+                        nodes = [$list.get(0)];
+                    }
 
-					if ($list.length !== 0 && $list[0].tagName === tag && this.utils.isRedactorParent($list))
-					{
-						this.selection.save();
+                    nodes = (this.list._isUnformat(type, nodes)) ? this.list._unformat(type, nodes) : this.list._format(type, nodes);
 
-						// remove list
-						$list.find('ul, ol').each(function()
-						{
-							var parent = $(this).closest('li');
-							$(this).find('li').each(function()
-							{
-								$(parent).after(this);
-							});
-						});
+                    this.selection.restore();
 
-						$list.find('ul, ol').remove();
-						$list.find('li').each(function()
-						{
-							return $(this).replaceWith(function()
-							{
-								return $('<p />').append($(this).contents());
-							});
-						});
-
-
-						$list.replaceWith(function()
-						{
-							return $(this).contents();
-						});
-
-						this.selection.restore();
-						return;
-					}
-
-
-					this.selection.save();
-
-					if ($list.length !== 0 && $list[0].tagName !== tag)
-					{
-                        $list.each($.proxy(function(i,s)
-                        {
-                            this.utils.replaceToTag(s, tag);
-
-                        }, this));
-					}
-					else
-					{
-					    document.execCommand('insert' + cmd);
-					}
-
-					this.selection.restore();
-
-					var $insertedList = this.list.get();
-					if (!$insertedList)
-					{
-						if (!this.selection.block())
-						{
-							document.execCommand('formatblock', false, 'p');
-						}
-
-						return;
-					}
-
-					// clear span
-					$insertedList.find('span').replaceWith(function()
-					{
-						return $(this).contents();
-					});
-
-					// remove style
-					$insertedList.find(this.opts.inlineTags.join(',')).each(function()
-					{
-						$(this).removeAttr('style');
-					});
-
-					// remove block-element list wrapper
-					var $listParent = $insertedList.parent();
-					if (this.utils.isRedactorParent($listParent) && $listParent[0].tagName !== 'LI' && this.utils.isBlock($listParent))
-					{
-						this.selection.save();
-
-						$listParent.replaceWith($listParent.contents());
-
-						this.selection.restore();
-					}
-
+                    return nodes;
 				},
 				get: function()
 				{
@@ -8192,7 +8084,7 @@
 
 					return ($list.length === 0) ? false : $list;
 				},
-				combineAfterAndBefore: function(block)
+                combineAfterAndBefore: function(block)
 				{
     				var $prev = $(block).prev();
     				var $next = $(block).next();
@@ -8210,7 +8102,331 @@
 
                     return false;
 
-				}
+				},
+    			_getBlocks: function()
+    			{
+        			var finalBlocks = [];
+        			var blocks = this.selection.blocks();
+        			for (var i = 0; i < blocks.length; i++)
+        			{
+            			var $el = $(blocks[i]);
+            			var isFirst = ($el.parent().hasClass('redactor-in'));
+
+            			if (isFirst) finalBlocks.push(blocks[i]);
+        			}
+
+        			return finalBlocks;
+    			},
+                _isUnformat: function(type, nodes)
+                {
+                    var countLists = 0;
+                    for (var i = 0; i < nodes.length; i++)
+                    {
+                        if (nodes[i].nodeType !== 3)
+                        {
+                            var tag = nodes[i].tagName.toLowerCase();
+                            if (tag === type || tag === 'figure')
+                            {
+                                countLists++;
+                            }
+                        }
+                    }
+
+                    return (countLists === nodes.length);
+                },
+                _uniteBlocks: function(nodes, tags)
+                {
+                    var z = 0;
+                    var blocks = { 0: [] };
+                    var lastcell = false;
+                    for (var i = 0; i < nodes.length; i++)
+                    {
+                        var $node = $(nodes[i]);
+                        var $cell = $node.closest('th, td');
+
+                        if ($cell.length !== 0)
+                        {
+                            if ($cell.get(0) !== lastcell)
+                            {
+                                // create block
+                                z++;
+                                blocks[z] = [];
+                            }
+
+                            if (this.list._isUniteBlock(nodes[i], tags))
+                            {
+                                blocks[z].push(nodes[i]);
+                            }
+                        }
+                        else
+                        {
+                            if (this.list._isUniteBlock(nodes[i], tags))
+                            {
+                                blocks[z].push(nodes[i]);
+                            }
+                            else
+                            {
+                                // create block
+                                z++;
+                                blocks[z] = [];
+                            }
+                        }
+
+                        lastcell = $cell.get();
+                    }
+
+                    return blocks;
+                },
+                _isUniteBlock: function(node, tags)
+                {
+                    return (node.nodeType === 3 || tags.indexOf(node.tagName.toLowerCase()) !== -1);
+                },
+                _createList: function(type, blocks, key)
+                {
+                    var last = blocks[blocks.length-1];
+                    var $last = $(last);
+                    var $list = $('<' + type + '>');
+                    $last.after($list);
+
+                    return $list;
+                },
+                _createListItem: function(item)
+                {
+                    var $item = $('<li>');
+                    if (item.nodeType === 3)
+                    {
+                        $item.append(item);
+                    }
+                    else
+                    {
+                        var $el = $(item);
+                        $item.append($el.contents());
+                        $el.remove();
+                    }
+
+                    return $item;
+                },
+                _format: function(type, nodes)
+                {
+                    var tags = ['p', 'div', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol'];
+                    var blocks = this.list._uniteBlocks(nodes, tags);
+                    var lists = [];
+
+                    for (var key in blocks)
+                    {
+                        var items = blocks[key];
+                        var $list = this.list._createList(type, blocks[key]);
+
+                        for (var i = 0; i < items.length; i++)
+                        {
+                            var $item;
+
+                            // lists
+                            if (items[i].nodeType !== 3 && (items[i].tagName === 'UL' || items[i].tagName === 'OL'))
+                            {
+                                $item = $(items[i]).contents();
+                                $list.append($item);
+                            }
+                            // other blocks or texts
+                            else
+                            {
+                                $item = this.list._createListItem(items[i]);
+                                //this.utils.normalizeTextNodes($item);
+                                $list.append($item);
+                            }
+                        }
+
+                        lists.push($list.get(0));
+                    }
+
+                    return lists;
+                },
+                _unformat: function(type, nodes)
+                {
+
+                    if (nodes.length === 1)
+                    {
+                        // one list
+                        var $list = $(nodes[0]);
+                        var $items = $list.find('li');
+
+                        var selectedItems = this.selection.blocks(['li']);
+                        var block = this.selection.block();
+                        var $li = $(block).closest('li');
+                        if (selectedItems.length === 0 && $li.length !== 0)
+                        {
+                            selectedItems = [$li.get(0)];
+                        }
+
+                        // 1) entire
+                        if (selectedItems.length === $items.length)
+                        {
+                            return this.list._unformatEntire(nodes[0]);
+                        }
+
+                        var pos = this.list._getItemsPosition($items, selectedItems);
+
+                        // 2) top
+                        if (pos === 'Top')
+                        {
+                            return this.list._unformatAtSide('before', selectedItems, $list);
+                        }
+
+                        // 3) bottom
+                        else if (pos === 'Bottom')
+                        {
+                            selectedItems.reverse();
+                            return this.list._unformatAtSide('after', selectedItems, $list);
+                        }
+
+                        // 4) middle
+                        else if (pos === 'Middle')
+                        {
+                            var $last = $(selectedItems[selectedItems.length-1]);
+
+                            var ci = false;
+
+                            var $parent = false;
+                            var $secondList = $('<' + $list.get(0).tagName.toLowerCase() + '>');
+                            $items.each(function(i, node)
+                            {
+                                if (ci)
+                                {
+                                    var $node = $(node);
+                                    var $childList = ($node.children('ul, ol').length !== 0);
+
+                                    if ($node.closest('.redactor-split-item').length === 0 && ($parent === false || $node.closest($parent).length === 0))
+                                    {
+                                        $node.addClass('redactor-split-item');
+                                    }
+
+                                    $parent = $node;
+
+                                }
+
+                                if (node === $last.get(0))
+                                {
+                                    ci = true;
+                                }
+                            });
+
+                            $items.filter('.redactor-split-item').each(function(i, node)
+                            {
+                                var $node = $(node);
+                                $node.removeClass('redactor-split-item');
+                                $secondList.append(node);
+                            });
+
+                            $list.after($secondList);
+
+                            selectedItems.reverse();
+                            for (var i = 0; i < selectedItems.length; i++)
+                            {
+                                var $item = $(selectedItems[i]);
+                                var $container = this.list._createUnformatContainer($item);
+
+                                $list.after($container);
+                                $container.find('ul, ol').remove();
+                                $item.remove();
+                            }
+
+
+                            return;
+                        }
+
+                    }
+                    else
+                    {
+                        // unformat all
+                        for (var i = 0; i < nodes.length; i++)
+                        {
+                            if (nodes[i].nodeType !== 3 && nodes[i].tagName.toLowerCase() === type)
+                            {
+                                this.list._unformatEntire(nodes[i]);
+                            }
+                        }
+                    }
+                },
+                _unformatEntire: function(list)
+                {
+                    var $list = $(list);
+                    var $items = $list.find('li');
+                    $items.each(function(i, node)
+                    {
+                        var $item = $(node);
+                        var $container = this.list._createUnformatContainer($item);
+
+                        $item.remove();
+                        $list.before($container);
+
+                    }.bind(this));
+
+                    $list.remove();
+                },
+                _unformatAtSide: function(type, selectedItems, $list)
+                {
+                    for (var i = 0; i < selectedItems.length; i++)
+                    {
+                        var $item = $(selectedItems[i]);
+                        var $container = this.list._createUnformatContainer($item);
+
+                        $list[type]($container);
+
+                        var $innerLists = $container.find('ul, ol').first();
+                        $item.append($innerLists);
+
+                        $innerLists.each(function(i, node)
+                        {
+                            var $node = $(node);
+                            var $parent = $node.closest('li');
+
+                            if ($parent.get(0) === selectedItems[i])
+                            {
+                                $node.unwrap();
+                                $parent.addClass('r-unwrapped');
+                            }
+
+                        });
+
+                        if (this.utils.isEmpty($item.html())) $item.remove();
+                    }
+
+                    // clear empty
+                    $list.find('.r-unwrapped').each(function(node)
+                    {
+                        var $node = $(node);
+                        if ($node.html().trim() === '') $node.remove();
+                        else $node.removeClass('r-unwrapped');
+                    });
+                },
+                _getItemsPosition: function($items, selectedItems)
+                {
+                    var pos = 'Middle';
+
+                    var sFirst = selectedItems[0];
+                    var sLast = selectedItems[selectedItems.length-1];
+
+                    var first = $items.first().get(0);
+                    var last = $items.last().get(0);
+
+                    if (first === sFirst && last !== sLast)
+                    {
+                        pos = 'Top';
+                    }
+                    else if (first !== sFirst && last === sLast)
+                    {
+                        pos = 'Bottom';
+                    }
+
+                    return pos;
+                },
+                _createUnformatContainer: function($item)
+                {
+                    var $container = $('<p>');
+                    $container.append($item.contents());
+
+                    return $container;
+                }
 			};
 		},
 
@@ -8366,7 +8582,7 @@
 								+ '<label>' + this.lang.get('text') + '</label>'
 								+ '<input type="text" id="redactor-link-url-text" aria-label="' + this.lang.get('text') + '" />'
 							+ '</section>'
-							+ '<section>'
+							+ '<section id="redactor-link-blank-section">'
 								+ '<label class="checkbox"><input type="checkbox" id="redactor-link-blank"> ' + this.lang.get('link-in-new-tab') + '</label>'
 							+ '</section>'
 							+ '<section>'
@@ -9229,9 +9445,17 @@
 
 					}, this));
 
+                    var htmlF;
+                    if (pre && this.detect.isFirefox())
+					{
+						e = e.originalEvent || e;
+						e.preventDefault();
+						htmlF = e.clipboardData.getData("text/plain");
+					}
+
 					setTimeout($.proxy(function()
 					{
-						var html = this.paste.getPasteBoxCode(pre);
+						var html = (htmlF) ? htmlF : this.paste.getPasteBoxCode(pre);
 
 						// buffer
 						this.buffer.set();
@@ -9817,7 +10041,7 @@
 						// single node
 						if (node === endNode)
 						{
-							return [this.selection.parent()];
+							return [node];
 						}
 
 						// iterate
@@ -10596,10 +10820,10 @@
 						formData.append(name, file);
 					}
 
-					this.progress.show();
 					var stop = this.core.callback('uploadStart', e, formData);
 					if (stop !== false)
 					{
+    					this.progress.show();
 				    	this.upload.send(formData, e);
 					}
 				},
@@ -10950,7 +11174,6 @@
 					{
 						return false;
 					}
-
 
 					if (!isEmpty && this.utils.isStartOfElement(block))
 					{

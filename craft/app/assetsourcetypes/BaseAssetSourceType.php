@@ -163,7 +163,7 @@ abstract class BaseAssetSourceType extends BaseSavableComponentType
 			throw new Exception(Craft::t('Uploaded file was empty'));
 		}
 
-		$fileName = AssetsHelper::cleanAssetName($file['name']);
+		$fileName = AssetsHelper::cleanAssetName($file['name'], true, true);
 
 		// Save the file to a temp location and pass this on to the source type implementation
 		$filePath = AssetsHelper::getTempFilePath(IOHelper::getExtension($fileName), true);
@@ -188,7 +188,7 @@ abstract class BaseAssetSourceType extends BaseSavableComponentType
 	 * @param string           $filename         The name of the file to insert.
 	 * @param bool             $preventConflicts If set to true, will ensure that a conflict is not encountered by
 	 *                                           checking the file name prior insertion.
-	 *
+	 * @throws Exception
 	 * @return AssetOperationResponseModel
 	 */
 	public function insertFileByPath($localFilePath, AssetFolderModel $folder, $filename, $preventConflicts = false)
@@ -272,7 +272,16 @@ abstract class BaseAssetSourceType extends BaseSavableComponentType
 					$fileModel->getContent()->title = Craft::t('Mobile Upload');
 				}
 
-				craft()->assets->storeFile($fileModel);
+				if (!craft()->assets->storeFile($fileModel)) {
+				    $allErrors = $fileModel->getErrors();
+				    $validationError = '';
+
+				    foreach ($allErrors as $attribute => $errors) {
+                        $validationError .= "\n" . $attribute . ': ' . implode('; ', $errors);
+                    }
+
+				    throw new Exception('Unable to store asset record for ' . $response->getDataItem('filePath') . ': ' . $validationError);
+				}
 
 				if (!$this->isSourceLocal() && $fileModel->kind == 'image')
 				{
@@ -459,7 +468,6 @@ abstract class BaseAssetSourceType extends BaseSavableComponentType
 		if ($oldFile->kind == 'image')
 		{
 			craft()->assetTransforms->deleteAllTransformData($oldFile);
-			$this->deleteSourceFile($oldFile->getPath());
 			$this->purgeCachedSourceFile($oldFile->getPath());
 
 			// For remote sources, fetch the source image and move it in the old ones place
@@ -473,6 +481,7 @@ abstract class BaseAssetSourceType extends BaseSavableComponentType
 			}
 		}
 
+		$this->deleteSourceFile($oldFile->getPath());
 		$newFileName = !empty($filenameToUse) ? $filenameToUse : $oldFile->filename;
 		$folder = craft()->assets->getFolderById($oldFile->folderId);
 

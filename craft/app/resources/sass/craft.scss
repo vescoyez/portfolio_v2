@@ -214,8 +214,8 @@ td.right { float: none; @include alignright; }
 
 .icon.delete { display: inline-block; }
 .icon.delete:before { content: 'remove'; color: rgba(0,0,0,0.2); }
-.icon.delete:not(.disabled):hover:before { color: $errorcolor; }
-.icon.delete:not(.disabled):active:before { color: #8c3b2e; }
+.icon.delete:not(.disabled):hover:before { color: $red; }
+.icon.delete:not(.disabled):active:before { color: darken($red, 10%); }
 
 .hidden { display: none !important; }
 
@@ -844,10 +844,10 @@ $checkboxPadding: 20px;
 }
 
 /* element select fields */
-.elementselect { position: relative; min-height: 40px; margin-bottom: -10px; }
+.elementselect { position: relative; min-height: 37px; margin-top: -7px; }
 .elementselect:after { @include clearafter; }
 .elementselect .element,
-.elementselect .btn { @include floatleft; @include margin(0, 7px, 7px, 0); }
+.elementselect .btn { @include floatleft; @include margin(7px, 7px, 0, 0); }
 .elementselect .element.small,
 .elementselect .btn { clear: both; }
 .elementselect .element { z-index: 1; }
@@ -889,25 +889,25 @@ ul.tree,
 .status.on,
 .status.live,
 .status.active,
-.status.enabled { background-color: #27AE60; } /* green */
+.status.enabled { background-color: $green; } /* green */
 
 .status.orange,
 .status.locked,
-.status.pending { background-color: #F2842D; } /* orange */
+.status.pending { background-color: $orange; } /* orange */
 
 .status.red,
 .status.off,
 .status.suspended,
-.status.expired { background-color: #D0021B; } /* red */
+.status.expired { background-color: $red; } /* red */
 
-.status.yellow { background-color: #F1C40E; }
-.status.pink { background-color: #FF50F2; }
-.status.purple { background-color: #9B59B6; }
-.status.blue { background-color: #0D99F2; }
-.status.turquoise { background-color: #2CE0BD; }
-.status.light { background-color: #CCD1D6; }
-.status.grey { background-color: #98A3AE; }
-.status.black { background-color: #32475E; }
+.status.yellow { background-color: $yellow; }
+.status.pink { background-color: $pink; }
+.status.purple { background-color: $purple; }
+.status.blue { background-color: $blue; }
+.status.turquoise { background-color: $turquoise; }
+.status.light { background-color: $light; }
+.status.grey { background-color: $grey; }
+.status.black { background-color: $black; }
 
 .status.disabled { opacity: 1; }
 
@@ -1012,7 +1012,7 @@ ul.tree,
 .meta > .field > .input > .datewrapper > .text,
 .meta > .field > .input > .timewrapper > .text,
 .meta > .field > .input > .datetimewrapper > .datewrapper > .text,
-.meta > .field > .input > .datetimewrapper > .timewrapper > .text, { display: block; margin: -8px 0; padding: 14px 0; border-radius: 0; @include box-shadow(none); border: none !important; background: transparent; }
+.meta > .field > .input > .datetimewrapper > .timewrapper > .text { display: block; margin: -8px 0; padding: 14px 0; border-radius: 0; @include box-shadow(none); border: none !important; background: transparent; }
 
 .meta > .field > .input > .datewrapper:before,
 .meta > .field > .input > .timewrapper:before,
@@ -1030,21 +1030,10 @@ ul.tree,
 .meta > .field > .input > .datewrapper,
 .meta > .field > .input > .timewrapper { display: block; width: 100%; }
 
-.meta > .field > .input > .elementselect > .elements > .element { height: 18px; float: none; margin: 0; }
-.meta > .field > .input > .elementselect > .elements > .element + .element { margin-top: 7px; }
-.meta > .field > .input > .elementselect > .elements > .element:not(.hasstatus):not(.hasthumb) { width: calc(100% - 14px); }
-.meta > .field > .input > .elementselect > .elements > .element.hasstatus:not(.hasthumb) { width: calc(100% - 32px); }
-.meta > .field > .input > .elementselect > .elements > .element.hasthumb:not(.hasstatus) { width: calc(100% - 54px); }
-.meta > .field > .input > .elementselect > .elements > .element.hasstatus.hasthumb { width: calc(100% - 72px); }
-.meta > .field > .input > .elementselect > .elements > .element > .label { width: calc(100% - 20px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-@media screen and (-webkit-min-device-pixel-ratio: 0)
-{
-	.meta > .field > .input .select { display: block; margin: -8px 0; width: 100%; border-radius: 0; @include box-shadow(none); background: none; }
-	.meta > .field > .input .select select { @include padding(14px, 12px, 14px, 0); width: 100%; @include box-shadow(none); }
-	.meta > .field > .input .select:after { right: 0; }
-	.meta > .field > .input .select + .spinner { position: absolute; top: calc(50% - 15px); right: 0; }
-}
+.meta > .field > .input .select { display: block; margin: -8px 0; width: 100%; border-radius: 0; @include box-shadow(none); background: none; }
+.meta > .field > .input .select select { @include padding(14px, 12px, 14px, 0); width: 100%; @include box-shadow(none); }
+.meta > .field > .input .select:after { right: 0; }
+.meta > .field > .input .select + .spinner { position: absolute; top: calc(50% - 15px); right: 0; }
 
 .body { position: relative; }
 
@@ -1261,7 +1250,7 @@ body #redactor-modal-overlay {
 
 /* tag select fields */
 .tagselect .element.small { clear: none; }
-.tagselect .add { position: relative; z-index: 1; display: inline-block; width: 12em; }
+.tagselect .add { position: relative; z-index: 1; @include margin(7px, 7px, 0, 0); display: inline-block; width: 12em; }
 .tagselect .add .text { @include padding-right(30px); }
 .tagselect .add .spinner { position: absolute; top: 0; @include right(5px); }
 body.ltr .tagselect.elementselect .element,
@@ -1428,7 +1417,6 @@ input.checkbox:indeterminate:focus + label:before,
 .passwordwrapper .password { width: 100%; }
 .passwordwrapper .password-toggle { display: block; position: absolute; top: 7px; @include right(7px); @include alignright; }
 .password { @include padding-right(5em); }
-.password.capslock:focus { background: #fff url(../images/capslock.png) no-repeat 100% 50%; }
 
 .datewrapper,
 .timewrapper { display: inline-block; position: relative; }
@@ -1470,7 +1458,6 @@ input:-ms-input-placeholder { @include placeholder-styles; }
 .input .redactor-box.redactor-box-fullscreen { z-index: 100 !important; }
 .input .redactor-toolbar { top: 0; background: none; @include box-shadow(none); }
 .input .redactor-toolbar.toolbar-fixed-box { @include pane; z-index: 1 !important; }
-.input .redactor-toolbar.toolbar-fixed-box + span + .redactor-layer { padding-top: 48px; }
 .input .redactor-toolbar li a { color: $textcolor; }
 .input .redactor-toolbar li a:hover { background-color: $lightselcolor; color: $textcolor; }
 .input .redactor-toolbar li a:active,
@@ -1505,25 +1492,33 @@ body #redactor-modal footer button:last-child { border-bottom-right-radius: $btn
 	-webkit-transition: border linear 100ms, -webkit-box-shadow linear 100ms;
 	-moz-transition: border linear 100ms, box-shadow linear 100ms;
 	-webkit-appearance: none;
+	-moz-appearance: none;
+	// from https://stackoverflow.com/a/15933790/1688568
+	&::-ms-expand {
+		display: none;
+	}
+	// from https://stackoverflow.com/a/19451423/1688568
+	&:-moz-focusring {
+		color: transparent;
+		text-shadow: 0 0 0 $textcolor;
+	}
 }
 @mixin select-input-fullwidth-styles { min-width: 100%; }
 @mixin select-input-focussed-styles { border-color: $focusglowcolor; outline: none;
 	@include box-shadow(0 0 2px hsl(205, 100%, 60%), inset 0 0 0 1px hsla(205, 100%, 60%, 0.5));
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 0)
-{
-	.select:not(.selectize),
-	.select:not(.selectize) select { @include select-styles; }
-	.select:not(.selectize) { @include select-container-styles; }
-	.select:not(.selectize):after { @include select-arrow-styles; }
-	.select:not(.selectize) select { @include select-input-styles; }
-	.select:not(.selectize).fullwidth select { @include select-input-fullwidth-styles; }
-	.select:not(.selectize) select:focus { @include select-input-focussed-styles; }
+.select:not(.selectize),
+.select:not(.selectize) select { @include select-styles; }
+.select:not(.selectize) { @include select-container-styles; }
+.select:not(.selectize):after { @include select-arrow-styles; }
+.select:not(.selectize) select { @include select-input-styles; }
+.select:not(.selectize) select option { background: #fff; }
+.select:not(.selectize).fullwidth select { @include select-input-fullwidth-styles; }
+.select:not(.selectize) select:focus { @include select-input-focussed-styles; }
 
-	.select:not(.selectize).small:after { top: 9px; }
-	.select:not(.selectize).small select { padding-top: 4px; padding-bottom: 4px; font-size: 11px; }
-}
+.select:not(.selectize).small:after { top: 9px; }
+.select:not(.selectize).small select { padding-top: 4px; padding-bottom: 4px; font-size: 11px; }
 
 /* selectize reset */
 .selectize .selectize-control.single .selectize-input { border-color: inherit; @include box-shadow(none); background: none; }

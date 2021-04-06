@@ -29,21 +29,22 @@
       </picture>
     </div>
   </div>
-  <div class="technologies">
+  <h4 class="heading heading--3">Things I used for this project</h4>
+  <ul class="technologies">
     {% set divider = entry.technologies.total > 4 and entry.technologies.total < 7 ?  3 : 4 %}
     {% for technology in entry.technologies.limit(8) %}
-    <div class="width-{{ 12 / divider }} technologies__item">
-      <div class="technologies__icon">
-        <svg class="icon">
-          <use xlink:href="/dist/images/icons.svg#{{ technology.slug }}"></use>
-        </svg>
-      </div>
-      <h4 class="technologies__title">
-        {{ technology.title }}
-      </h4>
-    </div>
+    <li class="width-{{ 12 / divider }} technologies__item">
+      <a href="{{ technology.technologyUrl }}" target="_blank" class="technologies__link">
+        <div class="technologies__icon">
+          <img src="{{ technology.technologyIcon[0].getUrl() }}" alt="{{ technology.title }}">
+        </div>
+        <h4 class="technologies__title">
+          {{ technology.title }}
+        </h4>
+      </a>
+    </li>
     {% endfor %}
-  </div>
+  </ul>
   <div class="text-center">
     {% if entry.siteUrl %}
     <a href="{{ entry.siteUrl }}" target="_blank" class="button">Visit {{ entry.title }}</a>

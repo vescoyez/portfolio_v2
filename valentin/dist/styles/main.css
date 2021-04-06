@@ -412,7 +412,7 @@ html {
 }
 @media only screen and (min-width: 1000px) {
   html {
-    font-size: 24px;
+    font-size: 22px;
   }
 }
 
@@ -472,6 +472,11 @@ a:hover {
   .heading--2 {
     font-size: 28px;
   }
+}
+
+.heading--3 {
+  text-align: center;
+  font-size: 18px;
 }
 
 .form__group {
@@ -1667,7 +1672,7 @@ a:hover {
   border: 0.5em solid #eee;
   border-radius: 2em;
   box-shadow: 0 0 0 1px #999 inset, 0 0 0 1px #999;
-  padding: 2em 0.5em;
+  padding: 0;
   text-align: center;
   background: #fff;
 }
@@ -1683,7 +1688,7 @@ a:hover {
 }
 .phone img {
   border: 1px solid #999;
-  border-radius: 1em;
+  border-radius: 1.4em;
 }
 
 .tablet {
@@ -1724,6 +1729,7 @@ a:hover {
       flex-wrap: wrap;
   -ms-flex-pack: center;
       justify-content: center;
+  padding-left: 0;
   margin-bottom: 10px;
 }
 @media only screen and (min-width: 800px) {
@@ -1773,18 +1779,30 @@ a:hover {
         flex-basis: 0;
   }
 }
+.technologies__item:hover .technologies__icon {
+  opacity: 0.75;
+}
+
+.technologies__link {
+  color: inherit;
+}
+.technologies__link:hover {
+  color: inherit;
+}
 
 .technologies__icon {
   display: inline-block;
   padding: 1em 0 1.5em;
-  background: #FFFFFF;
-  color: #4D4D4D;
+  transition: opacity 0.2s ease-out;
+  opacity: 0.5;
 }
-.technologies__icon .icon {
+.technologies__icon img {
   display: block;
+  height: 24px;
+  width: 24px;
 }
 @media only screen and (min-width: 800px) {
-  .technologies__icon .icon {
+  .technologies__icon img {
     height: 48px;
     width: 48px;
   }

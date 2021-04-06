@@ -3,6 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding-left: 0;
   @include media(m) {
     flex-wrap: nowrap;
   }
@@ -24,16 +25,33 @@
     padding: 0 20px;
     flex-basis: 0;
   }
+
+  &:hover {
+    .technologies__icon {
+      opacity: 0.75;
+    }
+  }
+}
+
+.technologies__link {
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+  }
 }
 
 .technologies__icon {
   display: inline-block;
   padding: 1em 0 1.5em;
-  background: #FFFFFF;
-  color: #4D4D4D;
+  transition: opacity 0.2s ease-out;
+  opacity: 0.5;
 
-  .icon {
+  img {
     display: block;
+    height: 24px;
+    width: 24px;
+
     @include media(m) {
       height: 48px;
       width: 48px;

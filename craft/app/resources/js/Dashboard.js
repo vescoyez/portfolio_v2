@@ -498,7 +498,7 @@ Craft.Widget = Garnish.Base.extend(
 
         // Focus on the first input
         setTimeout($.proxy(function() {
-            this.$settingsForm.find(':focusable:first').focus();
+            this.$settingsForm.find(':focusable:first').trigger('focus');
         }, this), 1);
     },
 
@@ -510,7 +510,7 @@ Craft.Widget = Garnish.Base.extend(
     getManagerRow: function()
     {
         var $row = $(
-            '<tr data-id="'+this.id+'" data-name="'+this.title+'">' +
+            '<tr data-id="'+this.id+'" data-name="'+Craft.escapeHtml(this.title)+'">' +
                 '<td class="widgetmanagerhud-icon">'+this.getTypeInfo('iconSvg')+'</td>' +
                 '<td>'+this.getManagerRowLabel()+'</td>' +
                 '<td class="widgetmanagerhud-col-colspan-picker thin"></td>' +
@@ -529,7 +529,7 @@ Craft.Widget = Garnish.Base.extend(
     {
         var typeName = this.getTypeInfo('name');
 
-        return this.title+(this.title != typeName ? ' <span class="light">('+typeName+')</span>' : '');
+        return Craft.escapeHtml(this.title)+(this.title != typeName ? ' <span class="light">('+typeName+')</span>' : '');
     },
 
     destroy: function()

@@ -67,13 +67,7 @@ class Requirements
 				'<a href="http://craftcms.com">Craft CMS</a>',
 				'The PDO MySQL extension is required.'
 			),
-			new Requirement(
-				'Mcrypt extension',
-				extension_loaded('mcrypt'),
-				true,
-				'<a href="http://craftcms.com">Craft CMS</a>',
-				'The Mcrypt extension is required.'
-			),
+			new McryptRequirement(),
 			new Requirement(
 				'GD extension',
 				extension_loaded('gd'),
@@ -195,18 +189,7 @@ class Requirements
 	 */
 	private static function _checkCryptBlowfish()
 	{
-		if (function_exists('crypt') && defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)
-		{
-			$hash = '$2y$04$usesomesillystringfore7hnbRJHxXVLeakoG8K30oukPsA.ztMG';
-			/** @noinspection NonSecureCryptUsageInspection */
-			$test = crypt('password', $hash);
-
-			if ($test !== $hash)
-			{
-				return 'You have an insecure version of crypt installed. Please update PHP to 5.3.7 or later. (<a href="https://secure.php.net/security/crypt_blowfish.php">Find out more</a>)';
-			}
-		}
-		else
+		if (!function_exists('crypt') || !defined('CRYPT_BLOWFISH') || !CRYPT_BLOWFISH)
 		{
 			return 'Craft CMS requires the <a href="http://php.net/manual/en/function.crypt.php">crypt()</a> function with CRYPT_BLOWFISH enabled for secure password storage.';
 		}
@@ -378,7 +361,7 @@ class PhpVersionRequirement extends Requirement
 	// Constants
 	// =========================================================================
 
-	const REQUIRED_PHP_VERSION = '5.3.0';
+	const REQUIRED_PHP_VERSION = '5.5.0';
 
 	// Protected Methods
 	// =========================================================================
@@ -401,14 +384,7 @@ class PhpVersionRequirement extends Requirement
 	 */
 	public function getNotes()
 	{
-		if ($this->_isBadPhpVersion())
-		{
-			return 'PHP '.PHP_VERSION.' has a known <a href="http://arstechnica.com/security/2014/03/php-bug-allowing-site-hijacking-still-menaces-internet-22-months-on">security vulnerability</a>. You should probably upgrade.';
-		}
-		else
-		{
-			return 'PHP '.static::REQUIRED_PHP_VERSION.' or higher is required.';
-		}
+		return 'PHP '.static::REQUIRED_PHP_VERSION.' or higher is required.';
 	}
 
 	// Protected Methods
@@ -423,16 +399,7 @@ class PhpVersionRequirement extends Requirement
 	{
 		if ($this->_doesMinVersionPass())
 		{
-			// If it's 5.3 < 5.3.12, or 5.4 < 5.4.2, still issue a warning, due to the PHP hijack bug:
-			// http://arstechnica.com/security/2014/03/php-bug-allowing-site-hijacking-still-menaces-internet-22-months-on/
-			if ($this->_isBadPhpVersion())
-			{
-				return RequirementResult::Warning;
-			}
-			else
-			{
-				return RequirementResult::Success;
-			}
+			return RequirementResult::Success;
 		}
 		else
 		{
@@ -452,19 +419,45 @@ class PhpVersionRequirement extends Requirement
 	{
 		return version_compare(PHP_VERSION, static::REQUIRED_PHP_VERSION, '>=');
 	}
+}
 
-	/**
-	 * Returns whether this is one of the bad PHP versions.
-	 *
-	 * @return bool
-	 */
-	private function _isBadPhpVersion()
-	{
-		return (
-			(version_compare(PHP_VERSION, '5.3', '>=') && version_compare(PHP_VERSION, '5.3.12', '<')) ||
-			(version_compare(PHP_VERSION, '5.4', '>=') && version_compare(PHP_VERSION, '5.4.2', '<'))
-		);
-	}
+/**
+ * Mcrypt requirement class.
+ *
+ * @package craft.app.etc.requirements
+ */
+class McryptRequirement extends Requirement
+{
+    /**
+     * McryptRequirement constructor.
+     *
+     * @param null $name
+     * @param null $condition
+     * @param bool $required
+     * @param null $requiredBy
+     * @param null $notes
+     */
+    public function __construct($name = null, $condition = null, $required = true, $requiredBy = null, $notes = null)
+    {
+        parent::__construct('Mcrypt extension', null, true, '<a href="http://craftcms.com">Craft CMS</a>', 'The Mcrypt extension is required if running PHP 5.6.0 or earlier.');
+    }
+
+    /**
+     * Calculates the result of this requirement.
+     *
+     * @return string
+     */
+    protected function calculateResult()
+    {
+        // If we're on at least PHP 5.6.1, we know our mcrypt_compat shim is in place.
+        if (version_compare(PHP_VERSION, '5.6.1', '>=')) {
+            return RequirementResult::Success;
+        }
+
+        if (!extension_loaded('mcrypt')) {
+            return RequirementResult::Failed;
+        }
+    }
 }
 
 /**
@@ -474,9 +467,6 @@ class PhpVersionRequirement extends Requirement
  */
 class IconvRequirement extends Requirement
 {
-	// Protected Methods
-	// =========================================================================
-
 	/**
 	 * @return IconvRequirement
 	 */

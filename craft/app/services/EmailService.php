@@ -267,13 +267,15 @@ class EmailService extends BaseApplicationComponent
 		$event = new Event($this, array(
 			'user' => $user,
 			'emailModel' => $emailModel,
-			'variables'	 => $variables
+			'variables'	 => $variables,
+			'sent'       => false,
 		));
 
 		$this->onBeforeSendEmail($event);
+		$sent = $event->params['sent'];
 
 		// Is the event giving us the go-ahead?
-		if ($event->performAction)
+		if (!$sent && $event->performAction)
 		{
 			try
 			{
@@ -320,7 +322,7 @@ class EmailService extends BaseApplicationComponent
 							$emailSettings['timeout'] = $this->_defaultEmailTimeout;
 						}
 
-						$pop->authorize($emailSettings['host'], $emailSettings['port'], $emailSettings['timeout'], $emailSettings['username'], $emailSettings['password'], craft()->config->get('devMode') ? 1 : 0);
+						$pop->authorise($emailSettings['host'], $emailSettings['port'], $emailSettings['timeout'], $emailSettings['username'], $emailSettings['password'], craft()->config->get('devMode') ? 1 : 0);
 
 						$this->_setSmtpSettings($email, $emailSettings);
 						break;
@@ -438,11 +440,17 @@ class EmailService extends BaseApplicationComponent
 				}
 				else
 				{
-					// TODO: This won't be necessary in 3.0 thanks to Parsedown
-					$emailModel->body = preg_replace('/(?<=[a-zA-Z])_(?=[a-zA-Z])/', '\_', $emailModel->body);
-
 					// They didn't provide an htmlBody, so markdown the body.
-					$renderedHtmlBody = craft()->templates->renderString(StringHelper::parseMarkdown($emailModel->body), $variables);
+
+					// Don't parse _text_ as italics because https://github.com/craftcms/cms/issues/1800
+					if (!class_exists('\Markdown_Parser', false))
+					{
+						require_once craft()->path->getFrameworkPath().'vendors/markdown/markdown.php';
+					}
+					$md = new \Markdown_Parser();
+					unset($md->em_relist['_']);
+
+					$renderedHtmlBody = craft()->templates->renderString($md->transform($emailModel->body), $variables);
 					$email->msgHTML($renderedHtmlBody);
 				}
 
@@ -493,7 +501,7 @@ class EmailService extends BaseApplicationComponent
 			return true;
 		}
 
-		return false;
+		return $sent;
 	}
 
 	/**
@@ -527,14 +535,17 @@ class EmailService extends BaseApplicationComponent
 			$email->SMTPKeepAlive = true;
 		}
 
-		if ($emailSettings['smtpSecureTransportType'] == 'none')
+		if (isset($emailSettings['smtpSecureTransportType']))
 		{
-			// Clearly they don't want any encryption.
-			$email->SMTPAutoTLS = false;
-		}
-		else
-		{
-			$email->SMTPSecure = $emailSettings['smtpSecureTransportType'];
+			if ($emailSettings['smtpSecureTransportType'] === 'none')
+			{
+				// Clearly they don't want any encryption.
+				$email->SMTPAutoTLS = false;
+			}
+			else
+			{
+				$email->SMTPSecure = $emailSettings['smtpSecureTransportType'];
+			}
 		}
 
 		if (!isset($emailSettings['host']))

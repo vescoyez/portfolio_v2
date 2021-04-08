@@ -35,7 +35,7 @@
   <section class="section" id="work">
     <div class="container">
     	<h2 class="heading section__heading">Work</h2>
-  		{% for entry in craft.entries.section('work').limit(3).find() %}
+  		{% for entry in craft.entries.section('work').find() %}
         {% include 'includes/_work' %}
   		{% endfor %}
       {# ##### More section removed for now #####

@@ -1,4 +1,5 @@
 .intro {
+  margin: 0;
   font-family: $second-font-family;
   color: rgba(255, 255, 255, 0.7);
   @include resp('font-size', (

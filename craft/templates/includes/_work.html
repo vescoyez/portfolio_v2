@@ -29,7 +29,7 @@
       </picture>
     </div>
   </div>
-  <h4 class="heading heading--3">Things I used for this project</h4>
+  <p class="heading heading--3">Things I used for this project</p>
   <ul class="technologies">
     {% set divider = entry.technologies.total > 4 and entry.technologies.total < 7 ?  3 : 4 %}
     {% for technology in entry.technologies.limit(8) %}

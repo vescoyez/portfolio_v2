@@ -1,0 +1,33 @@
+fieldLayouts:
+  b2fbe15b-d313-4ad3-b361-d4a16641010c:
+    tabs:
+      -
+        elements:
+          -
+            instructions: null
+            label: Title
+            type: craft\fieldlayoutelements\EntryTitleField
+          -
+            fieldUid: ca1a8f79-95a0-42ae-9552-11f7dc866cae # Testimonial
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: ec2fb365-4082-45d1-bfb7-168f281f29c4 # Person Picture
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: bf4d20d8-c471-42b5-a6ef-1321822a5650 # Person Title
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: 76997698-86ce-4845-b88a-d9c7635d18a9 # Person URL
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+        name: 'Tab 1'
+        sortOrder: 1
+handle: testimonials
+hasTitleField: true
+name: Testimonials
+section: 33672ab4-207e-43e1-9e56-64d7ab1fa769 # Testimonials
+sortOrder: 0
+titleFormat: null

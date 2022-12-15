@@ -1,0 +1,13 @@
+fieldLayouts:
+  153e2c05-f26f-4383-b314-4a6d67277a52:
+    tabs:
+      -
+        fields:
+          f742164d-862a-4edc-8b94-19374ce884e7: # Networks
+            required: false
+            sortOrder: 1
+        name: Content
+        sortOrder: 1
+handle: networks
+name: Networks
+sortOrder: 2

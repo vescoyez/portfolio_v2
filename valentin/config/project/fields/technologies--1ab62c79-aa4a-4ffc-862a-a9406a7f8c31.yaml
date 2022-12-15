@@ -1,0 +1,14 @@
+contentColumnType: string
+fieldGroup: 2c17a2e7-ef8b-4632-890e-fc15f2d105cf # Work
+handle: technologies
+instructions: ''
+name: Technologies
+searchable: true
+settings:
+  branchLimit: ''
+  localizeRelations: false
+  selectionLabel: ''
+  source: 'group:b3bfa62f-ebb7-4406-b8ae-47aaa89073c6' # technologies
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Categories

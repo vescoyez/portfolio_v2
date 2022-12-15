@@ -1,0 +1,14 @@
+contentColumnType: string
+fieldGroup: 2c17a2e7-ef8b-4632-890e-fc15f2d105cf # Work
+handle: description
+instructions: 'Describe the project'
+name: Description
+searchable: true
+settings:
+  cleanupHtml: '1'
+  columnType: text
+  configFile: Simple.json
+  purifyHtml: '1'
+translationKeyFormat: null
+translationMethod: none
+type: craft\redactor\Field

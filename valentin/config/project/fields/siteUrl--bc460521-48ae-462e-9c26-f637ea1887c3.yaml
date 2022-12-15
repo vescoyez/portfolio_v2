@@ -1,0 +1,15 @@
+contentColumnType: text
+fieldGroup: 2c17a2e7-ef8b-4632-890e-fc15f2d105cf # Work
+handle: siteUrl
+instructions: ''
+name: 'Site URL'
+searchable: true
+settings:
+  charLimit: ''
+  columnType: text
+  initialRows: '4'
+  multiline: ''
+  placeholder: ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

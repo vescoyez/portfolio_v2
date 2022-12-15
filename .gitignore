@@ -1,9 +1,4 @@
-# DB informations
-craft/config/db.php
-
-# Craft license key
-craft/config/license.key
-
-valentin/node_modules
-valentin/.sass-cache
-craft/storage/backups
+/.env
+/.idea
+/vendor
+.DS_Store

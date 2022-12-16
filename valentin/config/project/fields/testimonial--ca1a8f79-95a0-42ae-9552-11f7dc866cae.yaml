@@ -1,0 +1,14 @@
+contentColumnType: string
+fieldGroup: 4ea542e5-b965-4dd1-8f79-60e0bf3eb2c1 # Testimonials
+handle: testimonial
+instructions: ''
+name: Testimonial
+searchable: true
+settings:
+  cleanupHtml: '1'
+  columnType: text
+  configFile: ''
+  purifyHtml: ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\redactor\Field

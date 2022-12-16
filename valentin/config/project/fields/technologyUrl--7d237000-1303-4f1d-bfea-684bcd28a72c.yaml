@@ -1,0 +1,15 @@
+contentColumnType: text
+fieldGroup: 44f0a4c2-da3a-4933-8a2b-3fff9625b3e1 # Technology
+handle: technologyUrl
+instructions: ''
+name: 'Technology URL'
+searchable: true
+settings:
+  charLimit: ''
+  columnType: text
+  initialRows: '4'
+  multiline: ''
+  placeholder: ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

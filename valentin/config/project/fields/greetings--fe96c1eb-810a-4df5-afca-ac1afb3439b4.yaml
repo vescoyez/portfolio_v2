@@ -1,0 +1,15 @@
+contentColumnType: text
+fieldGroup: 2650e29d-0e92-4cb8-b6d9-62c3465bcf0b # Homepage
+handle: greetings
+instructions: 'Greet your guest'
+name: Greetings
+searchable: true
+settings:
+  charLimit: ''
+  columnType: text
+  initialRows: '4'
+  multiline: ''
+  placeholder: Hello
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

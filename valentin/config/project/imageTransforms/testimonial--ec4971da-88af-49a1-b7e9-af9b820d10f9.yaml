@@ -1,0 +1,9 @@
+format: jpg
+handle: testimonial
+height: 112
+interlace: none
+mode: crop
+name: Testimonial
+position: center-center
+quality: 82
+width: 112

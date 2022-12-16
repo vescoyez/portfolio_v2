@@ -1,0 +1,23 @@
+contentColumnType: string
+fieldGroup: 44f0a4c2-da3a-4933-8a2b-3fff9625b3e1 # Technology
+handle: technologyIcon
+instructions: ''
+name: 'Technology icon'
+searchable: true
+settings:
+  allowedKinds:
+    - image
+  defaultUploadLocationSource: 'volume:9f3564bf-b786-4937-88c9-94c1ae067da3' # images
+  defaultUploadLocationSubpath: ''
+  limit: '1'
+  localizeRelations: false
+  restrictFiles: '1'
+  selectionLabel: ''
+  singleUploadLocationSource: 'volume:9f3564bf-b786-4937-88c9-94c1ae067da3' # images
+  singleUploadLocationSubpath: technologies
+  sources: '*'
+  useSingleFolder: '1'
+  viewMode: large
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Assets

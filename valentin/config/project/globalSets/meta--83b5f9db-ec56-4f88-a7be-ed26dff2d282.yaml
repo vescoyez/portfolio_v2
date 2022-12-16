@@ -1,0 +1,16 @@
+fieldLayouts:
+  b990e032-f565-49df-b465-b4d0f3a02dac:
+    tabs:
+      -
+        fields:
+          18cea9a6-4a02-4502-b174-3cc717f8cdd9: # Meta Title
+            required: false
+            sortOrder: 1
+          c4054484-83ab-4a3c-8415-9d3a27527f2d: # Meta Description
+            required: false
+            sortOrder: 2
+        name: Content
+        sortOrder: 1
+handle: meta
+name: Meta
+sortOrder: 1

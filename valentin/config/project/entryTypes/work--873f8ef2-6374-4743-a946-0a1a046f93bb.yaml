@@ -1,0 +1,45 @@
+fieldLayouts:
+  49a4f3db-94be-4495-ace0-0ca9fb0e5517:
+    tabs:
+      -
+        elements:
+          -
+            instructions: null
+            label: Title
+            type: craft\fieldlayoutelements\EntryTitleField
+          -
+            fieldUid: c45ffb02-999c-490b-bd4a-993d877bcf32 # Site Address
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: 4e1e8332-09a1-40c3-9051-70c7f066a71d # Description
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: 91e06f6d-6263-4db7-b105-57df93fb5674 # Desktop Image
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: df682a93-826f-4d0c-8e91-f01868cd7df7 # Tablet Image
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: dfc60c41-b5d6-4abf-9f32-d25cde28bac9 # Mobile Image
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: 1ab62c79-aa4a-4ffc-862a-a9406a7f8c31 # Technologies
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+          -
+            fieldUid: bc460521-48ae-462e-9c26-f637ea1887c3 # Site URL
+            required: false
+            type: craft\fieldlayoutelements\CustomField
+        name: Work
+        sortOrder: 1
+handle: work
+hasTitleField: true
+name: Work
+section: 11090888-aeb3-460a-932e-f8c5bbe38bf9 # Work
+sortOrder: 0
+titleFormat: null

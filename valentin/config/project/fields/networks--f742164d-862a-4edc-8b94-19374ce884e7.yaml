@@ -1,0 +1,13 @@
+contentColumnType: string
+fieldGroup: c105295a-dab5-4639-ba70-012c33428ec2 # Globals
+handle: networks
+instructions: ''
+name: Networks
+searchable: true
+settings:
+  contentTable: '{{%matrixcontent_networks}}'
+  maxBlocks: null
+  propagationMethod: all
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Matrix

@@ -1,0 +1,15 @@
+contentColumnType: text
+fieldGroup: c105295a-dab5-4639-ba70-012c33428ec2 # Globals
+handle: metaTitle
+instructions: ''
+name: 'Meta Title'
+searchable: true
+settings:
+  charLimit: ''
+  columnType: text
+  initialRows: '4'
+  multiline: ''
+  placeholder: ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\PlainText

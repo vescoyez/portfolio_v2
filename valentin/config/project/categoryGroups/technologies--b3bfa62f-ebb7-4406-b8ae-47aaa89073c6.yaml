@@ -1,0 +1,23 @@
+fieldLayouts:
+  6e1c884a-6309-483d-b156-b03bb539f072:
+    tabs:
+      -
+        fields:
+          7d237000-1303-4f1d-bfea-684bcd28a72c: # Technology URL
+            required: false
+            sortOrder: 1
+          e7d29c60-a927-4090-9cc5-1994592d3cb4: # Technology icon
+            required: false
+            sortOrder: 2
+        name: 'Tab 1'
+        sortOrder: 1
+handle: technologies
+name: technologies
+siteSettings:
+  0d30a55e-363d-45bf-b2cd-0e4b1d613b9f: # Valentin Escoyez (en-US)
+    hasUrls: false
+    template: null
+    uriFormat: null
+structure:
+  maxLevels: null
+  uid: e170385f-1749-4b25-8c1f-4127845170d3

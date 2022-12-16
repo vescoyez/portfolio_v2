@@ -1,0 +1,55 @@
+<article class="work">
+  <h3 class="heading heading--2">{{ entry.title }}</h3>
+  <div class="grid">
+    <div class="grid__item width-7_l width-8_m width-10_s">
+      {{ entry.description }}
+    </div>
+  </div>
+  <div class="devices m-y">
+    <div class="grid">
+      <div class="grid__item width-10_m offset-1_m">
+        <div class="browser" data-title="{{ entry.siteAddress }}">
+          <picture>
+            <source srcset="{{ entry.desktopImage[0].getUrl('desktopRetina') }}" media="(min-width: 500px) and (min-resolution: 192dpi), (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2)">
+            <img src="{{ entry.desktopImage[0].getUrl('desktop') }}" alt="{{ entry.title }}">
+          </picture>
+        </div>
+      </div>
+    </div>
+    <div class="phone width-3 offset-8 width-2_m offset-0_m" data-title="{{ entry.siteAddress }}">
+      <picture>
+        <source srcset="{{ entry.mobileImage[0].getUrl('mobileRetina') }}" media="(min-width: 500px) and (min-resolution: 192dpi), (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2)">
+        <img src="{{ entry.mobileImage[0].getUrl('mobile') }}" alt="{{ entry.title }}">
+      </picture>
+    </div>
+    <div class="tablet hidden visible_m width-6_m" data-title="{{ entry.siteAddress }}">
+      <picture>
+        <source srcset="{{ entry.tabletImage[0].getUrl('tabletRetina') }}" media="(min-width: 500px) and (min-resolution: 192dpi), (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2)">
+        <img src="{{ entry.tabletImage[0].getUrl('tablet') }}" alt="{{ entry.title }}">
+      </picture>
+    </div>
+  </div>
+  <p class="heading heading--3">Things I used for this project</p>
+  <ul class="technologies">
+    {% set divider = entry.technologies.count > 4 and entry.technologies.count < 7 ?  3 : 4 %}
+    {% for technology in entry.technologies.limit(8) %}
+    <li class="width-{{ 12 / divider }} technologies__item">
+      <a href="{{ technology.technologyUrl }}" target="_blank" class="technologies__link">
+        <div class="technologies__icon">
+          <img src="{{ technology.technologyIcon[0].getUrl() }}" alt="{{ technology.title }}">
+        </div>
+        <h4 class="technologies__title">
+          {{ technology.title }}
+        </h4>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="text-center">
+    {% if entry.siteUrl %}
+    <a href="{{ entry.siteUrl }}" target="_blank" class="button">Visit {{ entry.title }}</a>
+    {% else %}
+    <span class="button button--disabled">Not online yet</span>
+    {% endif %}
+  </div>
+</article>

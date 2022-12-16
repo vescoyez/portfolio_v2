@@ -1,0 +1,69 @@
+field: f742164d-862a-4edc-8b94-19374ce884e7 # Networks
+fieldLayouts:
+  6eb4de3a-c507-4106-aa60-10f91bb7849b:
+    tabs:
+      -
+        fields:
+          ad3954e7-02e1-4207-ae79-4375c4128d6c: # Network Name
+            required: false
+            sortOrder: 1
+          be2a7e52-f7cb-4099-b6b5-6259f44911a3: # Site URL
+            required: false
+            sortOrder: 2
+          be2dc6ec-4f28-42c9-b6ab-c8965978ec2c: # Network Slug
+            required: false
+            sortOrder: 3
+        name: Content
+        sortOrder: 1
+fields:
+  ad3954e7-02e1-4207-ae79-4375c4128d6c: # Network Name
+    contentColumnType: text
+    fieldGroup: null
+    handle: networkName
+    instructions: ''
+    name: 'Network Name'
+    searchable: true
+    settings:
+      charLimit: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+    translationKeyFormat: null
+    translationMethod: none
+    type: craft\fields\PlainText
+  be2a7e52-f7cb-4099-b6b5-6259f44911a3: # Site URL
+    contentColumnType: text
+    fieldGroup: null
+    handle: siteUrl
+    instructions: ''
+    name: 'Site URL'
+    searchable: true
+    settings:
+      charLimit: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+    translationKeyFormat: null
+    translationMethod: none
+    type: craft\fields\PlainText
+  be2dc6ec-4f28-42c9-b6ab-c8965978ec2c: # Network Slug
+    contentColumnType: text
+    fieldGroup: null
+    handle: networkSlug
+    instructions: ''
+    name: 'Network Slug'
+    searchable: true
+    settings:
+      charLimit: ''
+      columnType: text
+      initialRows: '4'
+      multiline: ''
+      placeholder: ''
+    translationKeyFormat: null
+    translationMethod: none
+    type: craft\fields\PlainText
+handle: networks
+name: Networks
+sortOrder: 1

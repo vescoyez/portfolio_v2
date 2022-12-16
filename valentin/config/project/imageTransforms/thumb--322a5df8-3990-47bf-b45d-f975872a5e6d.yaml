@@ -1,0 +1,9 @@
+format: jpg
+handle: thumb
+height: null
+interlace: none
+mode: fit
+name: Thumb
+position: center-center
+quality: 82
+width: 400

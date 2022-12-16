@@ -1,0 +1,22 @@
+contentColumnType: string
+fieldGroup: 4ea542e5-b965-4dd1-8f79-60e0bf3eb2c1 # Testimonials
+handle: personPicture
+instructions: ''
+name: 'Person Picture'
+searchable: true
+settings:
+  defaultUploadLocationSource: 'volume:9f3564bf-b786-4937-88c9-94c1ae067da3' # images
+  defaultUploadLocationSubpath: ''
+  limit: '1'
+  localizeRelations: false
+  restrictFiles: ''
+  selectionLabel: ''
+  singleUploadLocationSource: 'volume:9f3564bf-b786-4937-88c9-94c1ae067da3' # images
+  singleUploadLocationSubpath: ''
+  sources:
+    - 'volume:9f3564bf-b786-4937-88c9-94c1ae067da3' # images
+  useSingleFolder: ''
+  viewMode: large
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Assets

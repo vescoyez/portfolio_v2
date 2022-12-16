@@ -1,0 +1,14 @@
+contentColumnType: string
+fieldGroup: 2650e29d-0e92-4cb8-b6d9-62c3465bcf0b # Homepage
+handle: intro
+instructions: 'Introduce yourself'
+name: Intro
+searchable: true
+settings:
+  cleanupHtml: '1'
+  columnType: text
+  configFile: ''
+  purifyHtml: ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\redactor\Field

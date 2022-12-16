@@ -1,0 +1,91 @@
+dateModified: 1671135760
+email:
+  fromEmail: valentin.escoyez@gmail.com
+  fromName: 'Valentin Escoyez'
+  template: null
+  transportType: craft\mail\transportadapters\Sendmail
+graphql:
+  publicToken:
+    enabled: false
+    expiryDate: null
+meta:
+  __names__:
+    0d30a55e-363d-45bf-b2cd-0e4b1d613b9f: 'Valentin Escoyez (en-US)' # Valentin Escoyez (en-US)
+    0feed7be-8ac6-4e90-b697-688e83e57e34: Mobile # Mobile
+    1ab62c79-aa4a-4ffc-862a-a9406a7f8c31: Technologies # Technologies
+    1b388469-21fa-4b0c-8116-fc092436d511: 'User Photos' # User Photos
+    2c17a2e7-ef8b-4632-890e-fc15f2d105cf: Work # Work
+    3e13ce0b-5ccb-4491-9dd5-a1f7faea575d: 'Tablet Retina' # Tablet Retina
+    4e1e8332-09a1-40c3-9051-70c7f066a71d: Description # Description
+    4ea542e5-b965-4dd1-8f79-60e0bf3eb2c1: Testimonials # Testimonials
+    7d237000-1303-4f1d-bfea-684bcd28a72c: 'Technology URL' # Technology URL
+    7f11b932-a406-47d5-8d02-cddd4f9e6be3: Default # Default
+    9f3564bf-b786-4937-88c9-94c1ae067da3: images # images
+    18cea9a6-4a02-4502-b174-3cc717f8cdd9: 'Meta Title' # Meta Title
+    44f0a4c2-da3a-4933-8a2b-3fff9625b3e1: Technology # Technology
+    82f33e5c-c5e9-4e74-9790-08c1137e8a8f: 'Desktop Retina' # Desktop Retina
+    83b5f9db-ec56-4f88-a7be-ed26dff2d282: Meta # Meta
+    88f916eb-718c-4633-94a7-5ca642daaac5: Intro # Intro
+    91e06f6d-6263-4db7-b105-57df93fb5674: 'Desktop Image' # Desktop Image
+    322a5df8-3990-47bf-b45d-f975872a5e6d: Thumb # Thumb
+    873f8ef2-6374-4743-a946-0a1a046f93bb: Work # Work
+    2650e29d-0e92-4cb8-b6d9-62c3465bcf0b: Homepage # Homepage
+    3149bd20-d805-4786-bea8-931ee738021e: Testimonials # Testimonials
+    33672ab4-207e-43e1-9e56-64d7ab1fa769: Testimonials # Testimonials
+    1989600a-8c5f-4681-9323-7719f1fb776d: Desktop # Desktop
+    11090888-aeb3-460a-932e-f8c5bbe38bf9: Work # Work
+    76997698-86ce-4845-b88a-d9c7635d18a9: 'Person URL' # Person URL
+    a81c4d9f-8be7-48af-b6e7-bfe0b66889b7: Networks # Networks
+    a97a2f1e-fcd7-4a71-b939-50c3084c5116: Body # Body
+    a97330e9-ca20-41e4-8504-d1fd8f2c01c0: Tablet # Tablet
+    ad3954e7-02e1-4207-ae79-4375c4128d6c: 'Network Name' # Network Name
+    b3bfa62f-ebb7-4406-b8ae-47aaa89073c6: technologies # technologies
+    b228e43d-49de-4b9a-9ad0-c586a8c47788: Homepage # Homepage
+    bc460521-48ae-462e-9c26-f637ea1887c3: 'Site URL' # Site URL
+    be2a7e52-f7cb-4099-b6b5-6259f44911a3: 'Site URL' # Site URL
+    be2dc6ec-4f28-42c9-b6ab-c8965978ec2c: 'Network Slug' # Network Slug
+    bf4d20d8-c471-42b5-a6ef-1321822a5650: 'Person Title' # Person Title
+    c45ffb02-999c-490b-bd4a-993d877bcf32: 'Site Address' # Site Address
+    c105295a-dab5-4639-ba70-012c33428ec2: Globals # Globals
+    c4054484-83ab-4a3c-8415-9d3a27527f2d: 'Meta Description' # Meta Description
+    ca1a8f79-95a0-42ae-9552-11f7dc866cae: Testimonial # Testimonial
+    ca995c1f-f7e5-477f-a93d-ed14a9114e43: Homepage # Homepage
+    df682a93-826f-4d0c-8e91-f01868cd7df7: 'Tablet Image' # Tablet Image
+    dfc60c41-b5d6-4abf-9f32-d25cde28bac9: 'Mobile Image' # Mobile Image
+    e7d29c60-a927-4090-9cc5-1994592d3cb4: 'Technology icon' # Technology icon
+    ec2fb365-4082-45d1-bfb7-168f281f29c4: 'Person Picture' # Person Picture
+    ec4971da-88af-49a1-b7e9-af9b820d10f9: Testimonial # Testimonial
+    f4a4c650-0411-4b2e-8d2e-96f1820e3f80: Default # Default
+    f6f20c94-5311-4e84-a624-67a29b21fe35: Networks # Networks
+    f27ef76f-3343-491b-ba8a-d0b6cb0dcd1b: 'Mobile Retina' # Mobile Retina
+    f742164d-862a-4edc-8b94-19374ce884e7: Networks # Networks
+    fe96c1eb-810a-4df5-afca-ac1afb3439b4: Greetings # Greetings
+    ff895e70-1ab1-4d39-a82e-4ca5225669c8: 'Valentin Escoyez (en-US)' # Valentin Escoyez (en-US)
+plugins:
+  contact-form:
+    enabled: '1'
+    licenseKey: null
+    schemaVersion: 1.0.0
+    settings:
+      allowAttachments: ''
+      honeypotField: gender
+      prependSender: ''
+      prependSubject: 'Contact Form'
+      successFlashMessage: 'Your message has been sent.'
+      toEmail: valentin.escoyez@gmail.com
+  redactor:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.3.0
+system:
+  edition: solo
+  live: true
+  name: 'Valentin Escoyez'
+  schemaVersion: 3.7.33
+  timeZone: UTC
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  requireEmailVerification: true
